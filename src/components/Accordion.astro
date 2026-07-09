@@ -1,0 +1,45 @@
+---
+/**
+ * 아코디언 — HTML 표준 <details>/<summary> 기반 (JS 0줄, 접근성 내장).
+ * MDX 본문에서 <Accordion label="제목">...</Accordion> 으로 사용.
+ * name 지정 시 같은 그룹에서 하나만 열림(브라우저 표준).
+ */
+interface Props {
+  label: string;
+  open?: boolean;
+  name?: string;
+}
+const { label, open = false, name } = Astro.props;
+---
+
+<details
+  class="group border-b border-line last:border-0"
+  open={open}
+  name={name}
+>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-3 py-4 font-display text-[17px] font-semibold text-ink transition-colors hover:text-primary-700"
+  >
+    <span>{label}</span>
+    <span
+      class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary-50 text-primary-600 transition-transform duration-300 group-open:rotate-45"
+      aria-hidden="true"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    </span>
+  </summary>
+  <div class="prose-panel pb-5 pr-9 text-[15px] leading-relaxed text-muted">
+    <slot />
+  </div>
+</details>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+  .prose-panel :global(ul) { margin: 0; padding-left: 1.1rem; list-style: disc; }
+  .prose-panel :global(li) { margin: 0.15rem 0; }
+  .prose-panel :global(li)::marker { color: var(--color-primary-400); }
+  .prose-panel :global(strong) { color: var(--color-ink); font-weight: 600; }
+  .prose-panel :global(a) { color: var(--color-primary-600); text-decoration: underline; text-underline-offset: 2px; }
+</style>

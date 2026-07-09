@@ -1,0 +1,97 @@
+---
+/**
+ * 캐러셀 — CSS scroll-snap 기반. 모바일 스와이프 자연 지원, JS는 점 표시/이동만(경량).
+ * MDX: <Carousel images={[{ src, alt }, ...]} />
+ */
+interface Slide {
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+interface Props {
+  images: Slide[];
+}
+const { images } = Astro.props;
+const uid = 'car-' + Math.random().toString(36).slice(2, 8);
+---
+
+<div class="carousel not-prose" data-carousel data-uid={uid}>
+  <div
+    class="scroll-track flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth rounded-2xl"
+    role="group"
+    aria-roledescription="캐러셀"
+    tabindex="0"
+  >
+    {
+      images.map((img, i) => (
+        <figure class="relative w-full shrink-0 snap-center" data-slide>
+          <img
+            src={img.src}
+            alt={img.alt ?? `슬라이드 ${i + 1}`}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            class="aspect-[16/10] w-full rounded-2xl border border-line object-cover"
+          />
+          {img.caption && (
+            <figcaption class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-ink/70 to-transparent px-4 py-3 text-sm text-white">
+              {img.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))
+    }
+  </div>
+
+  {
+    images.length > 1 && (
+      <div class="mt-3 flex items-center justify-center gap-2" data-dots>
+        {images.map((_, i) => (
+          <button
+            type="button"
+            class="h-2 w-2 rounded-full bg-line transition-all data-[active]:w-5 data-[active]:bg-primary-500"
+            data-dot
+            data-index={i}
+            aria-label={`${i + 1}번 슬라이드로 이동`}
+          />
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+      if (root.dataset.init) return;
+      root.dataset.init = '1';
+      const track = root.querySelector<HTMLElement>('.scroll-track')!;
+      const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-slide]'));
+      const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+      if (!slides.length) return;
+
+      const setActive = (idx: number) =>
+        dots.forEach((d, i) =>
+          i === idx ? d.setAttribute('data-active', '') : d.removeAttribute('data-active')
+        );
+      setActive(0);
+
+      dots.forEach((dot) =>
+        dot.addEventListener('click', () => {
+          const i = Number(dot.dataset.index);
+          slides[i]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        })
+      );
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) setActive(slides.indexOf(e.target as HTMLElement));
+          });
+        },
+        { root: track, threshold: 0.6 }
+      );
+      slides.forEach((s) => io.observe(s));
+    });
+  }
+  initCarousels();
+  document.addEventListener('astro:page-load', initCarousels);
+</script>

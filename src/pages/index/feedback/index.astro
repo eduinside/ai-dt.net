@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import PublisherCard from '../../../components/PublisherCard.astro';
+
+const publishers = (await getCollection('publishers')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// 교과별 필터 칩(정적)
+const subjects = [...new Set(publishers.flatMap((p) => p.data.subjects))];
+---
+
+<BaseLayout
+  title="출판사별 지원"
+  description="교과서 출판사별 AI 디지털교과서 도움자료와 오류·장애 제보 창구"
+>
+  <section class="mx-auto max-w-6xl px-5 pt-14">
+    <nav class="text-[13px] text-muted" aria-label="위치">
+      <a href="/" class="hover:text-primary-700">홈</a>
+      <span class="px-1.5" aria-hidden="true">/</span>
+      <a href="/index" class="hover:text-primary-700">안내</a>
+      <span class="px-1.5" aria-hidden="true">/</span>
+      <span class="text-ink">출판사별 지원</span>
+    </nav>
+
+    <div class="mt-6 max-w-2xl">
+      <SectionHeading eyebrow="Publishers" title="출판사별 지원" />
+      <p class="mt-4 text-[16px] leading-relaxed text-muted">
+        사용 중인 교과서 출판사를 선택하면 수업 도움자료와 오류·장애 제보 창구로
+        이동합니다. 교과별로 필요한 곳을 빠르게 찾아보세요.
+      </p>
+    </div>
+
+    <!-- 교과 칩(표시용) -->
+    <div class="mt-6 flex flex-wrap gap-2">
+      <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white">전체</span>
+      {
+        subjects.map((s) => (
+          <span class="rounded-full border border-line bg-surface px-3.5 py-1.5 text-[13px] font-medium text-muted">
+            {s}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        publishers.map((p) => (
+          <PublisherCard
+            href={`/index/feedback/${p.id}`}
+            name={p.data.name}
+            subjects={p.data.subjects}
+            accent={p.data.accent}
+            draft={p.data.draft}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
