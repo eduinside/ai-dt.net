@@ -1,0 +1,43 @@
+---
+/**
+ * 스스로 학습 안내 — 원본(docs/original/CONTENT.md §13).
+ * 원본은 안내 포스터 이미지 + 포털 바로가기 버튼. 원본 이미지를 이관.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import poster from '../assets/pages/study/poster.png';
+import portalButton from '../assets/pages/study/portal-button.png';
+---
+
+<BaseLayout
+  title="스스로 학습 안내"
+  description="AI·디지털 교육자료로 집에서도 스스로 학습하기 — 포털 로그인부터 스스로 점검·약속까지 안내"
+>
+  <section class="mx-auto max-w-4xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      AI·디지털 교육자료 집에서도 스스로 학습하기
+    </h1>
+
+    <div class="mt-10">
+      <Image
+        src={poster}
+        alt="AI·디지털 교육자료로 집에서도 스스로 학습하기 안내 — 1단계 포털 로그인, 2단계 교육자료 열기, 3단계 스스로 학습하기, 건강한 디바이스 활용 자세와 약속"
+        widths={[720, 1280]}
+        sizes="(max-width: 768px) 100vw, 720px"
+        class="mx-auto w-full max-w-[900px] rounded-md border border-line shadow-[var(--shadow-card)]"
+      />
+    </div>
+
+    <div class="mt-8 text-center">
+      <a
+        href="https://www.aidtbook.kr"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block transition-transform hover:-translate-y-0.5"
+        aria-label="AI·디지털 교육자료 포털(aidtbook.kr) 바로가기"
+      >
+        <Image src={portalButton} alt="AI·디지털 교육자료 포털 바로가기" width={480} height={270} class="mx-auto w-full max-w-[360px]" />
+      </a>
+    </div>
+  </section>
+</BaseLayout>
