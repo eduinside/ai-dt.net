@@ -27,7 +27,7 @@ npm run preview   # 빌드 결과 미리보기
 src/
   content.config.ts        콘텐츠 컬렉션 스키마(zod 검증)
   content/
-    publishers/            출판사 데이터 파일 (파일 1개 = 출판사 1곳)
+    publishers/            발행사 데이터 파일 (파일 1개 = 발행사 1곳)
   components/              재사용 컴포넌트(= 디자인 시스템)
     Accordion.astro          <details> 기반, JS 0줄
     Carousel.astro           CSS scroll-snap 기반, 경량 JS
@@ -36,8 +36,8 @@ src/
   layouts/BaseLayout.astro
   pages/
     index.astro                        홈
-    index/feedback/index.astro         출판사 허브
-    index/feedback/[id].astro          출판사 상세(데이터→자동 생성)
+    index/feedback/index.astro         발행사 답변 허브
+    index/feedback/[id].astro          발행사 상세(데이터→자동 생성)
   styles/global.css        디자인 토큰(@theme) + 웹폰트
 ```
 
@@ -45,11 +45,11 @@ src/
 
 원본 사이트 충실 재현이 원칙이다 — 텍스트·구조는 `docs/original/CONTENT.md`(원본 실측)를 따른다.
 
-출판사 한 곳을 추가하려면 `src/content/publishers/`에 `.mdx` 파일 하나만 추가한다:
+발행사 한 곳을 추가하려면 `src/content/publishers/`에 `.mdx` 파일 하나만 추가한다:
 
 ```mdx
 ---
-name: 출판사명   # 원본 표기 그대로 (예: 천재)
+name: 발행사명   # 원본 표기 그대로 (예: 천재)
 order: 13       # 가나다순
 ---
 

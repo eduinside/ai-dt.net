@@ -1,7 +1,7 @@
 ---
 /**
- * 출판사 피드백 허브 — 원본 제목·안내문(docs/original/CONTENT.md §8) + QnA형 게시판.
- * 전체 회신 목록을 먼저 보여주고, 출판사 칩을 누르면 해당 출판사만 목록형으로 필터(정적 페이지 이동).
+ * 발행사 답변 허브 — 원본 제목·안내문(docs/original/CONTENT.md §8) + QnA형 게시판.
+ * 전체 답변 목록을 먼저 보여주고, 발행사 칩을 누르면 해당 발행사만 목록형으로 필터(정적 페이지 이동).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -22,21 +22,21 @@ const rows = publishers.flatMap((p) =>
 ---
 
 <BaseLayout
-  title="출판사 피드백"
-  description="학교별로 수집한 AI·디지털 교육자료 활용 개선 의견과 출판사 회신 내용"
+  title="발행사 답변"
+  description="학교별로 수집한 AI·디지털 교육자료 활용 개선 의견과 발행사 답변 내용"
 >
   <section class="mx-auto max-w-4xl px-5 pt-12 sm:pt-14">
     <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[32px]">
-      AI·디지털 교육자료 개선 요청사항 출판사 피드백
+      AI·디지털 교육자료 개선 요청사항 발행사 답변
     </h1>
 
     <p class="mx-auto mt-8 max-w-2xl text-center text-[15px] leading-relaxed text-ink sm:text-[16px]">
-      학교별로 수집한 AI·디지털 교육자료 활용에 대한 개선 의견과 출판사 회신 내용을
-      출판사별로 탑재해 두었으니 활용에 참고하시기 바랍니다. (가나다순)
+      학교별로 수집한 AI·디지털 교육자료 활용에 대한 개선 의견과 발행사 답변 내용을
+      발행사별로 탑재해 두었으니 활용에 참고하시기 바랍니다. (가나다순)
     </p>
 
-    <!-- 출판사 필터 칩 -->
-    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="출판사 필터">
+    <!-- 발행사 필터 칩 -->
+    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="발행사 필터">
       <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white" aria-current="page">
         전체
       </span>

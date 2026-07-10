@@ -1,0 +1,43 @@
+---
+/**
+ * 404 — 잘못된 주소로 들어와도 안내와 이동 경로를 제공(접속 안 되는 페이지 방지).
+ * Cloudflare Pages는 dist/404.html을 자동으로 404 응답에 사용.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinkButton from '../components/LinkButton.astro';
+
+const links = [
+  { href: '/', label: '홈' },
+  { href: '/index/manual', label: '사전 준비사항 안내' },
+  { href: '/index/feedback', label: '발행사 답변' },
+  { href: '/class', label: '수업이야기' },
+  { href: '/contact', label: '문의 및 장애 지원' },
+];
+---
+
+<BaseLayout title="페이지를 찾을 수 없습니다" description="요청하신 페이지를 찾을 수 없습니다.">
+  <section class="mx-auto flex max-w-2xl flex-col items-center px-5 py-20 text-center sm:py-28">
+    <p class="font-display text-[64px] font-bold leading-none text-primary-600">404</p>
+    <h1 class="mt-4 text-[22px] font-bold text-ink sm:text-[26px]">페이지를 찾을 수 없습니다</h1>
+    <p class="mt-3 text-[15px] leading-relaxed text-muted">
+      주소가 바뀌었거나 삭제된 페이지일 수 있습니다. 아래에서 필요한 곳으로 이동하세요.
+    </p>
+
+    <div class="mt-8">
+      <LinkButton href="/" variant="primary">홈으로 가기</LinkButton>
+    </div>
+
+    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="바로가기">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+</BaseLayout>

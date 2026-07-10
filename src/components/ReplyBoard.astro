@@ -1,6 +1,6 @@
 ---
 /**
- * 출판사 회신 QnA형 게시판 — 목록형 행(row) + 펼치면 회신 문서 이미지.
+ * 발행사 답변 QnA형 게시판 — 목록형 행(row) + 펼치면 답변 문서 이미지.
  * 이미지는 src/assets/replies/{slug}/{dir}/*.png (원본 구글 사이트에서 이관, =w1280).
  * <details> 기반이라 JS 0줄, 이미지 자체는 lazy 로드.
  */
@@ -15,7 +15,7 @@ interface Row {
 }
 interface Props {
   rows: Row[];
-  showPublisher?: boolean; // 허브(전체 목록)에서 출판사 배지 표시
+  showPublisher?: boolean; // 허브(전체 목록)에서 발행사 배지 표시
 }
 const { rows, showPublisher = true } = Astro.props;
 

@@ -7,8 +7,8 @@ import { glob } from 'astro/loaders';
  * - P1에서는 publishers 만 실사용. 나머지는 P2~P3에서 콘텐츠 채움.
  */
 
-// 출판사 (구 /index/feedback/{출판사} × 12) — 데이터만으로 페이지 자동 생성
-// 출판사 회신 = QnA형 게시판 데이터. 회신 문서 이미지는 src/assets/replies/{slug}/{dir}/*.png
+// 발행사 (구 /index/feedback/{발행사} × 12) — 데이터만으로 페이지 자동 생성
+// 발행사 답변 = QnA형 게시판 데이터. 답변 문서 이미지는 src/assets/replies/{slug}/{dir}/*.png
 const publishers = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/publishers' }),
   schema: z.object({

@@ -1,6 +1,6 @@
 ---
 /**
- * 출판사 상세 — 원본 제목 패턴('{이름}' 회신 내용) + 해당 출판사만 필터된 목록형 게시판.
+ * 발행사 상세 — 원본 제목 패턴('{이름}' 회신 내용) + 해당 발행사만 필터된 목록형 게시판.
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -35,8 +35,8 @@ const rows = data.sections.map((s) => ({
       '{data.name}' 회신 내용
     </h1>
 
-    <!-- 출판사 필터 칩 -->
-    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="출판사 필터">
+    <!-- 발행사 필터 칩 -->
+    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="발행사 필터">
       <a
         href="/index/feedback/"
         class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
