@@ -17,8 +17,9 @@ interface Props {
   rows: Row[];
   showPublisher?: boolean; // 허브(전체 목록)에서 발행사 배지 표시
   filterable?: boolean;    // 허브에서 발행사 칩으로 클라이언트 필터링(초기 숨김)
+  linkToFaq?: boolean;     // 클릭 시 /index/faq#{id} 로 이동할지 여부
 }
-const { rows, showPublisher = true, filterable = false } = Astro.props;
+const { rows, showPublisher = true, filterable = false, linkToFaq = false } = Astro.props;
 
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/replies/**/*.png',
@@ -31,65 +32,130 @@ const imagesFor = (slug: string, dir: string) =>
     .map(([, mod]) => mod.default);
 ---
 
-<div class="divide-y divide-line border-y border-line">
+<div class="space-y-3">
   {
     rows.map((row) => {
       const imgs = imagesFor(row.slug, row.dir);
+      const rowId = `${row.slug}-${row.dir}`;
+      
+      if (linkToFaq) {
+        return (
+          <a
+            href={`/index/faq#${rowId}`}
+            class="group reply-row block rounded-[var(--radius-card)] border border-line bg-white shadow-sm transition-all hover:border-primary-400"
+            data-pub={row.slug}
+            hidden={filterable}
+          >
+            <div class="flex items-center justify-between gap-3 px-5 py-4 select-none outline-none">
+              <div class="flex items-start gap-3 min-w-0">
+                <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-100 text-[13px] font-bold text-primary-700">
+                  Q
+                </span>
+                <span class="font-semibold text-ink text-[15px] leading-snug break-keep">
+                  {row.label}
+                </span>
+              </div>
+              <div class="flex items-center gap-3 shrink-0 text-[13px] text-muted">
+                {row.date && <span class="hidden sm:inline">{row.date.replaceAll('-', '.')}</span>}
+                <span class="rounded bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-muted">
+                  문서 {imgs.length}장
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                  class="text-muted transition-transform group-hover:translate-x-0.5"
+                >
+                  <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </a>
+        );
+      }
+
       return (
         <details
-          class="group reply-row"
-          id={`${row.slug}-${row.dir}`}
+          class="group reply-row rounded-[var(--radius-card)] border border-line bg-white shadow-sm transition-all hover:border-primary-400"
+          id={rowId}
           data-pub={row.slug}
           hidden={filterable}
         >
-          <summary class="flex cursor-pointer list-none items-center gap-3 px-2 py-4 transition-colors hover:bg-primary-50/60">
-            {showPublisher && (
-              <span class="shrink-0 rounded-[4px] bg-primary-600 px-2.5 py-1 text-[13px] font-semibold text-white">
-                {row.publisher}
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 select-none outline-none">
+            <div class="flex items-start gap-3 min-w-0">
+              <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-100 text-[13px] font-bold text-primary-700">
+                Q
               </span>
-            )}
-            <span class="min-w-0 flex-1 truncate text-left text-[15px] font-semibold text-ink">
-              {row.label}
-            </span>
-            {row.date && (
-              <span class="hidden shrink-0 text-[13px] text-muted sm:inline">
-                {row.date.replaceAll('-', '.')}
+              <span class="font-semibold text-ink text-[15px] leading-snug break-keep">
+                {row.label}
               </span>
-            )}
-            <span class="shrink-0 text-[13px] text-muted">
-              문서 {imgs.length}장
-            </span>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              aria-hidden="true"
-              class="shrink-0 text-muted transition-transform duration-200 group-open:rotate-180"
-            >
-              <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 text-[13px] text-muted">
+              {row.date && <span class="hidden sm:inline">{row.date.replaceAll('-', '.')}</span>}
+              <span class="rounded bg-gray-100 px-2 py-0.5 text-[11px] font-medium text-muted">
+                문서 {imgs.length}장
+              </span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="transition-transform duration-200 group-open:rotate-180 text-muted"
+              >
+                <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
           </summary>
-          <div class="space-y-4 bg-primary-50/40 px-2 py-5 sm:px-5">
-            {imgs.length === 0 && (
-              <p class="text-[14px] text-muted">회신 문서를 이관 중입니다.</p>
-            )}
-            {imgs.map((img, i) => (
-              <Image
-                src={img}
-                alt={`${showPublisher ? `'${row.publisher}' ` : ''}${row.label} 문서 ${i + 1}쪽`}
-                widths={[720, 1280]}
-                sizes="(max-width: 768px) 100vw, 720px"
-                class="mx-auto w-full max-w-[720px] rounded-md border border-line bg-white shadow-[var(--shadow-card)]"
-                loading="lazy"
-              />
-            ))}
+          <div class="border-t border-line bg-gray-50/50 px-5 py-6">
+            <div class="flex items-start gap-3">
+              <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/10 text-[13px] font-bold text-accent">
+                A
+              </span>
+              <div class="w-full space-y-4 min-w-0">
+                {imgs.length === 0 && (
+                  <p class="text-[14px] text-muted">회신 문서를 이관 중입니다.</p>
+                )}
+                {imgs.map((img, i) => (
+                  <Image
+                    src={img}
+                    alt={`${showPublisher ? `'${row.publisher}' ` : ''}${row.label} 문서 ${i + 1}쪽`}
+                    widths={[720, 1280]}
+                    sizes="(max-width: 768px) 100vw, 720px"
+                    class="mx-auto w-full max-w-[720px] rounded-md border border-line bg-white shadow-sm"
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </details>
       );
     })
   }
 </div>
+
+<script>
+  function handleHashOpen() {
+    const hash = window.location.hash;
+    if (hash) {
+      const id = decodeURIComponent(hash.substring(1));
+      const details = document.getElementById(id) as HTMLDetailsElement;
+      if (details && details.tagName === 'DETAILS') {
+        details.open = true;
+        setTimeout(() => {
+          details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+      }
+    }
+  }
+
+  window.addEventListener('hashchange', handleHashOpen);
+  window.addEventListener('load', handleHashOpen);
+  document.addEventListener('astro:page-load', handleHashOpen);
+</script>
 
 <style>
   summary::-webkit-details-marker {

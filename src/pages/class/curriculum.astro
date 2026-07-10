@@ -48,20 +48,24 @@ const strategyVideos = [
         고려하여 디지털 역량 교육 주간을 운영할 수 있습니다(3월 운영 권장).
       </p>
       <div class="mt-4 flex flex-wrap gap-3">
-        <LinkButton href="#" variant="ghost" external>초등 자료 보기(KERIS)</LinkButton>
-        <LinkButton href="#" variant="ghost" external>중등 자료 보기(KERIS)</LinkButton>
+        <LinkButton href="#" variant="ghost" external>초등 자료</LinkButton>
+        <LinkButton href="#" variant="ghost" external>중등 자료</LinkButton>
       </div>
     </section>
 
     <!-- 교육과정 성취기준 -->
     <section class="mt-6 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
       <h2 class="text-[18px] font-bold text-ink">AI·디지털 교육자료 수업설계 관련 교육과정 및 성취기준</h2>
-      <p class="mt-2 text-[14px] text-muted">(수업설계 지원 콘텐츠 계속 업데이트 예정) ※ 아래 자료는 2025년 3월 기준입니다.</p>
+      <p class="mt-2 text-[14px] text-muted">KICE 학생평가지원포털</p>
       <div class="mt-4">
         <LinkButton href="https://stas.moe.go.kr/cmn/main" variant="ghost" external>교육과정·성취기준 보기</LinkButton>
       </div>
     </section>
-
+    <div class="mt-14 mb-8 border-l-4 border-primary-500 bg-gray-50 p-4 rounded-r-lg">
+      <p class="text-[14px] font-medium leading-relaxed">
+        ℹ️ (수업설계 지원 콘텐츠 계속 업데이트 예정) <br />※ 아래 자료는 2025년 3월 기준입니다.
+      </p>
+    </div>
     <!-- 초등 AIDT 수업자료 -->
     <section class="mt-10">
       <h2 class="text-[19px] font-bold text-ink">초등 AIDT 수업자료 <span class="text-[14px] font-normal text-muted">(대구광역시교육청 초등교육과, 대구쌤튜브)</span></h2>
@@ -139,17 +143,14 @@ const strategyVideos = [
             <div class="flex flex-wrap items-center justify-between gap-3">
               <p class="text-[15px] font-semibold text-ink">초등 수학과 AIDT 활용 전략</p>
               <LinkButton href="https://www.edunavi.kr/arc/ad/edunavi/arc/cp/selectChnnlPackageInfo.do?chnnlSn=172&packageSn=1641" variant="ghost" external>
-                영상 보기(에듀나비)
+                영상 보기
               </LinkButton>
             </div>
             
             <div class="mt-4 border-t border-line pt-4">
-              <ul class="grid grid-cols-1 gap-x-6 gap-y-2 text-[14px] sm:grid-cols-2">
+              <ul class="grid grid-cols-1 gap-x-6 gap-y-2 text-[14px] text-muted sm:grid-cols-2">
                 {strategyVideos.map((v) => (
-                  <li class="flex items-start gap-2">
-                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0 mt-1.5"></span>
-                    <span class="text-muted leading-relaxed font-medium">{v}</span>
-                  </li>
+                  <li>{v}</li>
                 ))}
               </ul>
             </div>

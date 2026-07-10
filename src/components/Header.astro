@@ -26,7 +26,7 @@ const nav = [
     label: '수업이야기',
     children: [
       { href: '/class/curriculum', label: '수업설계 지원' },
-      { href: '/class/secondary', label: '중등 AI·디지털 교육자료 지원' },
+      { href: '/class/mid', label: '중등 AI·디지털 교육자료 지원' },
       {
         href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/home',
         label: 'AI수학 디지털 교육자료 튜터링',
@@ -55,7 +55,7 @@ const isActive = (href: string) =>
     </a>
 
     <!-- 데스크톱 네비게이션 -->
-    <nav aria-label="주요 메뉴" class="hidden md:block">
+    <nav aria-label="주요 메뉴" class="hidden md:block ml-auto">
       <ul class="flex items-center gap-0.5 text-[15px]">
         {
           nav.map((item) => (

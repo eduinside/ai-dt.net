@@ -51,21 +51,26 @@ import logo from '../assets/logo-512.webp';
 
   <!-- FAQ · 도움자료 섹션 -->
   <section class="mx-auto max-w-4xl px-5 pt-12 animate-fade-in-up delay-150">
-    <p class="text-[16px] font-semibold text-ink">
-      ➡️ 선도학교 운영 관련 FAQ
-      <a href="/index/faq" class="ml-1 underline underline-offset-2 hover:text-primary-500">👉 더 보기</a>
-    </p>
+    <div class="flex items-center justify-between border-b border-line pb-3">
+      <h2 class="text-[18px] font-bold text-ink">선도학교 운영 관련 FAQ</h2>
+      <a href="/index/faq" class="text-[14px] font-semibold text-primary-600 hover:text-primary-700 transition-colors flex items-center gap-1">
+        더 보기
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0">
+          <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
 
     <!-- 원본 GAS QnA 게시판을 정적 FAQ 게시판으로 이관 (src/data/faq.ts 공유) -->
     <div class="mt-4">
-      <ReplyBoard rows={faqRows} showPublisher={false} />
+      <ReplyBoard rows={faqRows} showPublisher={false} linkToFaq={true} />
     </div>
 
     <a
       href="/index/AIDT"
       class="mt-6 block bg-primary-600 py-3.5 text-center text-[15px] font-semibold text-white transition-all duration-300 rounded-lg shadow-sm hover:shadow-md hover:bg-primary-700"
     >
-      👉활용 도움자료 더 보기🔗
+      활용 도움자료 더 보기
     </a>
   </section>
 

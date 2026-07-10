@@ -27,16 +27,17 @@
   --color-ink: #212121;
   --color-muted: #6a6a6a;
   --color-line: #dadce0;
-  --color-band: #eef0f1; /* 연회색 밴드 (연락처 줄) */
+  --color-band: #eef0f1;
+  /* 연회색 밴드 (연락처 줄) */
 
-  /* 주색 — 다크 슬레이트 (원본 밴드/버튼) */
-  --color-primary-50: #f0f3f4;
-  --color-primary-100: #dfe5e8;
-  --color-primary-200: #b9c5cb;
-  --color-primary-400: #52707e;
-  --color-primary-500: #34505c;
-  --color-primary-600: #263840;
-  --color-primary-700: #1b2930;
+  /* 주색 — 선명하고 세련된 바이브런트 스틸 슬레이트(Vibrant Steel Slate) 계열 */
+  --color-primary-50: #f0f4f6;
+  --color-primary-100: #e2ebf0;
+  --color-primary-200: #c5d7e2;
+  --color-primary-400: #6c94ac;
+  --color-primary-500: #47728d;
+  --color-primary-600: #2d4f64;
+  --color-primary-700: #1a3444;
 
   /* 히어로 — 밝은 시안 (원본 배너 톤) */
   --color-hero-from: #e8f7fa;
@@ -102,6 +103,7 @@ body {
     opacity: 0;
     transform: translateY(12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -113,15 +115,27 @@ body {
   animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.delay-75 { animation-delay: 75ms; }
-.delay-150 { animation-delay: 150ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
+.delay-75 {
+  animation-delay: 75ms;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
 
 /* 프리미엄 호버 효과 */
 .premium-card {
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .premium-card:hover {
   transform: translateY(-4px);
   border-color: var(--color-primary-200);
@@ -129,8 +143,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
