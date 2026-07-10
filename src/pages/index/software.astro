@@ -7,11 +7,20 @@ import LinkButton from '../../components/LinkButton.astro';
 import Carousel from '../../components/Carousel.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
 
-const slideImages = [
-  { src: '/images/placeholder/software-1.jpg', alt: '학습지원 소프트웨어 이미지 1', caption: '원본 네이버 블로그 참고' },
-  { src: '/images/placeholder/software-2.jpg', alt: '학습지원 소프트웨어 이미지 2', caption: '원본 네이버 블로그 참고' },
-  { src: '/images/placeholder/software-3.jpg', alt: '학습지원 소프트웨어 이미지 3', caption: '원본 네이버 블로그 참고' },
-];
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/pages/software/*.{png,jpg,jpeg,webp}',
+  { eager: true }
+);
+
+const imgs = Object.entries(all)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
+
+const slideImages = imgs.map((img, i) => ({
+  src: img.src,
+  alt: `학습지원 소프트웨어 슬라이드 ${i + 1}`,
+  caption: '원본 네이버 블로그 참고'
+}));
 ---
 
 <BaseLayout
@@ -24,7 +33,19 @@ const slideImages = [
     </h1>
 
     <div class="mt-10">
-      <Carousel images={slideImages} />
+      {
+        slideImages.length > 0 ? (
+          <Carousel images={slideImages} />
+        ) : (
+          <div class="rounded-md border-2 border-dashed border-line bg-white/50 px-4 py-8 text-center">
+            <p class="text-[14px] font-semibold text-muted">캐러셀 이미지 자리 — 학습지원 소프트웨어</p>
+            <p class="mt-1.5 font-mono text-[12px] text-muted">
+              src/assets/pages/software/ 폴더에 이미지를 넣으면 자동 캐러셀이 표시됩니다.
+            </p>
+            <p class="mt-1 text-[12px] text-muted">원본 네이버 블로그 이미지를 참고하여 추가해주세요.</p>
+          </div>
+        )
+      }
     </div>
 
     <div class="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">

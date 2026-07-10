@@ -14,9 +14,9 @@ const { prev, next, class: cls = '' } = Astro.props;
 ---
 
 <nav class:list={['mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between', cls]} aria-label="페이지 이동">
-  <div class="flex-1">
-    {
-      prev && (
+  {
+    prev && (
+      <div class="flex-1">
         <a
           href={prev.href}
           class="group flex flex-col items-start gap-1 rounded-[var(--radius-card)] border border-line bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-md"
@@ -27,12 +27,12 @@ const { prev, next, class: cls = '' } = Astro.props;
             {prev.title}
           </span>
         </a>
-      )
-    }
-  </div>
-  <div class="flex-1 text-right">
-    {
-      next && (
+      </div>
+    )
+  }
+  {
+    next && (
+      <div class="flex-1 text-right ml-auto">
         <a
           href={next.href}
           class="group flex flex-col items-end gap-1 rounded-[var(--radius-card)] border border-line bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-md"
@@ -43,7 +43,7 @@ const { prev, next, class: cls = '' } = Astro.props;
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </span>
         </a>
-      )
-    }
-  </div>
+      </div>
+    )
+  }
 </nav>

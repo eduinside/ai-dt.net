@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LinkButton from '../components/LinkButton.astro';
+
+const nav = [
+  {
+    href: '/index',
+    label: '지원센터',
+    children: [
+      { href: '/index/manual', label: '사전 준비사항 안내' },
+      { href: '/index/AIDT', label: 'AI·디지털 교육자료 활용 도움자료' },
+      { href: '/index/eduonepass', label: '교육디지털원패스' },
+      { href: '/index/software', label: '학습지원 소프트웨어' },
+      { href: '/index/faq', label: '선도학교 운영 관련 FAQ' },
+      { href: '/index/feedback', label: '발행사 답변' },
+    ],
+  },
+  {
+    href: '/class',
+    label: '수업이야기',
+    children: [
+      { href: '/class/curriculum', label: '수업설계 지원' },
+      { href: '/class/mid', label: '중등 AI·디지털 교육자료 지원' },
+      {
+        href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/home',
+        label: 'AI수학 디지털 교육자료 튜터링',
+        external: true,
+      },
+      { href: 'https://aidtshow.kr/', label: '웹전시관 바로가기', external: true },
+    ],
+  },
+  { href: '/study', label: '스스로 학습 안내' },
+  { href: '/contact', label: '문의 및 장애 지원' },
+];
+---
+
+<BaseLayout title="사이트맵" description="AI·디지털 교육자료 수업 지원센터 사이트맵">
+  <section class="mx-auto max-w-4xl px-5 py-12 sm:py-16">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[32px]">
+      사이트맵
+    </h1>
+    
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        nav.map((section) => (
+          <div>
+            <a
+              href={section.href}
+              class="block text-[18px] font-bold text-ink hover:text-primary-600 transition-colors"
+            >
+              {section.label}
+            </a>
+            {section.children && (
+              <ul class="mt-4 space-y-3">
+                {section.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      target={'external' in child && child.external ? '_blank' : '_self'}
+                      rel={'external' in child && child.external ? 'noopener noreferrer' : ''}
+                      class="flex items-center text-[15px] text-muted hover:text-primary-600 transition-colors"
+                    >
+                      <span class="mr-2 text-line">—</span>
+                      {child.label}
+                      {'external' in child && child.external && (
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="ml-1 shrink-0">
+                          <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
