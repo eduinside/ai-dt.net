@@ -91,8 +91,8 @@
 학교 구글 계정 등으로 인해 이관되지 못한 특정 페이지의 매뉴얼 이미지는 다음 경로에 순서대로 넣어두면 자동으로 페이지에 노출됩니다.
 - **경로 및 해당 위치**:
   - `src/assets/pages/manual/1-neis/` : 나이스 자료 연동 단계
-  - `src/assets/pages/manual/2-signup/` : 에듀원패스 회원가입 안내
-  - `src/assets/pages/eduonepass/signup/` : 에듀원패스 가입 방법 단계
+  - `src/assets/pages/manual/2-signup/` : 교육디지털원패스 회원가입 안내
+  - `src/assets/pages/eduonepass/signup/` : 교육디지털원패스 가입 방법 단계
 - **규칙**: 파일명은 반드시 **`01.png`**, **`02.png`** 등 두 자리 숫자로 구성합니다 (png, jpg, webp 지원). 파일이 없으면 사이트에서 "이미지 준비 중" 안내 박스가 기본 노출됩니다.
 
 ---

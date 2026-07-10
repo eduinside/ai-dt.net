@@ -36,7 +36,7 @@
 /               홈
 /index          안내 허브
   /index/AIDT         AIDT 안내
-  /index/eduonepass   에듀원패스 안내
+  /index/eduonepass   교육디지털원패스 안내
   /index/manual       매뉴얼
   /index/software     소프트웨어
   /index/faq          FAQ
@@ -49,7 +49,7 @@
 /contact        문의 및 장애 지원
 ```
 
-주요 외부 연결: aidtbook.kr, edupass.neisplus.kr(에듀원패스), aidtshow.kr, dge.go.kr, AIDT 튜터링(구글 사이트).
+주요 외부 연결: aidtbook.kr, edupass.neisplus.kr(교육디지털원패스), aidtshow.kr, dge.go.kr, AIDT 튜터링(구글 사이트).
 
 ### 1.3 목표
 
