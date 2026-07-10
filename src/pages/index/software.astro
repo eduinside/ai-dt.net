@@ -1,0 +1,25 @@
+---
+/**
+ * 학습지원 소프트웨어 — 원본(docs/original/CONTENT.md §6).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinkButton from '../../components/LinkButton.astro';
+---
+
+<BaseLayout
+  title="학습지원 소프트웨어"
+  description="학습지원 소프트웨어 선정기준 관련 자료 안내"
+>
+  <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      학습지원 소프트웨어
+    </h1>
+
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
+      <p class="text-[16px] font-semibold text-ink">학습지원 소프트웨어 선정기준 관련 자료 탑재 →</p>
+      <LinkButton href="https://edzip.kr/utilization/learning-sw" variant="primary" external>
+        자세히 보기(에듀집)
+      </LinkButton>
+    </div>
+  </section>
+</BaseLayout>

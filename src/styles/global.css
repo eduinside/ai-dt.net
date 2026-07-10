@@ -1,45 +1,45 @@
 /* ------------------------------------------------------------------
-   웹폰트 — P1 데모는 CDN 로드. P4에서 self-host(개인정보 최소 원칙)로 전환.
-   본문 Pretendard(가독성) / 제목 Hahmlet(한글 세리프, 신뢰감)
-   (@import 규칙은 다른 규칙보다 먼저 와야 하므로 최상단 고정)
+   웹폰트 — P1~P3 CDN 로드, P4에서 self-host 전환 (검수 결정 2026-07-09).
+   원본(구글 사이트)은 고딕 계열 단일 폰트 → 본문·제목 모두 Pretendard.
 ------------------------------------------------------------------ */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css");
-@import url("https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&display=swap");
 
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   디자인 토큰 — 종이빛 배경 · 딥 틸(주색) · 웜 코랄(강조)
+   디자인 토큰 — 원본 키 색상 실측(docs/original/CONTENT.md §0)
+   · 다크 슬레이트 #263840 (밴드·버튼 주색)
+   · 흰 배경 + 연회색 밴드 + 밝은 시안 히어로
 ------------------------------------------------------------------ */
 @theme {
   --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system, sans-serif;
-  --font-display: "Hahmlet", "Pretendard Variable", serif;
+  --font-display: var(--font-sans);
 
   /* 배경 / 표면 */
-  --color-paper: #faf8f3;
+  --color-paper: #ffffff;
   --color-surface: #ffffff;
-  --color-ink: #17272f;
-  --color-muted: #5f6f77;
-  --color-line: #e9e3d7;
+  --color-ink: #212121;
+  --color-muted: #6a6a6a;
+  --color-line: #dadce0;
+  --color-band: #eef0f1; /* 연회색 밴드 (연락처 줄) */
 
-  /* 주색 — 딥 틸 */
-  --color-primary-50: #eafafa;
-  --color-primary-100: #cbeeef;
-  --color-primary-200: #9fdcdf;
-  --color-primary-400: #34a0a6;
-  --color-primary-500: #0f7d84;
-  --color-primary-600: #0c6169;
-  --color-primary-700: #0a4b52;
+  /* 주색 — 다크 슬레이트 (원본 밴드/버튼) */
+  --color-primary-50: #f0f3f4;
+  --color-primary-100: #dfe5e8;
+  --color-primary-200: #b9c5cb;
+  --color-primary-400: #52707e;
+  --color-primary-500: #34505c;
+  --color-primary-600: #263840;
+  --color-primary-700: #1b2930;
 
-  /* 강조 — 웜 코랄 */
-  --color-accent-50: #fdeee7;
-  --color-accent-400: #ef7c54;
-  --color-accent-500: #e2623b;
-  --color-accent-600: #c44e2c;
+  /* 히어로 — 밝은 시안 (원본 배너 톤) */
+  --color-hero-from: #e8f7fa;
+  --color-hero-mid: #c9ecf3;
+  --color-hero-to: #dff2f0;
 
-  --radius-card: 1rem;
-  --shadow-card: 0 1px 2px rgba(23, 39, 47, 0.04), 0 8px 24px -12px rgba(23, 39, 47, 0.12);
-  --shadow-card-hover: 0 2px 4px rgba(23, 39, 47, 0.06), 0 16px 40px -16px rgba(23, 39, 47, 0.22);
+  --radius-card: 0.75rem;
+  --shadow-card: 0 1px 2px rgba(33, 33, 33, 0.06), 0 4px 12px -6px rgba(33, 33, 33, 0.1);
+  --shadow-card-hover: 0 2px 4px rgba(33, 33, 33, 0.08), 0 10px 24px -10px rgba(33, 33, 33, 0.18);
 }
 
 /* ------------------------------------------------------------------
@@ -54,13 +54,7 @@ body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-feature-settings: "ss06";
   line-height: 1.65;
-  /* 아주 은은한 종이 결 — 위쪽 웜 라이트 */
-  background-image:
-    radial-gradient(1200px 480px at 15% -8%, rgba(15, 125, 132, 0.06), transparent 60%),
-    radial-gradient(900px 420px at 100% 0%, rgba(226, 98, 59, 0.05), transparent 55%);
-  background-attachment: fixed;
 }
 
 ::selection {
@@ -78,6 +72,16 @@ body {
 .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.01em;
+}
+
+/* 원본 패턴: 제목 아래 중앙 짧은 밑줄 장식 */
+.title-underline::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 0.9rem auto 0;
+  background: var(--color-primary-600);
 }
 
 @media (prefers-reduced-motion: reduce) {

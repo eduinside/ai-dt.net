@@ -1,0 +1,24 @@
+---
+/**
+ * 선도학교 운영 관련 FAQ — 원본(docs/original/CONTENT.md §7) 구조.
+ * 원본 홈 GAS QnA 게시판을 정적 게시판으로 이관. 항목·게시일은 src/data/faq.ts 공유.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReplyBoard from '../../components/ReplyBoard.astro';
+import { faqRows } from '../../data/faq';
+---
+
+<BaseLayout
+  title="선도학교 운영 관련 FAQ"
+  description="AI·디지털 활용 선도학교 운영, 교육자료 활용·계약, 선정·주문 관련 자주 묻는 질문"
+>
+  <section class="mx-auto max-w-4xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[32px]">
+      선도학교 운영 관련 FAQ
+    </h1>
+
+    <div class="mt-10">
+      <ReplyBoard rows={faqRows} showPublisher={false} />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,62 +1,59 @@
 ---
+/**
+ * 출판사 피드백 허브 — 원본 제목·안내문(docs/original/CONTENT.md §8) + QnA형 게시판.
+ * 전체 회신 목록을 먼저 보여주고, 출판사 칩을 누르면 해당 출판사만 목록형으로 필터(정적 페이지 이동).
+ */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import SectionHeading from '../../../components/SectionHeading.astro';
-import PublisherCard from '../../../components/PublisherCard.astro';
+import ReplyBoard from '../../../components/ReplyBoard.astro';
 
 const publishers = (await getCollection('publishers')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-// 교과별 필터 칩(정적)
-const subjects = [...new Set(publishers.flatMap((p) => p.data.subjects))];
+const rows = publishers.flatMap((p) =>
+  p.data.sections.map((s) => ({
+    slug: p.id,
+    publisher: p.data.name,
+    label: s.label,
+    dir: s.dir,
+  }))
+);
 ---
 
 <BaseLayout
-  title="출판사별 지원"
-  description="교과서 출판사별 AI 디지털교과서 도움자료와 오류·장애 제보 창구"
+  title="출판사 피드백"
+  description="학교별로 수집한 AI·디지털 교육자료 활용 개선 의견과 출판사 회신 내용"
 >
-  <section class="mx-auto max-w-6xl px-5 pt-14">
-    <nav class="text-[13px] text-muted" aria-label="위치">
-      <a href="/" class="hover:text-primary-700">홈</a>
-      <span class="px-1.5" aria-hidden="true">/</span>
-      <a href="/index" class="hover:text-primary-700">안내</a>
-      <span class="px-1.5" aria-hidden="true">/</span>
-      <span class="text-ink">출판사별 지원</span>
-    </nav>
+  <section class="mx-auto max-w-4xl px-5 pt-12 sm:pt-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[32px]">
+      AI·디지털 교육자료 개선 요청사항 출판사 피드백
+    </h1>
 
-    <div class="mt-6 max-w-2xl">
-      <SectionHeading eyebrow="Publishers" title="출판사별 지원" />
-      <p class="mt-4 text-[16px] leading-relaxed text-muted">
-        사용 중인 교과서 출판사를 선택하면 수업 도움자료와 오류·장애 제보 창구로
-        이동합니다. 교과별로 필요한 곳을 빠르게 찾아보세요.
-      </p>
-    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-center text-[15px] leading-relaxed text-ink sm:text-[16px]">
+      학교별로 수집한 AI·디지털 교육자료 활용에 대한 개선 의견과 출판사 회신 내용을
+      출판사별로 탑재해 두었으니 활용에 참고하시기 바랍니다. (가나다순)
+    </p>
 
-    <!-- 교과 칩(표시용) -->
-    <div class="mt-6 flex flex-wrap gap-2">
-      <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white">전체</span>
-      {
-        subjects.map((s) => (
-          <span class="rounded-full border border-line bg-surface px-3.5 py-1.5 text-[13px] font-medium text-muted">
-            {s}
-          </span>
-        ))
-      }
-    </div>
-
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- 출판사 필터 칩 -->
+    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="출판사 필터">
+      <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white" aria-current="page">
+        전체
+      </span>
       {
         publishers.map((p) => (
-          <PublisherCard
-            href={`/index/feedback/${p.id}`}
-            name={p.data.name}
-            subjects={p.data.subjects}
-            accent={p.data.accent}
-            draft={p.data.draft}
-          />
+          <a
+            href={`/index/feedback/${p.id}/`}
+            class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
+          >
+            {p.data.name}
+          </a>
         ))
       }
+    </nav>
+
+    <div class="mt-8">
+      <ReplyBoard rows={rows} />
     </div>
   </section>
 </BaseLayout>

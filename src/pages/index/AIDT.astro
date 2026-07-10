@@ -1,0 +1,43 @@
+---
+/**
+ * AI·디지털 교육자료 활용 도움자료 — 원본(docs/original/CONTENT.md §4).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinkButton from '../../components/LinkButton.astro';
+
+const cards = [
+  { title: 'AI·디지털 교육자료 포털', href: 'https://www.aidtbook.kr/index.do' },
+  { title: 'AI·디지털 교육자료 웹전시관', href: 'https://aidtshow.kr/' },
+];
+---
+
+<BaseLayout
+  title="AI·디지털 교육자료 활용 도움자료"
+  description="AI·디지털 교육자료 포털·웹전시관과 대구교육청 활용 도움자료 안내"
+>
+  <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      AI·디지털 교육자료 활용 도움자료
+    </h1>
+
+    <div class="mt-10 space-y-4">
+      {
+        cards.map((c) => (
+          <div class="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
+            <p class="text-[16px] font-semibold text-ink">{c.title} →</p>
+            <LinkButton href={c.href} variant="primary" external>
+              바로가기
+            </LinkButton>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-10">
+      <h2 class="text-[18px] font-bold text-ink">활용 도움자료(대구교육청)</h2>
+      <div class="mt-4">
+        <LinkButton href="/index/manual" variant="ghost">사전 준비사항 안내</LinkButton>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

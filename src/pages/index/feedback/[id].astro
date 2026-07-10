@@ -1,10 +1,10 @@
 ---
-import { getCollection, render } from 'astro:content';
-import { YouTube } from 'astro-embed';
+/**
+ * 출판사 상세 — 원본 제목 패턴('{이름}' 회신 내용) + 해당 출판사만 필터된 목록형 게시판.
+ */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Accordion from '../../../components/Accordion.astro';
-import Carousel from '../../../components/Carousel.astro';
-import LinkButton from '../../../components/LinkButton.astro';
+import ReplyBoard from '../../../components/ReplyBoard.astro';
 
 export async function getStaticPaths() {
   const publishers = await getCollection('publishers');
@@ -13,120 +13,65 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { data } = entry;
-const { Content } = await render(entry);
 
-// MDX 본문에서 저자가 import 없이 바로 쓰는 컴포넌트들
-const components = { YouTube, Accordion, Carousel };
+const publishers = (await getCollection('publishers')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 
-const links = data.links ?? {};
-const linkItems = [
-  links.feedback && { href: links.feedback, label: '오류·장애 제보', variant: 'accent' as const },
-  links.site && { href: links.site, label: '출판사 AIDT 사이트', variant: 'ghost' as const },
-  links.manual && { href: links.manual, label: '매뉴얼', variant: 'ghost' as const },
-  links.channel && { href: links.channel, label: '지원 채널', variant: 'ghost' as const },
-].filter(Boolean) as { href: string; label: string; variant: 'accent' | 'ghost' }[];
-
-const accent = data.accent ?? '#0f7d84';
+const rows = data.sections.map((s) => ({
+  slug: entry.id,
+  publisher: data.name,
+  label: s.label,
+  dir: s.dir,
+}));
 ---
 
-<BaseLayout title={data.name} description={data.note ?? `${data.name} AI 디지털교과서 수업 지원`}>
-  <!-- 헤더 배너 -->
-  <section class="relative overflow-hidden border-b border-line">
-    <div
-      class="pointer-events-none absolute inset-0 -z-10 opacity-[0.12]"
-      style={`background:radial-gradient(600px 240px at 12% 0%, ${accent}, transparent 60%)`}
-      aria-hidden="true"
-    >
-    </div>
-    <div class="mx-auto max-w-4xl px-5 pb-10 pt-12">
-      <nav class="text-[13px] text-muted" aria-label="위치">
-        <a href="/" class="hover:text-primary-700">홈</a>
-        <span class="px-1.5" aria-hidden="true">/</span>
-        <a href="/index/feedback" class="hover:text-primary-700">출판사별 지원</a>
-        <span class="px-1.5" aria-hidden="true">/</span>
-        <span class="text-ink">{data.name}</span>
-      </nav>
+<BaseLayout
+  title={data.name}
+  description={`'${data.name}' AI·디지털 교육자료 개선 요청 회신 내용`}
+>
+  <section class="mx-auto max-w-4xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      '{data.name}' 회신 내용
+    </h1>
 
-      <div class="mt-6 flex items-center gap-4">
-        <span
-          class="grid h-16 w-16 shrink-0 place-items-center rounded-2xl font-display text-2xl font-bold text-white shadow-sm"
-          style={`background:${accent}`}
-          aria-hidden="true"
-        >
-          {data.name.charAt(0)}
-        </span>
-        <div>
-          <h1 class="font-display text-[30px] font-bold leading-tight text-ink sm:text-[36px]">
-            {data.name}
-          </h1>
-          {
-            data.subjects.length > 0 && (
-              <p class="mt-1 text-[15px] text-muted">{data.subjects.join(' · ')}</p>
-            )
-          }
-        </div>
-      </div>
-
-      {data.note && <p class="mt-5 max-w-2xl text-[16px] leading-relaxed text-muted">{data.note}</p>}
-
+    <!-- 출판사 필터 칩 -->
+    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="출판사 필터">
+      <a
+        href="/index/feedback/"
+        class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
+      >
+        전체
+      </a>
       {
-        linkItems.length > 0 && (
-          <div class="mt-6 flex flex-wrap gap-3">
-            {linkItems.map((l) => (
-              <LinkButton href={l.href} variant={l.variant} external>
-                {l.label}
-              </LinkButton>
-            ))}
-          </div>
+        publishers.map((p) =>
+          p.id === entry.id ? (
+            <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white" aria-current="page">
+              {p.data.name}
+            </span>
+          ) : (
+            <a
+              href={`/index/feedback/${p.id}/`}
+              class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {p.data.name}
+            </a>
+          )
         )
       }
+    </nav>
+
+    <div class="mt-8">
+      <ReplyBoard rows={rows} showPublisher={false} />
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/index/feedback/"
+        class="inline-flex items-center gap-1 text-[15px] font-semibold text-ink underline underline-offset-4 hover:text-primary-500"
+      >
+        ◀ 돌아가기
+      </a>
     </div>
   </section>
-
-  <!-- 본문 -->
-  <article class="mx-auto max-w-3xl px-5 py-12">
-    <div class="doc">
-      <Content components={components} />
-    </div>
-  </article>
 </BaseLayout>
-
-<style is:global>
-  .doc h2 {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--color-ink);
-    margin: 2rem 0 0.75rem;
-  }
-  .doc h3 {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--color-ink);
-    margin: 1.75rem 0 0.5rem;
-  }
-  .doc p {
-    color: var(--color-muted);
-    line-height: 1.75;
-    margin: 0.75rem 0;
-  }
-  .doc :where(details) + :where(details) {
-    margin-top: 0;
-  }
-  .doc details {
-    background: var(--color-surface);
-  }
-  /* details 묶음을 카드로 */
-  .doc details:first-of-type {
-    border-top: 1px solid var(--color-line);
-    margin-top: 1rem;
-  }
-  .doc lite-youtube {
-    margin: 1rem 0;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    max-width: 100%;
-  }
-</style>

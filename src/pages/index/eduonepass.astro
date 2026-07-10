@@ -1,0 +1,73 @@
+---
+/**
+ * 교육디지털원패스 — 원본(docs/original/CONTENT.md §5).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinkButton from '../../components/LinkButton.astro';
+
+const services = [
+  { label: '나이스플러스', href: 'https://www.neisplus.kr/' },
+  { label: '교육설문 에듀로', href: 'https://eduro.go.kr/nxui/index.html' },
+  { label: '함께학교', href: 'https://www.togetherschool.go.kr/' },
+  { label: '똑똑수학탐험대', href: 'https://www.toctocmath.kr/' },
+  { label: '에듀넷', href: 'https://www.edunet.net/' },
+  { label: '대입정보포털 어디가', href: 'https://www.adiga.kr/' },
+];
+---
+
+<BaseLayout
+  title="교육디지털원패스"
+  description="교육디지털원패스 소개, 회원 가입 방법, 이용 가능한 교육 서비스 안내"
+>
+  <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      교육디지털원패스
+    </h1>
+
+    <div class="mt-10 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-[18px] font-bold text-ink">교육디지털원패스란?</h2>
+        <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>바로가기</LinkButton>
+      </div>
+      <p class="mt-4 text-[15px] leading-relaxed text-muted">
+        교직원 및 학생이 하나의 아이디로 교육디지털원패스와 연계된 교육관련 사이트를 이용할 수 있는
+        다양한 인증수단을 제공합니다. 간편 로그인 기능을 제공하여 회원가입 편리성을 제공하고,
+        온라인 학생 신분 확인 및 학생 정보를 제공합니다.
+      </p>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-[18px] font-bold text-ink">교육디지털원패스 회원 가입 방법</h2>
+      <ul class="mt-4 space-y-2 text-[15px] leading-relaxed text-muted">
+        <li>※ 교직원</li>
+        <li>※ 학생이 직접 회원 가입하는 방법</li>
+        <li>※ 교직원이 학생의 회원 가입을 도와주는 방법</li>
+      </ul>
+    </div>
+
+    <div class="mt-8">
+      <h2 class="text-[18px] font-bold text-ink">교육디지털원패스로 이용 가능한 서비스</h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {
+          services.map((s) => (
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[15px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {s.label}
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
+                <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <LinkButton href="/index/manual" variant="ghost">AI 디지털교과서 사전 준비사항 안내</LinkButton>
+    </div>
+  </section>
+</BaseLayout>

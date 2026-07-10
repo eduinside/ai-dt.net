@@ -8,23 +8,20 @@ import { glob } from 'astro/loaders';
  */
 
 // 출판사 (구 /index/feedback/{출판사} × 12) — 데이터만으로 페이지 자동 생성
+// 출판사 회신 = QnA형 게시판 데이터. 회신 문서 이미지는 src/assets/replies/{slug}/{dir}/*.png
 const publishers = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/publishers' }),
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/publishers' }),
   schema: z.object({
-    name: z.string(),               // 표시 이름 (예: 천재교과서)
-    order: z.number().default(0),   // 그리드 정렬 순서
-    subjects: z.array(z.string()).default([]), // 담당 교과
-    accent: z.string().optional(),  // 카드 강조색 (hex)
-    links: z
-      .object({
-        feedback: z.string().url().optional(), // 피드백/문의 폼
-        channel: z.string().url().optional(),  // 지원 채널
-        manual: z.string().url().optional(),   // 매뉴얼
-        site: z.string().url().optional(),     // 출판사 AIDT 사이트
-      })
-      .default({}),
-    note: z.string().optional(),
-    draft: z.boolean().default(false), // 데이터만 있고 상세 미완성인 자리표시
+    name: z.string(),             // 표시 이름 (예: 천재) — 원본 표기 그대로
+    order: z.number().default(0), // 가나다순 정렬 순서
+    sections: z
+      .array(
+        z.object({
+          label: z.string(), // 학교급·교과 (원본 표기 그대로)
+          dir: z.string(),   // 이미지 폴더 번호 (replies/{slug}/{dir})
+        })
+      )
+      .default([]),
     updated: z.coerce.date().optional(),
   }),
 });

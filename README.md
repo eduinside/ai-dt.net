@@ -43,23 +43,22 @@ src/
 
 ## 콘텐츠 추가 방법 (운영자)
 
-출판사 한 곳을 추가하려면 `src/content/publishers/`에 파일 하나만 추가한다:
+원본 사이트 충실 재현이 원칙이다 — 텍스트·구조는 `docs/original/CONTENT.md`(원본 실측)를 따른다.
+
+출판사 한 곳을 추가하려면 `src/content/publishers/`에 `.mdx` 파일 하나만 추가한다:
 
 ```mdx
 ---
-name: 출판사명
-order: 14
-subjects: [영어]
-links:
-  feedback: https://...   # 오류 제보 폼
+name: 출판사명   # 원본 표기 그대로 (예: 천재)
+order: 13       # 가나다순
 ---
 
-## 본문 (선택)
-<Accordion label="준비사항" open>...</Accordion>
-<YouTube id="영상ID" />
-<Carousel images={[{ src: "...", alt: "..." }]} />
+<Accordion label="초등 수학" name="reply">
+회신 내용…
+</Accordion>
 ```
 
+페이지 틀(`'{이름}' 회신 내용` 제목 + ◀ 돌아가기)은 자동 생성된다.
 빌드가 frontmatter를 검증하므로 필수 항목 누락 시 배포 전에 걸러진다.
 
 ## 문서

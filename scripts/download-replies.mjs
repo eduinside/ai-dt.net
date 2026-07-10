@@ -1,0 +1,252 @@
+// 원본 구글 사이트 출판사 회신 이미지 일괄 다운로드 (P2 이관)
+// 실측 크롤링(2026-07-09, docs/original/CONTENT.md §9) 결과의 이미지 토큰.
+// 페이지 공통 장식 이미지(돌아가기 버튼 등) 토큰 2종은 제외했다:
+//   AA5AbUBeD5uJTAuc..., AA5AbUC4_XxR1Yjq...
+import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+const P = 'https://lh3.googleusercontent.com/sitesv/';
+
+const data = {
+  kumsung: {
+    '01 중·고 정보': [
+      'AA5AbUBz31IFxXcIqSMMvDfUGEhGzoJBfDp8lX37xzgpuzvQbREaSbEp791XoC2oRlN1N1HpoGbE6vm-w8y_jzcDvMMqp0A7S1GIvDL8c14s_t1EJwcvKhl24CTsU6uu4UDu_pG_D_VlxrPYw0xdU8A0jiUJ4i60jkV0i0JbuCU7YXCRPms9Z2ud689ttWfCks4udkk1P-0BAlW5Y5AJ5rWYtPEJTh3jYOVsFGSqaCoFLSc',
+      'AA5AbUBbBzUCWqh4bmLuCmwSxZtqmKTaF-j5vXwkzI2B_NBRGMTNH3ESiBCHFt-HVUkZkk37rVl0aKt7P8C6P6vEiWz80YXpDr6o8WjQ3M8fKKMwgbF7Gjt6qts4ApHO_2RVlAKORvLI4QaW79-TBPm0wmQmnJM1Hl7TMQtuZRLqLcy3_J52aOgVj7AAr5sz9xA3lrvGHZNxUs5xZvLuucCq60mCMMjfZrtmnC5KOmRNeMQ',
+      'AA5AbUBz4jO7jUmv_ZuVs7lBDOaSr0epOFU-GOuj7GzNihMv-Y3U14xjJqPR1Mqn5u7FQAuwwVfcsWUhK3PDLpRpdgSWFqqOwSqRRh8GpHxIRzkSG5TXul5ScweUYCdPHVIEIhT1W9sh6mNVTandLNkf0TpL9VyibSZhVlFx8HPw9DhXCx9_lSpY4UxW-Q9Err4-gltuSDdqSp230HQm0kIxgW73LL15yCe2RdTUN3sMYdk',
+      'AA5AbUCCHAOmh2Acaxtj6D_wUAgl0CcaAULajiLR4kKbHgGUmhNbudpEFtnXVKE-NcOsEhQj5g96nZuXBGelOeUb6CZiDCsuBTJ8YY3SbtLLAulnEawOHsA6cQmtDyeWr4nV4Ss8lS4ZDQ5OMAtWgsBwWBsJNQ55lmHwOCUXzfxZkG6_RHOksgUXfWNSguPF05mV2K-yU7ePyr8TRhu5i2ODA1JZUH6ZuZMcSGAuWDhS',
+      'AA5AbUD4efbNCj9OV6mi-tNQF3qEcZWbt9NIA3ekU6sfv4Dq0b21svZnIoZu_QK9_cwLZfveV7jMMgWfRO9BADu4H_fYetATk4pN9omSm5uO0ZnBQbwyB8mBoS1DMGKr9DqSK7hI9W_4GaK13v_boEpVn4ZFoy5HCmO8_iEd5CUfIo--8xpfpxewvkSKIQUH-ozNq36ElIZqs87P87pLqisk3ZWo9QAJGuNgCN4u2yQf1-4',
+      'AA5AbUCf9C1OncE9mUGbdJRgL-86-n3JR_ClaAsONhQsAxsw1ESUi1s22V-K33ZijqVWeTLMHYESK7TSuEGKkDYp7YslV-Bd5PJ5nGKwYk-n6-k-tH7U1zxyk5sxKNOOJrnorWavJbjTQlMtKMOnxF6MJRxRo3KEXU-L9E_Cge2n5visxGrDN14IvOTQunqCHm_Jw2duI7uSyRGZ_LMvX8rwyot-ZHPTi5jlB9AVX79wVeo',
+    ],
+  },
+  gilbut: {
+    '01 중학교 정보': [
+      'AA5AbUD6ha0vTHY7bvE8JioNTlgJYz8nlG-cbJSZ-0jyik0BdPmWI6R6iOIxeJtHwJZJp-b_CPU2bzFm9qHzpcfL72EcwPzdSlhRyVyc1SByEbliq2Q3KkM3ehCei7sqEJmmGRFthXht8yEGjM0ZNjMCD4EV2UEtLuU46hMyvu3B6iyLBJc4Z8r_IPZ9XRsx1guXe50Dtk27sbRogephVMIPgyqRnFtDcwxZhHrxJ5YjmtA',
+      'AA5AbUB7QTwiBUTTP4m7bD63jus8NR7X4i2ePyHo-CTM3eifQZ1GmVE7aMYTlBdhJI7jo7NZjjCxpnE6ckhqfRDMQm-PoH8xDtWJWP0_rUIRc7mf098fGBxOuef11zFpEMHypVr_vE5vaeq17iZkUrGv9KA4tk-6CV7eEdGYyEmWUZwDTre-jCvkVNlxga76eGdszZqGzHExx7Lo1bVS_Itx2lUe-J9KpU_OMrlz-Th1',
+    ],
+  },
+  donga: {
+    '01 초등 수학': [
+      'AA5AbUBA3-XuUR_UrdEYUKec2ZvGqN5YOnszof6Ztfp-qX1-etFsl2oWaXxVLhQ8AwtptiPhFJDMR4SZA8u-JzMQpXbPpP2kRa6T5out_v7faNeVPE8is0E_trkRI19Qk3h_La9jQaCDVtk49jQ7eIRxHmTGTeQ0XDGtaL9GqxcARilanrpHwK9xwBycddFUBuV9KZfcExqczYmJTMTzowtp7mQIdNJezDSDXYbDn5ik',
+    ],
+    '02 초등 영어': [
+      'AA5AbUBGYfTlF83obY9MW48FQBJ5qgqh8MjP8lsXhteRZI6BhnQn_yAnpixPtQnJyua3spsNsT-Q24UNBDBv8ILKr4XZjhthFTpGtF6_PLJTx42uEeCVjhr1fnSUfUO1Sraxz7grWdjy-QskDhuMPYWxcagabGZ-K5ubcwptTtBaIeW0XkmMREhiXVN_07N7vWvtj37LmDQs07x62vCOpG6mMxIkUDWsBWalwkP1_N8cbKM',
+    ],
+    '03 중등 수학': [
+      'AA5AbUCWvLRNT-CT6_lr6lY4ujm5rg-oBFM26qgjgCes4evKN8t62G4V1IaMAGHeT6O15_UDarwX6gXLMuvMNmh_lkYWRjVpO2TJ_aQP6MaRO9bzTcTzJmPDTbwshjjzcmg2ypp0kd79V-XZw5lYcnCMBL9vsfIa9EToQb7WgNsRY-xt_HIJ5FOAoH2_r6dqjTIQyy7p5Q4zvsGBqh3NQEcHMKK7VDQjjHA2SKtOdhQ-Ysk',
+    ],
+    '04 중등 영어': [
+      'AA5AbUDH3WK3HY6n6vNL2at3C7Ygf5GKoPJ1_LP_3DX0tv8Hx8OxJNSkzfAAHWV8XYFTRk1mn2X3Wa5qmLtIannR43XeEcZyjRt0YcrS9zW04q8RG44JDAkpGBnzEIpiUnJJaLHbeLRe1NZLvlbXzKhK23mbKwD90hr3EvBA0KlNWI11n-w7D1wfIYVlNVHnTXxMz6-WHqfCRy3JBBrn26o6HFZ2sgscBZ4IeDLmWrgq',
+    ],
+    '05 중등 정보': [
+      'AA5AbUDnsKpa8wDyKYpxnJ1-M7REQByRwo300KaJvveiHa5vBfEte16_oHiB3qqce1QkF4ErBqm_sUfE3N0VuElHqHuDlC4RaLebVuLN5k2V5Vty-mOrT7vB4eRDE-p_LeSy_z7UyjBUO-x0-XJnyPPXS3yglvwBu1Gx2MguNfc_SAMits9tAFDqD6KRWP_Id_9Q-y2Hh4n3ORY8bugmkbz0paTkubDoYbG_wL7iVaYrjVs',
+    ],
+    '06 고등 영어': [
+      'AA5AbUDSZi0Pe0g62ZXB_aT3jtYKdZN_IHh-pgCiR1wcl9iWwLCyr_pbaa1jfsepPe4Sdx-8yYkAdPU4t5L10-59h5yKSUzBWmYws7Frz9SMC7MOuIGYnGOtq7_9FzvkKchgrzCKkJB-_X669jGvVZ1wvyzmPptMuRjCVmtmx_7H02HP1j-M-vbc0dKY4ljWiuNggxj-DMLApm5EVpV2K9UT8iIverc8ANZ5KG_Jbzs1qig',
+    ],
+  },
+  didimdol: {
+    '01 초등 수학': [
+      'AA5AbUBF4b6S7Ku09ngtrMqDW46h7i_W1DZGeXDgH8V9iURubwwLxynmxsfjVxOmTjqijNCvbFwMS8s95opbsJVoaTD3BLq2jWtTdtneBYtQZpBXxf1pE4MHv_iqHD3iP85Tw_5jkqPgfPrt56Wpdx2YlzraO0xvWkc7x2C0yZO4mYlNFEla0hnF6fNb8aT7gd7Qq3nWmndj19mNi6OSyV6hz42mYOt2akJV2zo5PnXB98w',
+      'AA5AbUCmQUZYcaDXThhSdEEs0XfNQi-aKU-NLzYQXYetZpHv9PoGZVtX0WXSXA1vD0GPadHbNr6XCZkklzdibaVtqjYEju-sJQBgbPqMrtFtRXjaquczPjeceNBFtPxdVDq58X8J4G_36Y7Ff7SllcR80M_ciJNkk_SC280TaaPid5ECYPNL-cCUdTcTZGU_okK9Pgui-Q51TSobxt9DgODi5WwVF8TyHNt_XlneYmiV',
+    ],
+  },
+  mirae: {
+    '01 초등(수학·영어), 중등(수학·영어), 고등(수학)': [
+      'AA5AbUCyHayRUtPfjbWbe8mv0Th2At9asoWooT2OgOmsLVrLqhgCqXrsQxP-xzpdcWIJhdbbi3Dtih7vOpMotfGEIS43gZGUEnJkReqTIqpAclgpkYMMPUg43sCNFDM6XAl0cCwAD7pjz0vzgooYzVJERFjtEh-5onLO8XrNSYOcIcI-VQr3ei6evH4dDYoPqeTsv-jvLmMYeWSDMKgDE2a5k4-DjBKBpavd35s9HNR0',
+      'AA5AbUCa4iOxfLbf1ONMstyJpe6cqhRjIGc2-w6tHgb43Onmbxv-REyJ8Ov4PPjhYJnXweDAgibDkcKTFJHBuivLyok7wUgQ8xRarFrLCj-QEAQwQk-_fYqZjo-Fr8Z1DjajNgx99WExPdnSkW5eN-pYGBMmeK3iBBwsT7LO6Sef0Q4FgeS2Rb-t_nh_M0f1sNfqj3pq7XXQcgkIvotdHN-oD0EirdGX51FxxlboTosFJnw',
+      'AA5AbUDA-NK6ypcCF3fBLh4R68DYZHv6LDVCyWgyQULWz96IHKE1yg2-sw5fV95eECcDFA1u5Kgy1MScRTroP2CrSJnYfDmSB1t7rnrYGfc0AC8F63252ug9Ho7Y-iK4Kusv_CYcXZY_qEoSwgQIAAtZReawwLHTnLGM65DAFiIrKDDmSXfDdzr80FhaCePuRwhyo2Nn_PM1yF4j3zZ0QgGoxS3wmFqoJOfFVsV_j_zT',
+      'AA5AbUBls_cIHjiQCmwQMa5GMJX_rXQVMKx3T7JavvVwP9xxPIsFAY7eKTLp0GSJkBTgBowIu0IHiJen1urHlpzstPaiWy0CSds-1osd6zulwPV4dxuETULjftnIyJwD6TqXXtZD5sba1-01N36Tbld1ciLmMbUjZd6W0zOGCYg-eJQC4rTDnxReCazxr-fv92w3KOe3xErHDMYxmULQj__niwo5GEa7XfyDCrlq4V72Ui8',
+    ],
+    '02 초등·중등·고등(정보)': [
+      'AA5AbUCmMEEPo_sTEzME93oLUDfSbErSzZ5UYFG384IId82Z7yFM_4bCtsdIeJdm_c4qsQlJL_j9-r1bmXHFXgqjkw3wcVYTvSFcYSkj50MmA4eOILcH_vGJCMRfGCeQNjbkA8nEXzuQkXDDOdeSY-Skgk4Gn3yp9PiJ1DTUKm7z0OymrS9B9LdBVd5FNlBgxkC-m3DheR681IQ17qxajYIAB1YeF4gx4RDA4dnInNodvyc',
+      'AA5AbUD-BNxTHhYYYGI22a96rBFfANgvIT-Bf75iHq3D4J5p-S1V4F2QMvURWdc_jUs1JmRICrTV8waoX7791zsMvNpxDvtAwstTCm_yiXLBrkVekC5diVBTJxw-6ayRvbEhn3MWUbQ1XphERm-bUK-_O2tn69nGk7A_q0Qu8NPZPdJsPpHA1QYGhApJ19qCT9D49n_YMzSgNRq1uHcxD8WoNUT5dsTtw7XdiifTWepfNC0',
+    ],
+  },
+  bisang: {
+    '01 초·중·고(수학)': [
+      'AA5AbUAqNDQiUrLRX6c4Wu9rybXboT5CFpltAc9hGsZA8vE-jZpFQ0VzpBppzZpHmARKEBhYS-dgTAMZnClqTZKkBle8NLjRNrrgFijhlot9Jb9Qrf1-whDcO2vkshkvkin_4VOnRVHKGS_6fl-oAr2GvTQ2Cqdz7YSLoaxqad33RMUgdLZZocBA9AiGG8_NKK7tP_S3DwwbIUS_TPGEQtibN_PTY8jVHIdt01px9L6gbvM',
+      'AA5AbUD9oLAwAXfITQOuA2w3GVvtxAXYgOY1U3EHHMCr_XS2jxgOHrsJUCAE5sjPjcMSXFZbeUXFAeyGzPbqqBQbLk1imnAfIAH9tqy58PZfnH-1wZLprya4RGNOQfs_vrpsiPb1Y6V72gg7C7aFWbmem7HoezyYY1ToZIjKaCy1zVWE2uXlHeUn3oKITcM2C32YgQlljU21qdx0QMOJ99T2MCzj7XNxYSpQO9L_V3SOO84',
+      'AA5AbUB9J50yOtXXMWW9ma0n9mYIStg2kAnd_wlKfkaAefUIudFRIe3MW6qXJs55QkergOldvXbB2z0L4CofcC04A2JCqFfQh3AFG5PTyrUyGrhLOevDuZOqkQRyTeLPTnwo3mWNUCYAgRfft-a6rR6kDTw5pdK_tUJPmDiSI5F8aA27pr3rkQ2gl3vViSemlwRxKxHC1uGnhikAiuV85dtGNrtJiaMRKu_FFMRhY83B9Ic',
+      'AA5AbUCozlwwjjmcEYq3ecEq7mcvt_9Tq0PEyIABV1OmpJvXigF_L_twUvUkMlzkL-pkCHltAa-5ajkejIg9X9o3eAUXQAxBBuQZenEIA2mtZey-lj6aWKO-b8QaRaxLcStreYZ8gb2WEdVNj8Wk9GyvWGkYkleOuPiiztJLh8YQse_K3KlCz7s7NfU6H4ycQk0xj8i0DjHj4WndecPnk8G9lcgZarRIH5HVNpt3hFy1UJA',
+      'AA5AbUC-7NUgjLrUJMxVgQNzxoCHuAqpo-j-APR4r7zy29yv-kdSfyo8h3fVj_iwX0-Gr75IMMlNA5CChB7Wy4V0mAqAS599b70bRXTGSEJN-AiQfI0JVrcVzzzSnFqo1IN2-MFPR-igi6lflumdcowCGvZbczmEpbGsqABwRc3GimZsC60POcyKLd7YQepgvJItESjlC_NaY9l-Me0KI8bDyodmJVJlfEPSfGLmYCrz',
+      'AA5AbUCO3-4Z-ImAwCitde662larT5rUpZD74D_hDeUuGhGkgE7zlOOS-l48ba6ci9GmMpN6RmAEiL5f7CluBPfrZKtT8UD4MwN2ZNvlpdRPC2SlcmXMY8UtEfjJrMHT3Fk48cRCojHshFaWPcghnR2_uqe_dW10yHTg8ioOd-H8M9jILic5dWoj0YpEXq4eQ2ZTGd53KtyPhdtdqDz0lhj2FWa88emup5jYIKcNawoU77M',
+      'AA5AbUDadYB2I78FG8tl7H_B4zdXt3oOxEavnmQAGRp06lzIz3ChcftsVzU6qsoHu7R0qEpHoUkpaNcUD5cYXLVJIsnPR76vfYR9mNqiQsIIiqxdwAIXg0JAbqQ6Ok_SsGfL14dW6gxuDITqyNUvNmpAshgEI_tEeHVcBrNE0w_PfHNKnBduMoKRFb8p4YvPUvxlkqasEGw-NbOzoiijRSnUECLp7FGHEIAyAFM-fg',
+      'AA5AbUCiokBqa041TAb6t9MshD9xS85SuW_nk3a4yysA2OvbQopP2SkTDC-k3jcF0e-LWKB86vBtP9u6nnKrB5Ij1iy3CNTLIRc7eklFY-oX00aQBEUdTnMXFz6tz1R8eTu7pJG6V-y08Pw5N2VYqKPCeN_9oEsOwKk07zxEG0HAjVBdySQ9htZOYg9JV_lKSUmCzfyB-SlVg3AuCzr2JN0WlKOEDET-TsBh823uO_OqbiA',
+      'AA5AbUDA-hsAvxJK2h4OLmaTDpyJa-J5OMKWqY7ptQeSOelQLeR16HVAn245B5Wn44noDRJa9L0imLe_-oB3hja7DOB8nUpFqC1VCEvuGSpXM-w1IQaeILzsacTeF0YWiexfOYKaDgIvS-ytvRzKsH8ONizOCgkua2_u9Z0RIhlSrrO8jZiFbgXWjbvWCwEIm4qs8hPNAKmhKExP1rPyMJa0Gu8QsOT-nFFu_CVx18pn',
+      'AA5AbUDNmkd3ShuzWAdRaRdM3DwxH_kzdZwZ2e4cV3gXRN2dr9GFRPDWkTXs-RLkI922jZvjnTtpl6Px3J_SmbUcQ7RZuzVXu661bdG6jX_Vs5TtwWS4JBwEpIW_1L54IOuVuFzP79SxWaHGCucMum9S_3LpnpV7SJyzBA8JlRQ5OTU4qSQqPfygji_dRR6xCVPqHQvoG3L3BrAuHQkxqFMEu9PGNv0O8h4hS7GgZ1kHfzU',
+      'AA5AbUBhCsDwy8IZBkkzTNfhI9WqZ7VeN7kdQu6ic74GsQGateggvFeQs3zMF8fdZB2wFUNBtDDnz-ig-faDyms2-kPzCkZXzRmjgSy4nlABCvGXLR10-gleUxsYHAjh2CEqZtcdsOCDRjvRPDY5dWnvy6yEwynIZPjFj_Rm001R4bq6Jz4-y_m-XESOc-4BUy5442-6BHWXDvKo-K6YCsYV83iFyAFt5LkHx2hNZEeOl1k',
+      'AA5AbUB49DG9BCMhCUycj741Bn2VJv-9Xr83gwtPSYJpfkqp2T1ZzECMwX7i3IbpMrMTaLhzfFXBA2j-tm6hX8az1GkxA4sfLOOZKdbkOiwvc5VstjXVlJJbrO9_QRYTuft76Wc83g1JQrndOzQTj0UvfW6uhHBep0Iqj8e1wXVsfrp2CepnJdtVP2pq0eUH-scdJxgDqtlDQmT6u0KsKlZ3Eg5hFdPOxbLT8SwMPLUwgFo',
+      'AA5AbUCV-qrLleHdLjscIIHOp5Ab8lbfJtAzjUV6Sp-cOFQj-o_tIB7Yz3EEnvJ8nhSbOWf1HcYFyo4Pr6V8pyGh3mCxuqwZv8FzV4vxqVMl4ugMSoDJ6PRAEkcif-jCE97S5t8vV8AZSuptKOlp3JnsJfzvzP-Yl-4SLhVdlYOg0E7lADLA0ELzgHQqk_k1pQCh1LGWs5vyXbEt-TcSKC_Y31K3QGodU8eSkuMy-W0sDDk',
+      'AA5AbUBe63A3OCeUyL-TBwEkUIT4OyE7KaxPp1oT0JFZ1OORnTFMbR4E9JcjZ1LEAULIlnKEkbGGAgQDD7L1hIeR5dezaYVZE27yE5Ye1muglDzit-roc4mg5FqlmXMKLs5i5JL0Z7I1pjbGi9YRMRGz_dkjLnSXInBnGQZ-oA5aefe07OvGy4XWbJx_ATv715zxW6WA2dKe-7TP1UD-25ppItOdEx4Oy1RgvWwzl4Xk',
+      'AA5AbUC32jOSMUt0bq1CGCzuc2WVK3wIT57WHqQiq4sppE5BW_c9YOzPa-va0l3VM2bTaNJxtH7GK8DF2qQTTonfaaU8224id-L8NCxh2_hpGiE5IwqlH5Zqf3eL0q8dsX8yWgBe0-4X6-5SnWygcooR4YTbNHpnuHV4C7s1WDJOV2YUly6zS82yk1of926N5kI6gTx-fU_VNgLAKkkIfwezQ9saBHXMr43ShsH_Hulq',
+      'AA5AbUCvQQIEuu7s01mHZZRSCIJlNToanFcKvaHYdUSVvqAvJkNzvpfM3bsD5uHOBzJLEx2hRYLLH6IoFPVxoimkfomJqQsFT8pTR-RyqO9EN4RecpOR7LmCplEIcMLLxPbkV0ywvI9_RbVZ7dKuRLeyueBPD3BR0c1HixSbkJ9jobxicmfKW9e9UolNoWHga_LtmhGswLnaak0SuhzoHWJTkR23COI_am_2bJRqD3dtSzo',
+      'AA5AbUDhrviskeJZHYxBAfNM_abUsam_qp46oJO8L46kxCrpSk-2lQCfdMF8Gs5DOI_WPWXmU8rJE9_MjHYnnQARtzjlH_8v1duBJf7SGNBb2M6eaPdc-wR8apKFEiuB1f35UwMuY3Cm-W0uMxu1TmHC_3AL2z--6CX4K7SmIohxaFaD8HF2GGIg71d7IMwm5uZvKFACA7zi58qQou_hvbZqgTCxoMKtsCiRCiIq5bDJehM',
+    ],
+    '02 초·중·고(영어)': [
+      'AA5AbUCIRp_TzjbU4u3rb4M5nbAXU2g1B-ZuD_2tfxCtvUPNMlCm1N_toqRaq2Me4q6J7PAEW54xrXBNmVqsLKunqNuARuCjST9Re2K71FIGAIk8ZRI5yg6NygfONLPmL0PoYt2hdKssd_-xXLpuZFIj7KwjDltpbysbTgCH8eE7OCQ_GXlQo4AOEN2zJybAL-l5I9an4nJiq4FYeK-58Pq5SVoq9LhP2A6JllRzM7FjmSc',
+      'AA5AbUCKKlg6o6PsJlNmbbSHL5RJKw4Huc-iGaAiHEvWzP8AyMMDTyoJOa1DY2CHLyRcTkDgTBbu2LPjYxcSe3qUHPNTq7xwgqlEKUpZYhTde9lWRCJVRivnrJgUt73ig16Y8m7wEbXnscXaE9iHSO4xWzh7iwF_aElckPniONYz9wm3qoKGkJ7YllSzRdT0Ia--NSvlOfbLfNn9hAlZiTOifnJn3GuyIkShLqgZ9uKLO_w',
+      'AA5AbUA-6ZGK7OoWBW-BL0tOW5Nm02R6vz1Pirq02A48qlQuyJuwp4CiBazsNd1S0FnQkY02Ux0fxKHmn9m3e3CZOm4tFB4lJ26eLBVRQQUbjhf6JozY0QaEH069GTheEsezxZ5dOmkWP4LRFXdJQswQ_-3zS0YfJ7VlTV2M4t09r9xtbGPdciA3M937bULZNTfml5yAv5Blkz7Wkuw4bS3UhUkfvwNmwsN9C4Evpml9',
+      'AA5AbUAfNWeCN6_ASiUbCYlXt7Bk5k2laib9z89qcZpoE7drh-jNIFChbCrVFN5JURh7hdvT-Ht5ucNj_G_kUW-EnV-6zSY4mSuuVe0JipDNlDQPqC1JYZkZsDuM6jhL1yGPSwuGbEgoYhQyzRqDFO83KeGg8eDmfW7EbRBxZXY2PVtLKsBwkl-S1avo57rgD-B0nbsy14NKPpxNI5B6AOE2lMC-mKkwa-Xr2CuO7Hp1czc',
+      'AA5AbUDupOOGOrDJ0vf6_oSZ3o9VAZDonhyRhlf31E-J2bIWiANhKbl3sekBFqp6E_TbJ-MWu2JGeoBdy7d27Uv9VkW3dTG1NfDEajGzYQb5578CDtP62YSs73qzjr3SmNVC60PwRgR09j8AO3HVumHpdw-zYt4E57ECC4k82gwi-lfWIM9lxdzv2CPJUZSbVfsFqRWNlwSncRkg6D2iu9SESCv7i7lbN0IGGn_bF3R7',
+      'AA5AbUAGWGbHvkQl2DnSmsNK84-Af1dM0UfEIy5EnUysMe0q2j_QomBwYxXiBDbc4Lc7VzD2RqM9k4oRMHy10nB3_KOZ0TCPRTKjTHLORShJVQLcMuLl3wbz8-XsJWwg-hRhXP8gb6DIyRoDf2CKeZogPai7xjEaitOT5a4E42TVXFDm1XHbwCPqgcAVOcrrVFvWYe5-zYTxCIoeim-lu0WZUbMnYMl3_yrKUnJfKcSR',
+      'AA5AbUDDbmYIETMhspnjj2F9vD6HngKuacJHHkyypANtgu-nJROCT-nqIidtMDVISU5f0lubRQZ3wcvbyBWVdZYmrDOciNaf-yMAAk_UbpCOvikvJzSEWvO_lnUAlMqXQBuQHAcjkwbuOduRQoah3CoyvSiiplV9-8_rcJYlAQ0A9ZQTPh4KI_FszHrPXqkC6rMVqXwlhZWozbuXnkjFx8ywpxXZz5gb9YUz4MiEBs6JJyw',
+      'AA5AbUCnZKyL6GG5mxU7A2PmUlh1XYEWoxRkE3gDxj9Zc4Z7Qj4id-hQB6m-V7jmdbWVPvMWyHajC0eMVL2ilUpVaylun2p7JXsjMKESXqGWWf32AzGyWvc-NyI9hVnHTQ_n7Jg6OREjlo-uC3_Mz_7Yg6FnwfMclN1UcsLrT8rEOOnb6DVVDG7Yv-JUwIphYbm_tazrsGnr8sm2OC7QjSicv7t6yj_jpURY69wwqG0roE0',
+      'AA5AbUDC4_gKnOBo2Te6oYbe0s88ezXzZUQlCiW0G7pfxuWzL3We_benJf2epsssR7id_fCPenJrm_K3Z7iT1Gvrmz4ERQ7V0xcM_iKuj0EE-zrlcfKDTO7qBDKWOydN2am4Lcy3JnSyrptILAbAAcLvz1x8aEWNvv0_2wwLbSK10_wOpGrDk4uYisBoE2Coy2MTs-E7sB4JmRZP6tuNBweT20CodZA3xyK0RUEjzDEPAlM',
+      'AA5AbUBg3XNOTLlYv5dpfPK-J9VH0WSCfkBIQr0Kl9FzD9ioJqdgvTgs88ELz1t805uKqPYx2EtJYGKjFqchnOEuDMK4CepccXNGL3w_4AoFtvHXdr72fSMeDOyHesHjt9PZ5fu2sBmPG1roPijsGSYPYQe_baOAJ6li0xoROIUn_bzmP5uKIhKFQZ7TnzIIV1YezXK-o-FMQs9mK90A5VvnNbMuhcEu2l4rr-12lXOpi9c',
+      'AA5AbUDn4M8ojcphKJf6XtD1wtILNM5x33m_TVAjAL2ZTeVa37asILd3lofx2noNcEN69IT_B9tX5ertM-822WywDzOT6W2TZhZDZGHLoYz4o62xyrWAFD75EKy1sUB9CZuTEM8Vh-W3QHVqk77cNa54_MgEGFknpyNE8YRyT6HK8JdJ0ewbMO4ZS078yjiXlLUrUTFXLiuXYBxUD4cSW7nrymbYHhTZFGw2etZp4S7mwCw',
+    ],
+    '03 중·고(정보)': [
+      'AA5AbUCnPOz-vm390whUgXdokp1VwjoID8xQ14hDeURO1wUR4y5aYo4m3ceLpPYUcKDjVY4D_kX4vYlG-FcZrYNTTs5Z9sQPbnI7z3lROdcjk3tB54fWyc4gHoKl9TTCcL1gS3Bf8aoxNNHud4L38j9rye8WiiboAamrInjDyl0I6tq4SF-ukqpDHz5-Dh0gq3FJTOV55YlYqdK6Y8aS1_fgsrqYW3XiYzZ0k_-Ig6KE8no',
+      'AA5AbUDZ44i1FoAZbzba126D_sctuuTx4b5ou5gsTrcmRnXbvFC40mbF7DgEUqSr0y5iQKv-PsJXpuOkmdRaCvwuXjCYUL2nBRHCAgY5EIOyivdZmIwgdJg_XLtfFBdV2NjyP-JyxNFWwBjOMqQsEvmglrAw_l928vhTGjoz9jkvrlmlZNaGIjfnxV5Zr3eTAAcQYZCVzlyALxA1pyeuThuWZzkdGTYecs6BOE7znKGNBWw',
+    ],
+  },
+  cmass: {
+    '01 정보': [
+      'AA5AbUB2F1aLrzfcMnxYfjfaJvN-DeeChvjRXQL4B3hwrYBkwvn4XUlV_5qAgDciAjsIGt0Ve9AtoFxxPD_A1ecL3OqYblsiwTRklxzmg-3A2UJdUTUXg9MqjAH75XZpHP9Ldhqa0noBnQg3X2L8J0RqLM9ZfI1FTe3IR3YDqmEEjSHAv8aAHJ1Y5_gfeF2dQzX8AvBdkrZ-4qpmzS45zof-MzfCOJAHbTzivAgEGianM8s',
+      'AA5AbUDsuEvQT4Uz8rfY8_ktyS8rKz7ZNttTE0QP8XOUz1RTB4LWy5HUtrk-28NE6wXJrVhW7QS7vcCMmrIIRtTgxOj0TaCgvIgTmBAAoKB0FGHRYOFdwlTi42Yt024AXI0o7quqr0oONo8LYyaORET19gdHCi77ITaHuMa2KgdV-197DQnGRIIjzh6_1ivegU5qRqxpF8inlMjw2HUAKgwxYm0-XM2eIE4DVLMhbzGeRhw',
+      'AA5AbUCOz5PNVlS56edqzy2A33_D-xTWTFAsboIDk7Spgce6EvRbzFwf7EjC-HimE4wv4-cTFKrybjHhjYIOLARvaseH5amLgizxiv4bjKDbPOxzxW3rIE925VWBQx9sihCFqOyorK_7U6Lvb0xEuKXHoC6p2-8LP-3Lmi7OXcqCDcBYssig0HS-GEag2yBYhotMV7pEa9f-wRU9kPoXKQdpDELZpA9Kq4nuWfL6YCbowCQ',
+      'AA5AbUBhB-_JdES4-uNYSmW5CPLFFqsnGpmwkXHkQxE2cDhyVvB7A5dxw9bTOAaLpggvkx6iWYXL7CmDArsyH-6eeOgT29W-w0rICQMbr27Y83pUIesjmuVUICgJNBkC6MoUINrf6ZNWI5zYlMleceGbaOfBA7uo1Dp8bz5hLw8poEkU8FbvxmRDIlB_iqYZ0pFPFQjZQ4l71P7rJVfgzZUn_se8Jv_77sVvgkcv-XZs',
+    ],
+  },
+  icecream: {
+    '01 초등 수학': [
+      'AA5AbUCTEs7t7_-eXSCTDfxbiFH-DGxklGxEtJHkCP99Kbl2fT-4Q3wwtfl1Knpp4Sem_A9Moq5HYJAFZz7yQ1XKVkGbnF5gfPd14jsDyggSM98V-_FhkgBhdq1oSeDsJj3ogdrS9xKbgLVWhiEbz3AvpDYrXWd1x46Tp5S1SPEPo8u0KGVlLRDdF6fAHV-L2sGM9DoxJxRWjwqjMYqlk_hyrmaXdnbPvtSLZQM4on6E',
+      'AA5AbUC4uGesjErRsaLUxyXggJKiCbCglEWh-U7Bg0NyLn1tppibjI0uAryIzzlpMOIsQ5aDe6hUbsihk3yyymyvBgsuX0XQM2kSsVU-11MwiRSYYMAVMNGnfw8eqgfGZjKtP_Soj1eedwZCUvuXdJ83zpEOAGN9HiMhqSCsacPJcMTPzMyzfEUqOdmnje02P63_mIwXYZgJXc5VtT9ajx08SosE_FlFpv8bwFPR5iIgspE',
+    ],
+  },
+  neungyule: {
+    '01 중등 고등 영어': [
+      'AA5AbUAjs2H1HtTAGEbikh1IA_mhfhvQzGMGbY9AOCcJNBD91BEi9Q_AC0zDLSEac_J0jhJ9kZRrZyhAGGoBeBvH3lRaFLYPYUOUV2A9k-q4RZU_JrXFgp2FAfOHdH02hoo7ruT8NPqujwHYpOPQhf3kf24JAaT95XBce2mAsTZhA4ErTB54P1V7UMCTK2zU4goyUdWXevK4Cj0_09rN4TO4_aSBf322jGeMst7gWWLk',
+      'AA5AbUDj9BpChMV638Y8HT-OJf25rv2mfnlEezZ2xo57rcN4qo2OYRCPvwPK_TLdWSGYRYmcYh8Cb6aEVc-1AaD6ZMhb5ZM99ZUl6teBMEAFXZRFfHAsrRW0rH9aaiLfqVhorggOyfLaFpF37Y04_MFcVdYlGWX-Uv9B39afw45Wl17jb8U_vNI8-ntJDNXOmjtdk5LJsrwz-2AHhquP0Gk5KmAjtGi4pvyyOQ5faVaVkNA',
+      'AA5AbUCWwgn7jJt8ltySUFkJ1BWB7TDbOADQFGzcrkF1FtK7M2ENQpVPMPZhlKxB1HEeQc-D_5smXVMvPpnv5yrr_7pDowdIcvq_HCd1u1afKArowhiHFv4A-OR0kHT7Op3SDhNnByHH0deVsWhv9cVJSWJ85v-exNIn1HYpyx3KlA1-FfcHJhUadFKg0aukkAyWHRKSjqn2yfjSbyJdqGXrJv0FmxMQMKPCOwXwnZoM',
+    ],
+  },
+  ybm: {
+    '01 초등 수학': [
+      'AA5AbUCiZ5Sx5E8SYH2FEJEznEDWjjDxjUCd839_UGZ2E4W7_BmV7baZc2WRAOZiOod3gzK1FZOHlifzsLqpl35pyOiAvFVsIbhBDAOLprIba-9BJ8IiD7JYMgcVj4giPAvCXl-QiAiRROQjiM1azxhE2wB6vaN5xWXC0x9C6xiSYvM_hePcEEu_GBj4AtmAgQzkJfOUtlSpW5oTo4rg8d_oUNBXrkU2_32nW35-rqFQzjQ',
+      'AA5AbUDRwOVMrylzf6hDXtZrCcPa9GNCaKW6YbEidZbmVenTBcN8KTEnu1PhqllFolMqc4h3yUpailADACTJEof34lqP6EZD1jAerZT_T9T2W0Mpi2ixKE9hl-urksZlbuCVjr3hiHaccDTh6NLenXQ8yHFBeOjDgppujwpFm4zvut24Xp9o1rSvZMk6j_yhbMjEysmM8FLgypJc5aRLEqZvV1CVsNWn2y9lUHBt_h3H',
+    ],
+    '02 초등 영어': [
+      'AA5AbUB75_0P2H8tB5pMYa-m-N0TpHrm7itLdhR5mc65UJuq57RPe1Bvkg7Lk9KSRifAMlxd3Tx7XRqD31WWsNYIF2woKZw07i_u04BnIIY8SqOJQDy8BmyhBuVv-CUON1uSIzAgndPj5QLLlcXnDiPZoo9v_Ql3apLYxFN_bEZSIjZn7Mq_c9WD8YX6S5Jl5B2rqUSkXR95Kzm8pF4DkkFukEPDcWbExRqPx80hiadN',
+      'AA5AbUBMRIKxKngJQqOXtEXfAYA_DzYA6bnWTR1yhiirhrvFO4opTrBmP2Mg3EBxT-lM1NH16dEai6LsI2B_gLFlLw-Ybn0vO8MMhYMW-Z08koqJaprJsM4jEdY11qmCmJHZa4IrnEpuSPtwzfQE0xe-wYH89qzmD8NJVffnyGGMzeoJ9Q2IW2y7vgqwnp5ZoaY8Howa4yEGebmeL4ucIxlBiBddHp1m2190Mv8Uc7a3',
+      'AA5AbUB0RwHEHtWp3dfqDXE9MUit5eGQDUv3X8JvW1O3rqfVaPJu-eltetHc5xttfU1xoOIvnrXuIQ-sDhw2U_g4gS6snVrWFYfcDuAD6c_SWtsDh-7K9OjJw8k8yIIYSYFf_xJOH0bqrxJthljFUh8zx22qObxXGepiC3zuWYppIBW2yxtLbexHRiDi3dKF84Pil_Qzj0UJByov0xJgiwMZtyJMIrfMnlT2GHIt2ZmBXrY',
+      'AA5AbUAIXbQj0bcEJ4GAD6kQ6J8R1LH4gQV2pK4HM9fi5yIfOll--O9luBf3QgOUdqA4RhXudIR40MnO3LhlJ97sRLYBaRfotTO-bapLMdYf-k0-9qS7L9hWJzxj5toNRa-uSIfK-pMafyCogX-3RWXPSaWP6ZNQMKHxePLU2A5l90wGq3106X5zNXFCfPmvj9MDm6d8sxazxn4HrnzA3ByWK7MR_YDc8pGcFXG7nnV1Fvg',
+    ],
+    '03 중등·고등 영어': [
+      'AA5AbUBysjicwBtZHm5c_DCEVN0Ajy0xBKG5miygqX-jIAQfg5gps3bY4HcbD4cGO4c8uwnj1bomf8XGEubYjefmKb0YHAHO7Y3QE4y5K6PjtEcX6vSgiPlqJONdJBGB-UkNPbfcPJixgUUYmY-YrVayo6j-XZGf5_ikpe0muDBPid1mP8MnVGdYAwwjRdBxB9nA-pvTlLO_DzMreHBO29OUhAlCpxRrHmB-xiI12tqpbjw',
+      'AA5AbUBrNsg3Q2wXrTBfc7lrt44_iJWJLglA9CgE5ggZMnwSjIUfhMHVdJRLVxIZRokzqSC7FBoi_lGKGkWl2bMf137qKOpCpR4mV3Tgje_gaJSjVQhIl4j052SOCDnImOXFBNGntmUZYTdNfdvDdiB6pbejE4dQQCITg96QcBAgPQzDVq78cJusG-b3fAj853kdlD1_fZhhSnVWc3M5lg8bwjFvehXk9SpFSXEBOKqNSa4',
+      'AA5AbUC8WN7VifUp3qPdFhaxS5awJUvalN0CrE85aZh_lFMzwhuyOMpWbe97MP5I_S5umg_9YBUyjnae3mamfpwJOjcxhyytzO_sFsLyKLuEUxIqm-0ZEgTTuF1Ox7qr4s2dAvkDewe0D6wewqqgzsWKf2NgFSc0byId4Vt4h1ihkoOM5G3ZUnBOEUKITt35swEqU5rX8r4_gR-SqEyoRB_RY3JxhTlgeRkeiHr_ZBLQ',
+      'AA5AbUD2P8LdC7CzPrsQwkU6hjyqk4OYzn4LwJtL_ZlwXEofviHpk3afcWXD3jpvK3OdgmgXidynIaCtFJSTYA3qJqxXTR2G_mHJGqKu6InQ5b5P38YBP98KAUfDtmH0TzqeYlk7q7FBovT7Hwu9JmxcAeDRcXYOsLoc2pGuuEzJqgnooIwqehXMJT7dczV1ByNd_2BPq5CMtbY7fft_krSiL7PoUPUL5yov_eIZDztrKGg',
+    ],
+    '04 고등 수학': [
+      'AA5AbUBj0i55TADiHrXHY6Ym_uk7dJE1nmgIrW6VAV-5-y1OxgwI67nnreor-yhz8qcPlUf_IK9zwtIQ70Fuf18GoCUZvTEDS815NzK6ULbhXDPs4-2aS3MKZLqwlPRHqQwSHRYFeiZ9QmETQYIeh1ikqw7YvWDbWjpDWRqsuqpeH0P25sY4GFPcR7bwWIFG0WNHpyGhoTjzDB57fWALkIugZp9ldynyreni1NZ6lis8',
+      'AA5AbUDLS-4WbvQ4awm4Vrdh9yVgzJfZi6ZIZ2jJV7YBPs_hg327lwpt175GE6y-_U3kWS0XnvPWZbUArWHJ3HcAri-eAp7xhNBrK7SVINPddVavSkH8f7jJpGsrbtTzz1XoPk4_7NiekIH7Bqdb0Q-bOxpq3ZL-vs0s98zdEQfEJJygXkZC9nvy5fTYADVE9V7xBIxVXspiVcrTFi5tsbITNDVpjOEC0xJc9JLQ_gCLnqM',
+    ],
+    '05 고등 정보': [
+      'AA5AbUDHYGszrFRKeLjzaxlHzG0s5eh4SjZUcwU5E3HaQt5NZg65mgMS3XdIWuRSyTuIAidstUnjoMpp9ROO5oSn2WD-bhLVpfwusV_z16mx1KMyHqaNgH2p64bc32Z2nN1oaDfa_mIV3DKZwLb42r1CzmXx8qjz78yvZmm1B9z3smgVfZ0npj__o7cdnNc8zyb5Ep6K96XJJBVuqEtF2WdbID4f6ol_FMs4io9P95WeR9I',
+      'AA5AbUAFte2a8fcoYsxxIh-HjLm9yU7hWeNOR6pwtC6hZsppGK8Bsrkvon9vgiRgS3s5EfDxdNmUv-9SgAmjIZbXh7bNHTfxTOqP6fA5wQ92PqVznuqGoX_6rrvX1qVLS_HyaGKRygQiUNg_vggQhbCHw18y03CcGEJMeKH7HSFZatlNj-tJFawBBEnZComXbxf3rOI21teIPOpevq1Sxo78lAnHYMD7kSk_1wv9jd6xWYM',
+    ],
+  },
+  jihaksa: {
+    '01 초등 수학': [
+      'AA5AbUAJFIoD6XfzSA6X-JWm5W4VfVUem20mBpIq6Rj10jWAmJYYcXl08VwJu8F4gnK-5EK2KPTi_98NXN6tEomY9wCLxFGVbiVfH-hV-ifOWT9HmvVkHQJDIMtfZyzGpazgvPywfd1CrAcsZyUcZv_TmzEVXCiII6cIjPhJiJM1Sc4E8lHe2lhr8FCwOHkKhKb-PuCtVbzL25UDFIV8aVCXpMrpF-D0ZVeGBJjkIMkH',
+      'AA5AbUC-QmTw58Pys8crknnkoe_HAxXZuWCQgQtMwNtlKqQW-HSWoYZSCaJfOpRZoutZp3w0E76bNCPCXpJ0v2znM6dHSSyhV5SW7rdjo6T57oytRVwhGEK-IuZecmZlBJlLhY6dxVvekL37ROPwVPuUaQmVXHOIpK21yT2s1TT7y4VxflR1LjCOff4EPzC5IKXaIKYisrIE3dVgvqfWMPv3HhLtlKeUUl3OZE0LKg',
+    ],
+    '02 중학 수학': [
+      'AA5AbUA0akS60S6Qi2Cb4_AQvzxqMRvg2u0OGQZTYaWvkVrpjPSjoSeSaZ83IJ9bJu5xA0-Z0rifK1_CeODBqxdcYO82Bt1Y6SMaAMkFkwB72y4ruUWCBLwirmVbZTnLLka2UXbbOQhedmO5cbWBCrmfmfjESb72gOiMd1vFaDNzB_uqC9JtCfvaAMtRESlacX83ji9tp8ZRncq-agRa14GrhT8jMfUk9mjXPcPjf_eMLZU',
+      'AA5AbUBBtAgI0zgLbtfNmK2TiX6C6y_gXtXQ2twtncAGFyV8FjT1nkjE6evpmQhSXwWeH8TgDek49Rys--EpNtpyk74Oc5vQuBacAuNIKnIiwkSb6xr0FAe1CzUlQPCPpgcrU9FzC7pTg1J6EgWTvUq4SonDHicUBQPI5ILL8Kj3e4CojDHyu1INjj98SGpQLb307ZLybJj0S_9v8LE7WzuMaFv39BbyccRsnnHVR8N0biU',
+    ],
+    '03 중등 영어': [
+      'AA5AbUD8YNtpPqQ9MvkhCPI4liyWQlW-ATeYQTMMApjAmdMXerb4XvRw3JHPpFPhuvFkHUnhLjJSlAFIyTyOvkl6tzcPWJMRv55i26AMJzHMgiYFXIMnivZz5kV9rzCdhLSxt9MsmwzGNnGFXcmd8x8WDrgl9N9vhJUkmtOZBaqxc1y8vTI0i11MMOq_a4fS5vEjll_S0mkiDZ3ofdyTyvhEi6nrk_MlLRt0JzJptbgc4rk',
+    ],
+    '04 고등 수학': [
+      'AA5AbUCkIeaui2ID35BsITFNCDcc_BrBJ3tpKwDqOI0RGRc2YfHTqQCnYDHlO82bgfS0atXa8J8ts2j2IjD-XPVF-5b4WmaOE0CvFXDNPj5Eo7VlfL4eO3kogY5ITgXJAVgydFbSUh8ZOiJMSgfdHpuhWN_7rU4jINvWmjSmC6dQJb6ibyFdayh-A6jkVlj8eOPtfO98i0DiXNPK72v_hQACKf9LtID1fBQXqKIhFefB',
+      'AA5AbUBalyPvlw6pi1SGvw2bESlsgruttXkz6wxUnChesNMyQ6oPZWZ7E8tBZ8uj6ToKSEZmK_Z7odosJXV2yH9O4_0TAaVEVXnfDMErFRdm_XzWGUXvoBTuPOjU0J1x6FtIRFQJOjB1gPPC7Rb7YvlkFZWm65LE5y_z3-H9a3znlE8yW-aOfb_gdzV08EtbesiPvhuGyV5wyLEjgnvAwzPXxdMSfTBdKiPwvSla-VAaA7I',
+    ],
+    '05 고등 영어': [
+      'AA5AbUBsLigMI6haRlPT0kSWjDXSk4WhQvD7U1igtTdTK6xlMoUnwKPORem0EIluPGhLtfppBOMc0vFZ_KKm3_YRbmjjbs98Z5BnOjNzXMnecqKDk5jruipeGkHRJPvPG1bqgbU4DGwEJMWIKi7rtMMIC_0YNKpq7A-5B69cvcwXqi8zp4iAK9W1R4U_rcX382YRjm7fYkXPCJi4mJ9NucnjeZNb3NgM8MqUj6nMNWZp',
+    ],
+  },
+  cheonjae: {
+    '01 초등 수학': [
+      'AA5AbUDbHx_KPJxRh-xI5c6Nfiz0VTJv9aSdHnGdRdzRScNatJQUFznkh8fYelbRbIuYx_O7rFZy_CN3baSf0lOq9Gl6MHVBOf4qKLsye_rzXUfcAO1DM3YPdllC7abole5sGKc6AaayG3HjbPsVLExd06aT_xMG9A2iVasLS5EZFijZtjf_tvJSvo9oqo56SGHPT3Y88aa5Pnv3LBuX1P0RMPg5RPaz6oZUYGRNcB6t',
+      'AA5AbUBaSFmUxjS2Fzi8jMRS8Nu6ALqDjLvwMGP5LxBqbCTv3P0CUxMNJZRM1oPanT1qwmq-N1qTfaDw7GgygT4eYNntkromp9H5ypzD6CEHjjR5rk3GO2RHlF-VV9swotCM_b1XSb9Ll4tX97iE_TkuwfQaBrFrfHc7T6J6GTasZCYN_Npt8py2lmSfuaOIsDwL2jPn-RX7wld9VNT7GwhNQETNBsKp7s56lrXkDmFZNtY',
+      'AA5AbUBFh_LH1wxyoPbJjb6bYubZDhYLQttzlvfu1IJc5F4v2oYICNKZcICWvL4MTfE5y3EpiLJmnvTB_HFsyDx56f_ZtmfbID3bFyX6CPsrFLCNHXXQuyq49na3EykRzsSLCtbBZzbXr8MGyILaOaxIYEsugRWLhnaqYZg46BCgJgJvTMSBDb6IGk7CA7o5TjQBxxnC8VEOjxW955KFhZrBzQcCUFUSkl6rLBJrrBVMQGA',
+    ],
+    '02 초등 영어': [
+      'AA5AbUAuszUhOKlGpxeXfZ3YaYj7s-xIXAeDuaoipwUPAWI6P7eBEl-iLKB9snVdlm3AQ1svJWO58IxpLvx7Z5pFhtuGgIihc3V_wzRjdrJMXOq3Bfh5pFlgZRX_VTclT0hl4hlThCtigrhiGOMTTH747e7qIIKdinL3Okali9CIG_9l3s8zH62RMB4q7E0mCfNOJBODr-eY9yOCjEkBzo0jgWgNLSGjWMImfS86_H898eE',
+      'AA5AbUBIp2B6RwpMxcAoV9QDCMr5ijN28pfY4ilA_NblnYr6e6nPZggzIP2CPv0vVcuzZme2PLRV_VeQOyOgbk345OHuA2zg7juHJFhrC2Hfq6MlW6utIvcVvvlvtfVGodUlZuCljrlqLGIqbvxNAq0Q-XQ-uWhVAI8nYUrpqLJNZHK08jyugqT6SlPZMPzzGgtOcw9iXTW_HqCjYigoNsnAxUQrYq0bI3GWyg95Fc7k',
+    ],
+    '03 중등 수학': [
+      'AA5AbUC27WMyOSeF7QxuAEHTik0OlEKjYpOp1-Awa3yoeevXQoox5cJm6cB2I9IyByw419KK2VT0_i-C5uXQtrLUECUCXeQfgyQr52bw-uDOl4Mc8gBmgBZf1OaVD9Vn9im2Jau7S3oj8UzeCBsqunFdwAHKwgUzpZsTZDMhhFiHgMm1f6YEkN3BpN8OSPFL0mhvqZ77gn8My0ckmyMa2ivDIi74JrUwKmUZvJc8hE3DCMo',
+      'AA5AbUD_Nq35bp44o0v8jWjUcQdhC0kFDKBE2QyVIFIuKjacSxe36AKydaVkpL1ddcxD-rCn7ShBIHPq42LIgbeHb-kkbu4eBbD2NYi38VnjGTvLa1kySt3CtR2PtRktvS4qEMyRWNNMMmiILrcaEu5ussS00HYGg-rrRZSBSb2Xti204dZmnBnFNUib43OKDUarP9ypjZlQSfGJMof1Eb2yAbTdgrLk4t5W6rYBktf1ENs',
+      'AA5AbUBWN_slJrw6xaDuujGobhs4kNRmLjw3wP8g8jEpLAKBShiXUff0q-hTKtRl4wbtACpa3iOw1LRmpmDlvoJcXqT3tZ2Ipu8X0GmK4RNLFXXPFKnwBBoB2DTCCGqjfEIVvoZWx1Fd-h1Xyt-IAYWIUammSdKjdGgGSjOkb0r2lDRcUOFB6qlUlPM3P_gDG2GxA_ujzILyN4sbQsyeIbXe-oG1Xbw2w2-nXDWurR77',
+    ],
+    '04 중학 영어': [
+      'AA5AbUAbOVAc6T3481PLOE_6a7HFXaNFQvxvZiMd-_KfM0Kt3jHWS77Gvh4YkPCS5vg3uTmYmGOTpYo3sqjjp4Rgp7okTFVkNTHbo7mXKHkwsXyaWMxcUMgnzZ-IP9e0-YKxFeQaENaD5u_7YPp48Daf8hvhRngavbHvK8m8N6tudwo6ybUbd8QgiJRFmxf4zOIdH-g8xNPuZaIK3LWt9YukG16U6Fsf71-2CyRGWSTC2aU',
+      'AA5AbUB-CNq504UX8srw9Zhg3uobzZh0johq1qvJsTlkrC7DBKSoVWEpno-4dRY0Zizn02ga2QJCziLuoM_nuO1AYc2FBeXI-Y_E5RPfFLL9FEAKSIdlcJ6-KE2Q_Xt3McAHbM1Vah2s1ISICqX3DUx6Z7XdAPObLFxifsTAA_f4NcqZPeuced49jyg8oq0wTY1WIZPqY1fuyhSO9ZYtOPnfi_WGPo2kr9jOZmOoBGoQA4s',
+    ],
+    '05 중학 정보': [
+      'AA5AbUCslvf2nIGTZXvuSon-oktx57jqdna7LekIJDyLqoAbadk6mpo2j-UsKC_Ido58YlArE5Ue7HKZL0_viYjB3jl5TpCi955Y_rzkIvppNdOY5OTPIqCmlk4TfwzxfIuBmTyAqnASk-kzxapgaMZnoRvqxglOfg53DuwWnAk--yfXFHnagt4_Ou7ENWt_veqNRZkmLB_96w7e4J-_qx1uj0b-I0DQJ3YGhrHBM04-wDk',
+      'AA5AbUA5_5ECq4le8-KmwwZtrDiA9DF6UCKahpuc07r16_xOJ5-cT2SN24YAW0UH07csH3cvhkdb-ECoZ46x2jr5GZ7rQBHlsQfgH6ZCXYGIrFCHKmlokN-Lx0MslArGAFp0uVCL_1AsKnZuZNxfMvUftypBVGDM_59_rbw1qJoaw-Vazfp2AmPYeIjo3t4ZmL3fscvZ7HEVyDcAZHNgRNDpc_sqMBpot8N8YyhZGbMvLhI',
+    ],
+    '06 고등 수학': [
+      'AA5AbUBk73SYh55YeZIc57UgSPXzAH6xcMYqLsn-Li9S0Qr0AFh-24LlPB5waGzwTJBdSaSDYgLSykMRPliKNh9NZUHPao_r2EVJIQaS-lxODG5fFgmUZJTvUEiZmSG-eMxcqRqlqtO6167Fr-ic9cRJ2lHsrVD2WeH7HoQJptyOBWvAn1i6ZlGH7hG8qcsWX1l-75cEmmKpEmP24f0pmlEtUQ8TLRvFa592sB1icgUl',
+      'AA5AbUAc3qCh2S91CDCmoJKDpBJWXwXjHdF331FKlJh0hlJQpmHOdnJ-OjH58_qy0S3l16x_g2KXd8-HJGUZJRGkL2O4P_xGLYA9NFOzKzCg2GceRzEATKvZ2-8gCzYZJVZi_1LoaMqo-8IP7bBM5_pO_XOOf0EualOhYzhg3IOM-9jfVSreCaQwWZ1N9PTdiFR7fmWvVVZ9ab-VrSepcoZROeCpIIrj5wOomxiiJtfn',
+    ],
+    '07 고등 영어': [
+      'AA5AbUAFTrg7qFb566lk9okfW62YZtuyqPwhsrHwuI60GBphg2cl18XHOkeCzgOJwCrl5nZ8OWUPgeAdTZKBthiw3rYT7PZ-6uRYogPGz0wZU_eFWw60bPj16vyT2E-89s3oQAQFypd8fFpNOl3hwSpaXkm4Q1Mgu7YKQ4aKSmEtusYuTHTlFp7x1F6v45ihqidbouZUxw7d07_5pRoUZATUraOJE8NJ75iVLONi7k2T3eo',
+      'AA5AbUAi2QoopgV2-JLpBRCgwmD92nY3WaeXR2I6VIYrT-L8gNBh--QA9EzWEKZT_cH6-4E1YJ7l0HflArbvoJMgEjCZg-3T2Te3KXIYRqypn4TNc_eG8xxDr7fsi1aH9ERa9ICmQn8hhnEbOExlanobOg606bX5Tz2hMh2VTcOt5zzPmkX41GDIZG6J_wfsmOV6Fkyel01bA5t-swIQsKmffyQpiLrxPuEIrnQe9Jkk',
+    ],
+    '08 고등 정보': [
+      'AA5AbUASm-GIuxhyTyDC0TuSkY6x6J9A9_eyM4zUdw6E4NBmOfP2ZSHGkEhA6J9od6U_WeBgRA8cUzdmAkWkMcAcowkjEDjd7F4IsaxvyzwFuecyGV_qPkH-OmGEX3s69l2nze2Pv4TFbMM4ANBx6yjzAnU_txcIbv3syShM0amiCPRInwC91zhCDtd3HCIq-tqaHUfEMCvnITn32fMeFpB05HuDPARXXMf8UG5DqUdfm3E',
+      'AA5AbUB4y9zmk1NEr4gu20wRI0YanBjqtBeNrpmgfQQSappodXu9Co586JmnaDiFR7SNZWvAOdgVSEjzXj4bUGpJQV650TnXcc2lSrBe9aitCoqt_26YHaNnKzz9HLXfl0eyUXYRTd6sKIKJBAl0R0pWYikMJ-yVMqAx7YmKi-uDCxQB6rRBj4aSrOY7uBt0xeIrXE5xsoc7-iElq0w8MtL1WC30eUxy1gFDoTlEBGgs-DE',
+      'AA5AbUA0KBDFgQS5ZEuUEEpd-KtAuvYWehUyjfq-sN2Ds41MvzSs4CRHa9kJelZ20RTLDlH14BNMTpOwVgU87MqStdx8MrXedttdD5RCLFfBesz0HIBskNgRoG92t3hzOt9bEyOmqtYGZc5En38Dprh-fQ2nlosi9jRsvfQm6EUsyDooREF8Dt0rlKhobSpzM8I7COw-tPdX1UljY9NUwePz9sOfdVO60FfMwa9Jmvls7T0',
+    ],
+  },
+  faq: {
+    '01 1. AI·디지털 교육자료 선정 및 주문 등 관련': [
+      'AA5AbUDpoTm4FXScNBAgBvrhdwsxx3T9eRZlKkEQA_S3513Cfai9fNiBfhgc4l80vAFUPsFPfBGaHfaUB8eTHTHa7Bd036gDiko4Qki5c8CcIMFr_ktrMnpe9cSW08Bm5IrtKF05ZjSkPpJ0oUSRjLyWAzS66JNw4eVE9KlQyDEs_Dj5RlnclqnhltnIu6_GZVbv7b7ncJHJmJfpu-3axfKVZZMtWJj9I9ag3cn9U75B',
+    ],
+    '02 2. AI·디지털 교육자료 활용 및 계약 관련': [
+      'AA5AbUA258Le2KDP9roLX4X2HAmPEizG9QiRoUhpyNFzVA-Ahfp8Ug4f3t1ZLtYvjnLW_gD8jvYiufy5_Ma7O--8sStN2I83xLpw9GCdbBS8tCWhvHR_FnyIgD4FNUBMFudbyDvGBRHDNBEYlfjUaxfBtvJEvz1otcaJyHaVo9ktHDRuoTMSb7z5Q_I5Em-3ENkO1gYWTBYo7vAKDXRHHdicwgdjbIIo3Mqp3yeDAfCz',
+    ],
+    '03 3. 2026년 AI·디지털 활용 선도학교 운영 QA': [
+      'AA5AbUCJ-nmdEVR5OHTRJOzO3vT4wA1cCBR6EWz2GvbAZTu-hOImvg12V1BvzOw28vDIOAQ_9upCwYSOoqyY1_C7rJNLJSoX3EjkSP99m_z0fPpb05f4mGyj2gFgQeZ-e3yvT9xYIeWcv4jnEh3AtcIEGig3tN4OI9Tqit0mgJsorRVWRTx61kGa2P9s7gvBbsiPIHyKc4_KQwfajce92C4zxGInoPq34jKJFugEdgHj',
+      'AA5AbUDEtzN5CfIOTJSdqlIbmTfuCEZ5o-cHSyVIcjD_k5FB8RmUuO0pneRNlANIoXSNrYrMDdXa9-hLbS0EVtV5HNnOpQbG3uNYgztUN6zch_nkwYx_YREItggzxqqG0RXbieuJlfo2bj3YvvPyH_3LHEtS-97XAmgLi7TaBYsV_xUlulovGZVh-iTiCYa4mguUUQoOOQmDO1WoqXnej7yvW9kGocXniYpswMsh2Q',
+      'AA5AbUARY1LuL2SvvDA0mJ3bzGLHQ71h5C7locdBJfSMSmEoJIO_Z40SGPb_m7iOP1-iI73vOn0NJ4xgLi5TXkhQrIH5nyB9iMLrDYrgwlK7Sd77BYVTghxI_26huORViX4XT64js80kZfOsoiNwiCZNgrAfyo7f4kTRxTfoNt9_PaB7eDXjvTLrKg7wTzM_COYzXirn52M--4Fct-jvs8K9ITbzGJmcRxT-VxNQ4h2JqFo',
+      'AA5AbUDhk0NuB71bLCM_vIEn-E_GWB8KatpHTbf5wCTkBvONtOV_exhufb_4FR7lUJ5Rgr-o0ARnT5GhjdkqDNEU_Gf5V9rWlP9F31PHMqnUAJWj0cYkaMeNGdNgQnjC3qzjEtboOOPUN_qXAkkmd5tM_SBvly2-KSr_otORmyZGO3SL2_brbQ2hv2hK0YMiiOjN7AG2fqm6Y4TDFObekPmWCPu_-w7XThnprLcdNsE-',
+      'AA5AbUBk4gEr2KBcd3d7r8zdoEo52TR7yxWIb8VJoHDmKV4Pu5thWkoiDOIqH-wRUlVzqgwC6V-l-BeIQQN74g8bCkta93OmVSIC51M53174EXwcRKIKcILZ-HIudsDkKPaa6F7YFoDXOGEdJ3aBWAZjyetVhyOfs4joAyWWbNWMxPspUWf44lo0mmGCQBWZ3Xr4YalOJrXJevoCOVCEkzsqzP0S4jmNCQUMnAlRLPmH',
+    ],
+  },
+};
+
+const base = process.argv[2] ?? 'src/assets/replies';
+let ok = 0, fail = 0;
+const failures = [];
+for (const [slug, sections] of Object.entries(data)) {
+  for (const [section, tokens] of Object.entries(sections)) {
+    const dirNo = section.split(' ')[0];
+    const dir = join(base, slug, dirNo);
+    mkdirSync(dir, { recursive: true });
+    for (let i = 0; i < tokens.length; i++) {
+      const file = join(dir, String(i + 1).padStart(2, '0') + '.png');
+      if (existsSync(file)) { ok++; continue; }
+      // 서명이 크기 파라미터를 포함하므로 원본 페이지와 동일한 =w1280만 허용됨
+      const url = P + tokens[i] + '=w1280';
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length < 1000) throw new Error('too small: ' + buf.length);
+        writeFileSync(file, buf);
+        ok++;
+      } catch (e) {
+        fail++;
+        failures.push(`${slug}/${dirNo}/${i + 1}: ${e.message}`);
+      }
+    }
+  }
+}
+console.log('downloaded:', ok, 'failed:', fail);
+if (failures.length) console.log(failures.join('\n'));

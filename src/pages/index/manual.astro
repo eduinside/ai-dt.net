@@ -1,0 +1,120 @@
+---
+/**
+ * 사전 준비사항 안내 — 원본(docs/original/CONTENT.md §3).
+ * 텍스트·체크리스트 그대로. 교육부 자료·서식은 원본 구글 드라이브 링크 유지(C6).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinkButton from '../../components/LinkButton.astro';
+import Accordion from '../../components/Accordion.astro';
+
+const moeDocs = [
+  { label: '(교육부) FAQ 모음(2025)', href: 'https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link' },
+  { label: '(교육부) AI 디지털교과서 준비(2025)', href: 'https://drive.google.com/file/d/1mUZ49TBxH63vriMFG5jlKhfe05RXT_It/view?usp=drive_link' },
+  { label: '(교육부) AI 디지털교과서 활용(2025)', href: 'https://drive.google.com/file/d/1vN89EsTm9O2sxX0FQFJ6PhyIqFyTFg-p/view?usp=drive_link' },
+];
+const forms = [
+  { label: '편집 가능 서식(Canva)', href: 'https://www.canva.com/design/DAGmKaC0BzU/kehQ-qNuicw8iWf11czrEA/view' },
+  { label: '웹포스터(PDF)', href: 'https://drive.google.com/file/d/1Bu01VtbzCK9F31OEA9nEJFtm0-TVEyYm/view?usp=drive_link' },
+  { label: '가정통신문(HWP)', href: 'https://drive.google.com/file/d/1cFZeSVh8JctirODhmfWOS-R3wqvMcQHO/view?usp=drive_link' },
+];
+---
+
+<BaseLayout
+  title="사전 준비사항 안내"
+  description="AI·디지털 교육자료 사용을 위한 사전 준비사항 — NEIS 연동, 교육디지털원패스 가입, 교육부 도움자료, 안내장"
+>
+  <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      AI·디지털 교육자료 사용을 위한 사전 준비사항 안내
+    </h1>
+
+    <!-- 대상별 안내 -->
+    <div class="mt-10 rounded-[var(--radius-card)] border border-line bg-white px-5 shadow-[var(--shadow-card)]">
+      <Accordion label="1. NEIS 교육과정 담당자" name="target" />
+      <Accordion label="2. 담임 및 지도교사" name="target" />
+      <Accordion label="3. 처음 교육디지털원패스 가입학생의 경우" name="target" />
+      <Accordion label="4. 기존 교육디지털원패스 가입학생의 경우" name="target" />
+    </div>
+
+    <!-- 1. NEIS 연동 -->
+    <section class="mt-12">
+      <h2 class="text-[19px] font-bold text-ink">
+        1. AI·디지털 교육자료 포털과 NEIS 자료 연동 <span class="text-primary-600">(필수 선행 작업)</span>
+      </h2>
+      <p class="mt-2 text-[15px] font-semibold text-ink">나이스 학적 연동을 위한 선행 작업 (나이스 교육과정 담당자)</p>
+      <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
+        <li>✅ 교육디지털원패스 및 AI·디지털 교육자료 포털은 나이스의 학적 정보와 연동</li>
+        <li>✅ 학급시간표에서 AI·디지털 교육자료 과목 배정</li>
+        <li>✅ 나이스 변동 사항이 있을 경우 AI·디지털 교육자료 시스템에 반영은 익일<br />
+          <span class="pl-5 text-[14px]">예) 시간표 수정, 진급, 전출입 등</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 2. 원패스 회원가입 -->
+    <section class="mt-10">
+      <h2 class="text-[19px] font-bold text-ink">2. 교육디지털원패스 회원가입(교사 및 학생)</h2>
+      <div class="mt-3">
+        <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>교육디지털원패스 포털(바로가기)</LinkButton>
+      </div>
+      <ul class="mt-4 space-y-1.5 text-[15px] leading-relaxed text-muted">
+        <li>교육디지털원패스 학생 가입 방법 — (유형1) 보호자와 학생이 직접 가입 / (유형2) 담임교사 지원 가입</li>
+        <li class="text-[14px]">* 영상 재생시 설정(⚙)을 눌러 고화질로 시청하세요.</li>
+        <li>교육디지털원패스 교사 가입 방법</li>
+      </ul>
+    </section>
+
+    <!-- 3. 교육부 도움자료 -->
+    <section class="mt-10">
+      <h2 class="text-[19px] font-bold text-ink">3. AI·디지털 교육자료 도움 자료 (교육부 자료)</h2>
+      <div class="mt-3">
+        <LinkButton href="https://www.aidtbook.kr/index.do" variant="primary" external>AI·디지털 교육자료 포털(바로가기)</LinkButton>
+      </div>
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        {
+          moeDocs.map((d) => (
+            <a
+              href={d.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {d.label}
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
+                <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 4. 활용 안내장 -->
+    <section class="mt-10">
+      <h2 class="text-[19px] font-bold text-ink">4. AI·디지털 교육자료 활용 안내장(2025)</h2>
+      <p class="mt-2 text-[15px] font-semibold text-ink">웹포스터 및 가정통신문 활용 안내</p>
+      <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
+        <li>✅ 각 학교 상황에 맞게 수정하여 활용하시기 바랍니다.</li>
+        <li>✅ 타시도에서 활용하실 경우 출처를 밝혀주시기 바랍니다.</li>
+        <li>✅ Canva 템플릿 링크에서 본인 계정으로 로그인하면 자동 복제됩니다. (추가 요청 필요 없음)</li>
+      </ul>
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        {
+          forms.map((f) => (
+            <a
+              href={f.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {f.label}
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
+                <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </section>
+</BaseLayout>

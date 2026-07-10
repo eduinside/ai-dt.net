@@ -1,55 +1,187 @@
 ---
+/**
+ * 원본 네비게이션 구조 (docs/original/CONTENT.md §1)
+ * 지원센터▾ · 수업이야기▾ · 스스로 학습 안내 · 문의 및 장애 지원
+ * - 데스크톱: CSS(:hover/:focus-within) 드롭다운
+ * - 모바일: <details> 기반 전체 메뉴 (JS 0줄)
+ */
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-512.webp';
+
 const nav = [
-  { href: '/', label: '홈' },
-  { href: '/index', label: '안내' },
-  { href: '/class', label: '수업이야기' },
-  { href: '/study', label: '스스로 학습' },
-  { href: '/contact', label: '문의·지원' },
+  {
+    href: '/index',
+    label: '지원센터',
+    children: [
+      { href: '/index/manual', label: '사전 준비사항 안내' },
+      { href: '/index/AIDT', label: 'AI·디지털 교육자료 활용 도움자료' },
+      { href: '/index/eduonepass', label: '교육디지털원패스' },
+      { href: '/index/software', label: '학습지원 소프트웨어' },
+      { href: '/index/faq', label: '선도학교 운영 관련 FAQ' },
+      { href: '/index/feedback', label: '출판사 피드백' },
+    ],
+  },
+  {
+    href: '/class',
+    label: '수업이야기',
+    children: [
+      { href: '/class/curriculum', label: '수업설계 지원' },
+      { href: '/class/secondary', label: '중등 AI·디지털 교육자료 지원' },
+      {
+        href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/home',
+        label: 'AI수학 디지털 교육자료 튜터링',
+        external: true,
+      },
+      { href: 'https://aidtshow.kr/', label: '웹전시관 바로가기', external: true },
+    ],
+  },
+  { href: '/study', label: '스스로 학습 안내' },
+  { href: '/contact', label: '문의 및 장애 지원' },
 ];
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+
 ---
 
-<header class="sticky top-0 z-40 border-b border-line/70 bg-paper/85 backdrop-blur-md">
-  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
-    <a href="/" class="group flex items-center gap-2.5" aria-label="AI·디지털 교육자료 수업 지원센터 홈">
-      <span
-        class="grid h-9 w-9 place-items-center rounded-xl bg-primary-600 font-display text-lg font-bold text-white shadow-sm transition-transform group-hover:-rotate-6"
-        aria-hidden="true"
-      >
-        AI
-      </span>
-      <span class="hidden font-display text-[17px] font-bold tracking-tight text-ink sm:block">
-        디지털 교육자료 <span class="text-primary-600">지원센터</span>
+<header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:px-5">
+    <a href="/" class="flex min-w-0 items-center gap-2" aria-label="AI·디지털 교육자료 수업 지원센터 홈">
+      <Image src={logo} alt="" width={64} height={64} class="h-8 w-8 shrink-0" loading="eager" />
+      <span class="truncate text-[15px] font-bold tracking-tight text-ink sm:text-[17px]">
+        AI·디지털 교육자료 수업 지원센터
       </span>
     </a>
 
-    <nav aria-label="주요 메뉴">
-      <ul class="flex items-center gap-1 text-[15px]">
+    <!-- 데스크톱 네비게이션 -->
+    <nav aria-label="주요 메뉴" class="hidden md:block">
+      <ul class="flex items-center gap-0.5 text-[15px]">
         {
           nav.map((item) => (
-            <li>
+            <li class="group relative">
               <a
                 href={item.href}
                 aria-current={isActive(item.href) ? 'page' : undefined}
                 class:list={[
-                  'relative rounded-lg px-3 py-2 font-medium transition-colors',
+                  'flex items-center gap-1 rounded-lg px-3 py-2 font-medium transition-colors',
                   isActive(item.href)
-                    ? 'text-primary-700'
+                    ? 'font-semibold text-primary-600 underline decoration-2 underline-offset-8'
                     : 'text-muted hover:text-ink',
                 ]}
               >
                 {item.label}
-                {isActive(item.href) && (
-                  <span class="absolute inset-x-3 -bottom-[7px] h-0.5 rounded-full bg-accent-500" />
+                {item.children && (
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    aria-hidden="true"
+                    class="mt-0.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                  >
+                    <path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
                 )}
               </a>
+
+              {item.children && (
+                <ul class="invisible absolute right-0 top-full z-50 w-72 rounded-lg border border-line bg-white py-2 opacity-0 shadow-[var(--shadow-card-hover)] transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        {...('external' in child && child.external
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {})}
+                        class:list={[
+                          'flex items-center justify-between gap-2 px-4 py-2 text-[14px] transition-colors hover:bg-primary-50 hover:text-primary-700',
+                          isActive(child.href) ? 'font-semibold text-primary-600' : 'text-ink',
+                        ]}
+                      >
+                        {child.label}
+                        {'external' in child && child.external && (
+                          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
+                            <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))
         }
       </ul>
     </nav>
+
+    <!-- 모바일 메뉴 -->
+    <details class="group relative md:hidden">
+      <summary
+        class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg text-ink hover:bg-primary-50"
+        aria-label="메뉴 열기"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="group-open:hidden">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="hidden group-open:block">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+        </svg>
+      </summary>
+      <nav
+        aria-label="모바일 메뉴"
+        class="fixed inset-x-0 top-14 z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-line bg-white shadow-[var(--shadow-card-hover)]"
+      >
+        <ul class="px-4 py-3">
+          {
+            nav.map((item) => (
+              <li class="border-b border-line/70 py-1 last:border-0">
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block px-2 py-2.5 text-[15px] font-semibold',
+                    isActive(item.href) ? 'text-primary-600' : 'text-ink',
+                  ]}
+                >
+                  {item.label}
+                </a>
+                {item.children && (
+                  <ul class="mb-2 pl-3">
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          {...('external' in child && child.external
+                            ? { target: '_blank', rel: 'noopener noreferrer' }
+                            : {})}
+                          class:list={[
+                            'flex items-center gap-1.5 px-2 py-2 text-[14px]',
+                            isActive(child.href) ? 'font-semibold text-primary-600' : 'text-muted',
+                          ]}
+                        >
+                          {child.label}
+                          {'external' in child && child.external && (
+                          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
+                            <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                        )}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
   </div>
 </header>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

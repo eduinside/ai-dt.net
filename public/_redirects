@@ -1,0 +1,19 @@
+# 구 구글 사이트에서 외부에 공유된 한글 경로 → 신규 영문 slug (Cloudflare Pages)
+# 2depth 한글 경로만 대응(1depth는 그대로 유지). 참고: docs/IMPLEMENTATION_PLAN.md §3
+
+# 수업이야기 하위
+/class/중등-ai디지털-교육자료-지원 /class/secondary 301
+
+# 출판사 피드백 (가나다순 한글 → 영문 slug)
+/index/feedback/금성출판사 /index/feedback/kumsung 301
+/index/feedback/길벗 /index/feedback/gilbut 301
+/index/feedback/동아출판 /index/feedback/donga 301
+/index/feedback/디딤돌 /index/feedback/didimdol 301
+/index/feedback/미래엔 /index/feedback/mirae 301
+/index/feedback/비상 /index/feedback/bisang 301
+/index/feedback/씨마스 /index/feedback/cmass 301
+/index/feedback/아이스크림미디어 /index/feedback/icecream 301
+/index/feedback/엔이능률 /index/feedback/neungyule 301
+/index/feedback/와이비엠 /index/feedback/ybm 301
+/index/feedback/지학사 /index/feedback/jihaksa 301
+/index/feedback/천재 /index/feedback/cheonjae 301

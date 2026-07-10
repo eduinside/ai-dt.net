@@ -1,0 +1,144 @@
+---
+/**
+ * 수업설계 지원 — 원본(docs/original/CONTENT.md §11) 텍스트·목록 계승.
+ * 외부 자료 링크(KERIS·에듀나비·교육부)는 원본 대상 유지.
+ */
+import { YouTube } from 'astro-embed';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LinkButton from '../../components/LinkButton.astro';
+
+const EDUNAVI_PKG = 'https://www.edunavi.kr/arc/ad/edunavi/arc/cp/selectChnnlPackageList.do';
+const EDUNAVI_AREA = 'https://www.edunavi.kr/arc/ad/edunavi/arc/cc/selectChnnlCntntsVidoList.do';
+const EDUNAVI_VIDEO = 'https://www.edunavi.kr/arc/ad/edunavi/arc/cp/selectChnnlPackageInfo.do';
+
+const mathUnits = [
+  '3-1-1. 덧셈과 뺄셈', '3-1-5. 길이와 시간', '3-1-6. 분수와 소수', '3-2-3. 원', '3-2-6. 그림그래프',
+  '4-1-1. 큰 수', '4-1-5. 규칙 찾기', '4-1-6. 막대그래프', '4-2-2. 삼각형', '4-2-3. 소수의 덧셈과 뺄셈',
+];
+const engTopics = {
+  '이해(듣기)': ['1. 수를 묻고 답하는 표현', '2. 소유한 것을 묻고 답하는 표현', '3. 날씨를 묻고 답하는 표현', '4. 물건의 위치를 묻고 답하는 표현'],
+  '이해(읽기)': ['5. 좋아하는 것을 묻고 답하는 표현', '6. 날씨를 묻고 답하는 표현', '7. 소개하는 표현', '8. 지금 하고 있는 동작을 묻고 답하는 표현', '9. 가격을 묻고 답하는 표현'],
+  '표현(말하기)': ['10. 색을 묻고 답하는 표현', '11. 할 수 있는 것을 묻고 답하는 표현', '12. 가족을 소개하는 표현', '13. 감정을 묻고 답하는 표현', '14. 물건의 주인인지 묻고 답하는 표현', '15. 물건의 가격을 묻고 답하는 표현'],
+  '표현(쓰기)': ['16. 안부를 묻고 답하는 표현', '17. 요일을 묻고 답하는 표현', '18. 금지하는 표현', '19. 직업을 묻고 답하는 표현', '20. 시각을 묻고 답하는 표현', '21. 제안하고 답하는 표현'],
+};
+const strategyVideos = [
+  '1. 수학과와 AIDT 만남(현재)', '2. 수학교과에서 AIDT의 역할(1)', '3. 수학교과에서 AIDT의 역할(2)',
+  '4. 교육과정 설계에서 AIDT 활용 방안', '5. 수업에서 AIDT 활용 방안', '6. 평가에서 AIDT 활용 방안',
+  '7. 기록에서 AIDT 활용 방안', '8. 효과적인 AIDT 활용을 위한 팁(1)', '9. 효과적인 AIDT 활용을 위한 팁(2)',
+  '10. 선생님들의 AIDT 활용 방법에 대한 생각',
+];
+---
+
+<BaseLayout
+  title="수업설계 지원"
+  description="AI·디지털 교육자료를 활용한 수업설계 지원 — 디지털 역량 교육자료, 교육과정·성취기준, 출판사별 기능·사례"
+>
+  <article class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      AI·디지털 교육자료 수업설계 지원
+    </h1>
+    <p class="mt-8 text-center text-[16px] text-ink">AI·디지털 교육자료를 활용한 수업설계를 지원합니다.</p>
+
+    <!-- KERIS 디지털 역량 -->
+    <section class="mt-10 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+      <h2 class="text-[18px] font-bold text-ink">디지털 역량 교육자료(KERIS)</h2>
+      <p class="mt-2 text-[15px] leading-relaxed text-muted">
+        학생들이 디지털 기술을 안전하고 책임감 있게 사용할 수 있도록 학교의 교육과정, 학사일정 등을
+        고려하여 디지털 역량 교육 주간을 운영할 수 있습니다(3월 운영 권장).
+      </p>
+      <div class="mt-4">
+        <LinkButton href="https://www.keris.or.kr/main/ad/pblcte/selectPblcteETCInfo.do" variant="ghost" external>자료 보기(KERIS)</LinkButton>
+      </div>
+    </section>
+
+    <!-- 교육과정 성취기준 -->
+    <section class="mt-6 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+      <h2 class="text-[18px] font-bold text-ink">AI·디지털 교육자료 수업설계 관련 교육과정 및 성취기준</h2>
+      <p class="mt-2 text-[14px] text-muted">(수업설계 지원 콘텐츠 계속 업데이트 예정) ※ 아래 자료는 2025년 3월 기준입니다.</p>
+      <div class="mt-4">
+        <LinkButton href="https://stas.moe.go.kr/cmn/main" variant="ghost" external>교육과정·성취기준 보기</LinkButton>
+      </div>
+    </section>
+
+    <!-- 초등 AIDT 수업자료 -->
+    <section class="mt-10">
+      <h2 class="text-[19px] font-bold text-ink">초등 AIDT 수업자료 <span class="text-[14px] font-normal text-muted">(대구광역시교육청 초등교육과, 대구쌤튜브)</span></h2>
+
+      <div class="mt-5 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-[15px] font-semibold text-ink">초등 3~4학년 수학 — 수업 전·중·후 활용 노하우</p>
+          <LinkButton href={EDUNAVI_PKG} variant="ghost" external>단원별 보기</LinkButton>
+        </div>
+        <ul class="mt-3 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+          {mathUnits.map((u) => <li>{u}</li>)}
+        </ul>
+      </div>
+
+      <div class="mt-4 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <p class="text-[15px] font-semibold text-ink">초등 3~4학년 영어 — 수업 단계별 활용 노하우</p>
+          <LinkButton href={EDUNAVI_AREA} variant="ghost" external>영역별 보기</LinkButton>
+        </div>
+        <div class="mt-3 space-y-3">
+          {
+            Object.entries(engTopics).map(([area, items]) => (
+              <div>
+                <p class="text-[14px] font-semibold text-ink">[{area}]</p>
+                <ul class="mt-1 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+                  {items.map((it) => <li>{it}</li>)}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 활용 전략 영상 -->
+    <section class="mt-10">
+      <h2 class="text-[19px] font-bold text-ink">초등 수학과에 적용가능한 AIDT의 활용 전략 <span class="text-[14px] font-normal text-muted">(대구미래교육연구원)</span></h2>
+      <p class="mt-2 text-[15px] text-muted">총 10편의 수학과 적용 AIDT 활용 전략 연수 영상을 시청하실 수 있습니다.</p>
+      <div class="mt-4">
+        <YouTube id="VrX-req38DM" title="초등 수학과 AIDT 활용 전략" />
+      </div>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <LinkButton href={EDUNAVI_VIDEO} variant="ghost" external>영상 보기(에듀나비)</LinkButton>
+      </div>
+      <ul class="mt-4 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+        {strategyVideos.map((v) => <li>{v}</li>)}
+      </ul>
+    </section>
+
+    <!-- 출판사별 기능·사례 -->
+    <section class="mt-10">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-[19px] font-bold text-ink">출판사별 AI 디지털교과서 기능 및 사례 알아보기 <span class="text-[14px] font-normal text-muted">(대구교육연수원)</span></h2>
+        <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+      </div>
+      <p class="mt-2 text-[14px] text-muted">초·중·고 주요 출판사의 수학과·영어과 AI 디지털교과서 기능 및 수업 적용 사례를 소개합니다.</p>
+      <div class="mt-4 space-y-3 text-[14px] leading-relaxed text-muted">
+        <p><b class="text-ink">[초등학교]</b> 교육디지털원패스 가입 / 수학(천재): 교사용·학생용, 개념기반 탐구학습 사례(초3·초4) / 영어(천재): 주요기능, 개념기반 탐구수업 사례 / 영어(YBM): 주요기능, 개념기반 탐구학습 사례</p>
+        <p><b class="text-ink">[중학교]</b> 교육디지털원패스 가입 / 수학(비상): 교사용, 수업사례(1)(2) / 수학(천재): 교사용, 수업사례(1)(2) / 수학(교학사): 교사용·학생용, 수업사례(1)(2) / 영어(동아/윤·이): 수업사례 / 영어(비상): 수업사례</p>
+        <p><b class="text-ink">[고등학교]</b> 수학(비상): 교사용·학생용, 수업사례(1)(2) / 수학(천재): 교사용, 수업사례(1)(2) / 수학(YBM): 교사용·학생용, 수업사례(1)(2) / 수학(지학사): 교사용·학생용, 수업사례(1)(2) / 영어(YBM·비상): 수업사례</p>
+      </div>
+    </section>
+
+    <!-- 정보 교과 활용 기초 -->
+    <section class="mt-10">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-[19px] font-bold text-ink">AI 디지털교과서 정보 교과 활용 기초 <span class="text-[14px] font-normal text-muted">(대구창의융합교육원)</span></h2>
+        <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+      </div>
+      <p class="mt-2 text-[14px] text-muted">초·중·고 주요 출판사의 정보과 AI 디지털교과서 기능 및 수업 적용 사례를 소개합니다.</p>
+      <div class="mt-4 space-y-3 text-[14px] leading-relaxed text-muted">
+        <p><b class="text-ink">[초등학교]</b> 정보(천재·잇플·앨리스·씨마스·미래엔) 수업 활용</p>
+        <p><b class="text-ink">[중학교]</b> 정보(비상·미래엔) 수업 설계</p>
+        <p><b class="text-ink">[고등학교]</b> 정보(천재·금성) 수업 설계</p>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  lite-youtube { margin: 0 auto; border-radius: var(--radius-card); overflow: hidden; max-width: 100%; }
+</style>
