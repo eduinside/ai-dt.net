@@ -2,15 +2,17 @@
 /**
  * AI·디지털 교육자료 활용 도움자료 — 원본(docs/original/CONTENT.md §4).
  */
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LinkButton from "../../components/LinkButton.astro";
-
 import PageNavigation from "../../components/PageNavigation.astro";
+
+import imgGuide11 from "../../assets/pages/manual/11.png";
+import imgGuide12 from "../../assets/pages/manual/12.png";
 
 const cards = [
   {
-    title: "AI·디지털 교육자료 포털",
-    href: "https://www.aidtbook.kr/index.do",
+    title: "AI·디지털 교육자료 포털", href: "https://www.aidtbook.kr/index.do",
   },
   { title: "AI·디지털 교육자료 웹전시관", href: "https://aidtshow.kr/" },
 ];
@@ -96,113 +98,164 @@ const forms = [
       }
     </div>
 
-    <div class="mt-10">
-      <h2 class="text-[18px] font-bold text-ink">활용 도움자료(교육부)</h2>
-      <div class="mt-4 flex flex-wrap gap-3">
-        <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
-          {
-            moeDocs.map((d) => (
-              <a
-                href={d.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+    <!-- 활용 도움자료(교육부) -->
+    <div class="mt-10 space-y-4">
+      <h2 class="text-[18px] font-bold text-ink">활용 도움자료 (교육부)</h2>
+      <div class="grid gap-3 grid-cols-1 sm:grid-cols-2">
+        {
+          moeDocs.map((d) => (
+            <a
+              href={d.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {d.label}
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="shrink-0 text-muted"
               >
-                {d.label}
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
-                  class="shrink-0 text-muted"
-                >
-                  <path
-                    d="M3 11L11 3M5 3h6v6"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </a>
-            ))
-          }
-        </div>
-        <h2 class="text-[18px] font-bold text-ink">
-          활용 도움자료(대구교육청)
-        </h2>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
-            {
-              dgeDocs.map((d) => (
-                <a
-                  href={d.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
-                >
-                  {d.label}
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    aria-hidden="true"
-                    class="shrink-0 text-muted"
-                  >
-                    <path
-                      d="M3 11L11 3M5 3h6v6"
-                      stroke="currentColor"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </a>
-              ))
-            }
-          </div>
-          <h2 class="text-[18px] font-bold text-ink">
-            AI·디지털 교육자료 활용 안내장(2025)(대구교육청)
-          </h2>
-          <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
-            {
-              forms.map((f) => (
-                <a
-                  href={f.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
-                >
-                  {f.label}
-                  <svg
-                    width="13"
-                    height="13"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    aria-hidden="true"
-                    class="shrink-0 text-muted"
-                  >
-                    <path
-                      d="M3 11L11 3M5 3h6v6"
-                      stroke="currentColor"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </a>
-              ))
-            }
-          </div>
-        </div>
+                <path
+                  d="M3 11L11 3M5 3h6v6"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          ))
+        }
       </div>
-
-      <PageNavigation
-        prev={{ title: "사전 준비사항 안내", href: "/index/manual" }}
-        next={{ title: "교육디지털원패스", href: "/index/eduonepass" }}
-      />
     </div>
+    <hr>
+    <!-- 활용 도움자료(대구교육청) -->
+    <div class="mt-10 space-y-4">
+      <h2 class="text-[18px] font-bold text-ink">활용 도움자료 (대구교육청)</h2>
+      <div class="grid gap-3 grid-cols-1 sm:grid-cols-2">
+        {
+          dgeDocs.map((d) => (
+            <a
+              href={d.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              <span class="break-all">{d.label}</span>
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="shrink-0 text-muted"
+              >
+                <path
+                  d="M3 11L11 3M5 3h6v6"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+<hr>
+    <!-- AI·디지털 교육자료 활용 안내장(2025)(대구교육청) -->
+    <div class="mt-10 space-y-4">
+      <h2 class="text-[18px] font-bold text-ink">
+        AI·디지털 교육자료 활용 안내장 (2025, 대구교육청)
+      </h2>
+      <div class="grid gap-3 grid-cols-1 sm:grid-cols-2">
+        {
+          forms.map((f) => (
+            <a
+              href={f.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+            >
+              {f.label}
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="shrink-0 text-muted"
+              >
+                <path
+                  d="M3 11L11 3M5 3h6v6"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <button class="w-full block outline-none focus:ring-4 focus:ring-primary-500 rounded-lg transition-transform hover:opacity-95 cursor-zoom-in lightbox-trigger" data-img-src={imgGuide11.src} aria-label="안내장 11 크게 보기">
+          <Image src={imgGuide11} alt="안내장 11" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+        </button>
+        <button class="w-full block outline-none focus:ring-4 focus:ring-primary-500 rounded-lg transition-transform hover:opacity-95 cursor-zoom-in lightbox-trigger" data-img-src={imgGuide12.src} aria-label="안내장 12 크게 보기">
+          <Image src={imgGuide12} alt="안내장 12" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+        </button>
+      </div>
+    </div>
+
+    <PageNavigation
+      prev={{ title: "사전 준비사항 안내", href: "/index/manual" }}
+      next={{ title: "교육디지털원패스", href: "/index/eduonepass" }}
+    />
   </section>
+
+  <!-- Lightbox Dialog -->
+  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-modal="true">
+    <div class="relative w-full max-w-[95vw] max-h-[95vh] overflow-auto hide-scrollbar text-center flex items-center justify-center">
+      <img id="lightbox-img" src="" alt="크게 보기" class="max-w-full max-h-[90vh] object-contain cursor-default bg-white rounded-md" />
+    </div>
+  </dialog>
 </BaseLayout>
+
+<script>
+  function setupLightbox() {
+    const dialog = document.getElementById("lightbox") as HTMLDialogElement;
+    const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+    if (!dialog || !lightboxImg) return;
+
+    const triggers = document.querySelectorAll(".lightbox-trigger");
+    triggers.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const src = btn.getAttribute("data-img-src");
+        if (src) {
+          lightboxImg.src = src;
+          dialog.showModal();
+        }
+      });
+    });
+
+    dialog.addEventListener("click", () => {
+      dialog.close();
+    });
+  }
+
+  setupLightbox();
+  document.addEventListener("astro:page-load", setupLightbox);
+</script>
+
+<style>
+  dialog::backdrop {
+    background: transparent;
+  }
+</style>
