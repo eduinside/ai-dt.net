@@ -2,14 +2,73 @@
 /**
  * AI·디지털 교육자료 활용 도움자료 — 원본(docs/original/CONTENT.md §4).
  */
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import LinkButton from '../../components/LinkButton.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LinkButton from "../../components/LinkButton.astro";
 
-import PageNavigation from '../../components/PageNavigation.astro';
+import PageNavigation from "../../components/PageNavigation.astro";
 
 const cards = [
-  { title: 'AI·디지털 교육자료 포털', href: 'https://www.aidtbook.kr/index.do' },
-  { title: 'AI·디지털 교육자료 웹전시관', href: 'https://aidtshow.kr/' },
+  {
+    title: "AI·디지털 교육자료 포털",
+    href: "https://www.aidtbook.kr/index.do",
+  },
+  { title: "AI·디지털 교육자료 웹전시관", href: "https://aidtshow.kr/" },
+];
+
+const moeDocs = [
+  {
+    label: "FAQ 모음(2025)",
+    href: "https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view",
+  },
+  {
+    label: "AI 디지털교과서 준비(2025)",
+    href: "https://drive.google.com/file/d/1mUZ49TBxH63vriMFG5jlKhfe05RXT_It/view",
+  },
+  {
+    label: "AI 디지털교과서 활용(2025)",
+    href: "https://drive.google.com/file/d/1vN89EsTm9O2sxX0FQFJ6PhyIqFyTFg-p/view",
+  },
+];
+const dgeDocs = [
+  {
+    label:
+      "붙임1. 교육디지털원패스 및 AI·디지털교육자료 포털 안내(이용동의 및 로그인).pdf",
+    href: "https://drive.google.com/file/d/1rYC2dRXC5orKS-MlrZ0eHPV56ozRmKQI/view",
+  },
+  {
+    label: "붙임3_AI·디지털 교육자료 이용 준비 퀵가이드.pdf",
+    href: "https://drive.google.com/file/d/1jOjOYVLc6FTi19zMc_4CFMzsmOxrxgQ4/view",
+  },
+  {
+    label: "붙임4_[교사] AI·디지털 교육자료 포털 서비스 이용 준비.pdf",
+    href: "https://drive.google.com/file/d/1asrRTpB4UdmjwsY0vUqsgPS8Ba9Oi9Gn/view",
+  },
+  {
+    label: "붙임4-1 [초등] AI·디지털 교육자료 이용을 위한 나이스 준비사항.pdf",
+    href: "https://drive.google.com/file/d/1JB2ykvCiEJl-LT4YZMA20_TqVPY0gvhp/view",
+  },
+  {
+    label: "붙임4-2 [중등] AI·디지털 교육자료 이용을 위한 나이스 준비사항.pdf",
+    href: "https://drive.google.com/file/d/1s6NpvO8S-T7FFPk3tt8rlaXGVkuamh_v/view",
+  },
+  {
+    label: "붙임5_[학생] AI·디지털 교육자료 포털 서비스 이용 준비.pdf",
+    href: "https://drive.google.com/file/d/17wQGtOMtdm5cWR8snjARu04hBXJ4mQny/view",
+  },
+];
+const forms = [
+  {
+    label: "편집 가능 서식(Canva)",
+    href: "https://www.canva.com/design/DAGmKaC0BzU/kehQ-qNuicw8iWf11czrEA/view",
+  },
+  {
+    label: "웹포스터(PDF)",
+    href: "https://drive.google.com/file/d/1Bu01VtbzCK9F31OEA9nEJFtm0-TVEyYm/view",
+  },
+  {
+    label: "가정통신문(HWP)",
+    href: "https://drive.google.com/file/d/1cFZeSVh8JctirODhmfWOS-R3wqvMcQHO/view",
+  },
 ];
 ---
 
@@ -18,7 +77,9 @@ const cards = [
   description="AI·디지털 교육자료 포털·웹전시관과 대구교육청 활용 도움자료 안내"
 >
   <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
-    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+    <h1
+      class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]"
+    >
       AI·디지털 교육자료 활용 도움자료
     </h1>
 
@@ -36,18 +97,112 @@ const cards = [
     </div>
 
     <div class="mt-10">
-      <h2 class="text-[18px] font-bold text-ink">활용 도움자료(대구교육청)</h2>
+      <h2 class="text-[18px] font-bold text-ink">활용 도움자료(교육부)</h2>
       <div class="mt-4 flex flex-wrap gap-3">
-        <LinkButton href="https://drive.google.com/drive/u/0/folders/1gRLnIczv5SX_sVXbQ7H6nGMvCTAk8JKT" variant="primary" external>
-          구글드라이브 폴더 보기
-        </LinkButton>
-        <LinkButton href="/index/manual" variant="ghost">사전 준비사항 안내</LinkButton>
+        <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
+          {
+            moeDocs.map((d) => (
+              <a
+                href={d.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+              >
+                {d.label}
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden="true"
+                  class="shrink-0 text-muted"
+                >
+                  <path
+                    d="M3 11L11 3M5 3h6v6"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            ))
+          }
+        </div>
+        <h2 class="text-[18px] font-bold text-ink">
+          활용 도움자료(대구교육청)
+        </h2>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
+            {
+              dgeDocs.map((d) => (
+                <a
+                  href={d.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+                >
+                  {d.label}
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    aria-hidden="true"
+                    class="shrink-0 text-muted"
+                  >
+                    <path
+                      d="M3 11L11 3M5 3h6v6"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              ))
+            }
+          </div>
+          <h2 class="text-[18px] font-bold text-ink">
+            AI·디지털 교육자료 활용 안내장(2025)(대구교육청)
+          </h2>
+          <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
+            {
+              forms.map((f) => (
+                <a
+                  href={f.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
+                >
+                  {f.label}
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    aria-hidden="true"
+                    class="shrink-0 text-muted"
+                  >
+                    <path
+                      d="M3 11L11 3M5 3h6v6"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              ))
+            }
+          </div>
+        </div>
       </div>
-    </div>
 
-    <PageNavigation 
-      prev={{ title: '사전 준비사항 안내', href: '/index/manual' }}
-      next={{ title: '교육디지털원패스', href: '/index/eduonepass' }}
-    />
+      <PageNavigation
+        prev={{ title: "사전 준비사항 안내", href: "/index/manual" }}
+        next={{ title: "교육디지털원패스", href: "/index/eduonepass" }}
+      />
+    </div>
   </section>
 </BaseLayout>

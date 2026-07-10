@@ -13,35 +13,6 @@ import imgNeis from "../../assets/pages/manual/1-neis/001.png";
 import imgSignup from "../../assets/pages/manual/2-signup/002.png";
 import imgHelp from "../../assets/pages/manual/3-help/003.png";
 import imgGuide from "../../assets/pages/manual/4-guide/004.png";
-
-const moeDocs = [
-  {
-    label: "(교육부) FAQ 모음(2025)",
-    href: "https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link",
-  },
-  {
-    label: "(교육부) AI 디지털교과서 준비(2025)",
-    href: "https://drive.google.com/file/d/1mUZ49TBxH63vriMFG5jlKhfe05RXT_It/view?usp=drive_link",
-  },
-  {
-    label: "(교육부) AI 디지털교과서 활용(2025)",
-    href: "https://drive.google.com/file/d/1vN89EsTm9O2sxX0FQFJ6PhyIqFyTFg-p/view?usp=drive_link",
-  },
-];
-const forms = [
-  {
-    label: "편집 가능 서식(Canva)",
-    href: "https://www.canva.com/design/DAGmKaC0BzU/kehQ-qNuicw8iWf11czrEA/view",
-  },
-  {
-    label: "웹포스터(PDF)",
-    href: "https://drive.google.com/file/d/1Bu01VtbzCK9F31OEA9nEJFtm0-TVEyYm/view?usp=drive_link",
-  },
-  {
-    label: "가정통신문(HWP)",
-    href: "https://drive.google.com/file/d/1cFZeSVh8JctirODhmfWOS-R3wqvMcQHO/view?usp=drive_link",
-  },
-];
 ---
 
 <BaseLayout
@@ -184,15 +155,20 @@ const forms = [
             </h2>
             <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
               <li>
-                ✅ AI·디지털 교육자료 선정 및 구입 절차 이후 NEIS 담당자의
-                사전작업 필요함
+                ✅ 교육디지털원패스 및 AI·디지털 교육자료 포털은 나이스의 학적
+                정보와 연동
+              </li>
+              <li>✅ 학급시간표에서 AI·디지털 교육자료 과목 배정</li>
+              <li>
+                ✅ 나이스 변동 사항이 있을 경우 AI·디지털 교육자료 시스템에
+                반영은 익일
               </li>
               <li>✅ 초등 : [출결일괄편성]</li>
               <li>✅ 중등 : [수강학생편성]</li>
             </ul>
           </div>
         </div>
-        <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
+        <!-- 비디오 세트 (Vimeo 임베드) -->
         <div
           class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
         >
@@ -201,14 +177,18 @@ const forms = [
           >
             <span>🎥 1단계 안내 영상</span>
           </p>
-          <video
-            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
-            controls
-            src=""
+          <div
+            class="relative w-full aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
           >
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
-            연동해주세요.
-          </video>
+            <iframe
+              src="https://player.vimeo.com/video/1159227053"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
         </div>
       </div>
 
@@ -240,7 +220,7 @@ const forms = [
             </div>
           </div>
         </div>
-        <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
+        <!-- 비디오 세트 (Vimeo 임베드) -->
         <div
           class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
         >
@@ -249,14 +229,18 @@ const forms = [
           >
             <span>🎥 2단계 안내 영상</span>
           </p>
-          <video
-            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
-            controls
-            src=""
+          <div
+            class="relative w-full aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
           >
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
-            연동해주세요.
-          </video>
+            <iframe
+              src="https://player.vimeo.com/video/1159227722"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
         </div>
       </div>
 
@@ -286,39 +270,9 @@ const forms = [
                 external>교육디지털원패스(바로가기)</LinkButton
               >
             </div>
-            <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
-              {
-                moeDocs.map((d) => (
-                  <a
-                    href={d.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
-                  >
-                    {d.label}
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      aria-hidden="true"
-                      class="shrink-0 text-muted"
-                    >
-                      <path
-                        d="M3 11L11 3M5 3h6v6"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </a>
-                ))
-              }
-            </div>
           </div>
         </div>
-        <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
+        <!-- 비디오 세트 (Vimeo 임베드) -->
         <div
           class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
         >
@@ -327,14 +281,18 @@ const forms = [
           >
             <span>🎥 3단계 안내 영상</span>
           </p>
-          <video
-            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
-            controls
-            src=""
+          <div
+            class="relative w-full aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
           >
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
-            연동해주세요.
-          </video>
+            <iframe
+              src="https://player.vimeo.com/video/1159228239"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
         </div>
       </div>
 
@@ -369,39 +327,9 @@ const forms = [
                 external>AI·디지털 교육자료 포털(바로가기)</LinkButton
               >
             </div>
-            <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
-              {
-                forms.map((f) => (
-                  <a
-                    href={f.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
-                  >
-                    {f.label}
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      aria-hidden="true"
-                      class="shrink-0 text-muted"
-                    >
-                      <path
-                        d="M3 11L11 3M5 3h6v6"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </a>
-                ))
-              }
-            </div>
           </div>
         </div>
-        <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
+        <!-- 비디오 세트 (Vimeo 임베드) -->
         <div
           class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
         >
@@ -410,14 +338,18 @@ const forms = [
           >
             <span>🎥 4단계 안내 영상</span>
           </p>
-          <video
-            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
-            controls
-            src=""
+          <div
+            class="relative w-full aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
           >
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
-            연동해주세요.
-          </video>
+            <iframe
+              src="https://player.vimeo.com/video/1159228440"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
