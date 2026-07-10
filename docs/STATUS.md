@@ -2,6 +2,32 @@
 
 최종 갱신: 2026-07-10
 
+## 남은 작업 (핸드오프)
+
+> GitHub: `eduinside/ai-dt.net` (main). 로컬·원격 동기화됨. `npm install && npm run dev`로 이어서 작업.
+> 빌드 25페이지 정상, 내부 링크 broken 0.
+
+**배포 (P5, 운영자 계정 필요)**
+- [ ] Cloudflare Pages ↔ GitHub 레포 연동 (설정값·절차: `docs/DEPLOY.md`). 운영자가 진행 예정.
+- [ ] `*.pages.dev` 프리뷰 검수 → 관계자 확인.
+- [ ] ai-dt.net 커스텀 도메인 연결 + DNS 전환(TTL 낮추고, 롤백 경로 확보). 구글 사이트는 전환까지 유지.
+
+**콘텐츠 채우기 (운영자)**
+- [ ] 인증 걸린 원본 이미지 드롭인: `src/assets/pages/{manual/1-neis, manual/2-signup, eduonepass/signup}/`에 `01.png…` 저장하면 자동 표시. 안내: `src/assets/pages/README.md`.
+- [ ] 발행사 답변 12곳·FAQ 문서가 최신인지 확인(원본 갱신 시 `src/assets/replies/…` 교체, 스키마 `src/content/publishers/*.mdx`).
+
+**P4 잔여 (기능 마감)**
+- [ ] 사이트 내 검색(Pagefind) 도입 — 정적 인덱스, 무료. 헤더 🔍 자리에 연결.
+- [ ] 접근성(KWCAG) 점검 — 대비·포커스·대체텍스트·landmark 최종 확인.
+- [ ] 동료용 저작 양식/가이드 문서(P4 산출물) — `docs/`에 마크다운 템플릿 + 메타 항목표.
+- [ ] (선택) 웹폰트 self-host 전환 — 현재 CDN(Pretendard/Hahmlet). 개인정보 원칙상 P4에서 전환 가능.
+
+**보류·확인 사항**
+- manual·eduonepass "가입 방법 영상"은 원본이 인증 걸린 구글 자산이라 자동 이관 불가 → 이미지 드롭인으로 대체하거나, 유튜브 원본이 있으면 `<YouTube id=…/>`로 임베드 가능.
+- `docs/original/CONTENT.md`(원본 실측)·`replies-crawl.json`(이미지 인벤토리)는 재크롤 없이 참고용으로 보존.
+
+---
+
 ## 현재 단계: P3~P5 준비 — 핵심 완료
 
 ### 피드백 필터·이미지 슬롯·배포 준비 (2026-07-10)
