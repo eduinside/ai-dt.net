@@ -3,7 +3,9 @@
  * 수업이야기 허브 — 원본(docs/original/CONTENT.md §10).
  * 원본은 배너 이미지 중심이나, 정보 구조(제목·링크)를 카드로 계승.
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import linkToMathImg from '../../assets/pages/class/link-to-math.png';
 
 const tutoring = [
   { label: '교사', href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/teacher' },
@@ -17,10 +19,6 @@ const tutoring = [
   description="AI·디지털 교육자료를 활용한 수업 사례 — 튜터링 플랫폼, 수업설계 지원, 웹전시관"
 >
   <section class="mx-auto max-w-4xl px-5 py-12 sm:py-14">
-    <div class="mb-10 text-center">
-      <img src="/images/placeholder/class-banner.jpg" alt="수업이야기 배너 이미지" class="mx-auto w-full max-w-[800px] rounded-[var(--radius-card)] border border-line object-cover shadow-sm" loading="lazy" />
-    </div>
-    
     <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[32px]">
       AI·디지털 교육자료 수업이야기
     </h1>
@@ -31,14 +29,10 @@ const tutoring = [
       href="https://sites.google.com/dge.go.kr/aidt-tutoring-t/home"
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-10 block rounded-[var(--radius-card)] border border-primary-200 bg-primary-50 p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)]"
+      class="mt-10 block transition-transform hover:-translate-y-0.5 rounded-[var(--radius-card)] overflow-hidden border border-line shadow-sm hover:shadow-[var(--shadow-card-hover)]"
+      aria-label="AI수학 디지털 교육자료 튜터링 바로가기"
     >
-      <p class="text-[13px] font-bold uppercase tracking-wider text-primary-600">AI수학 디지털 교육자료 튜터링</p>
-      <p class="mt-2 text-[18px] font-bold text-ink">미래형 수학 교실을 위한 AI 디지털 교육자료 지원 플랫폼</p>
-      <span class="mt-3 inline-flex items-center gap-1 text-[14px] font-semibold text-primary-600">
-        바로가기
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-      </span>
+      <Image src={linkToMathImg} alt="AI수학 디지털 교육자료 튜터링 - 미래형 수학 교실을 위한 AI 디지털 교육자료 지원 플랫폼" class="w-full h-auto" />
     </a>
 
     <div class="mt-4 grid gap-3 sm:grid-cols-3">
