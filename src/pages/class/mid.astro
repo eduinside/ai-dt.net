@@ -8,12 +8,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // 원본 수업 지원 영상 콘텐츠 (유튜브)
 const videos = [
-  { id: '1objZh1Lrd4', title: '(1) 교과서 재구성 기능으로 내 자료가 더해진 영어교과서 만들기' },
-  { id: 'dG2PznyU1Ag', title: '(2) 수업 지원 영상' },
-  { id: 'C4bM6Wolws0', title: '(3) 수업 지원 영상' },
-  { id: 'TongXzliuOk', title: '(4) 수업 지원 영상' },
-  { id: 'm9B2iylskvA', title: '(5) 수업 지원 영상' },
-  { id: '8_L1HxAtmSk', title: '(6) 수업 지원 영상' },
+  { 
+    id: '1objZh1Lrd4', 
+    title: '(1) 교과서 재구성 기능으로 내 자료가 더해진 영어교과서 만들기',
+    desc: '학습자료를 재구성하여 맞춤형 영어 수업을 설계하는 방법을 알아봅니다.',
+    link: 'https://www.youtube.com/watch?v=1objZh1Lrd4'
+  },
+  { 
+    id: 'dG2PznyU1Ag', 
+    title: '(2) 다양한 AI 도구를 활용한 개별화 수업 설계',
+    desc: 'AI 챗봇과 자동 채점 도구를 활용해 학업 성취도를 높이는 수업 사례입니다.',
+    link: 'https://www.youtube.com/watch?v=dG2PznyU1Ag'
+  },
+  { 
+    id: 'C4bM6Wolws0', 
+    title: '(3) AIDT 대시보드를 활용한 데이터 기반 피드백',
+    desc: '학생들의 학습 데이터를 분석하여 개별 맞춤형 피드백을 제공하는 방법 안내.',
+    link: 'https://www.youtube.com/watch?v=C4bM6Wolws0'
+  },
+  { 
+    id: 'TongXzliuOk', 
+    title: '(4) 수학 교과에서의 탐구 중심 AI 학습',
+    desc: '개념 이해와 문제 해결력을 키워주는 스마트 수학 학습법과 실제.',
+    link: 'https://www.youtube.com/watch?v=TongXzliuOk'
+  },
+  { 
+    id: 'm9B2iylskvA', 
+    title: '(5) 디지털 교과서 기능 100% 활용 가이드',
+    desc: '수업 전/중/후 효율적인 교사 워크플로우를 위한 핵심 기능 정리.',
+    link: 'https://www.youtube.com/watch?v=m9B2iylskvA'
+  },
+  { 
+    id: '8_L1HxAtmSk', 
+    title: '(6) 모두가 참여하는 협력적 디지털 학습',
+    desc: '동료 학생 및 교사와 상호작용하며 문제를 해결하는 프로젝트 기반 학습.',
+    link: 'https://www.youtube.com/watch?v=8_L1HxAtmSk'
+  },
 ];
 ---
 
@@ -57,11 +87,17 @@ const videos = [
         AI·디지털 교육자료 활용 수업 이게 되네?! <span class="text-muted">| 수업 지원 영상 콘텐츠</span>
       </h2>
       <p class="mt-2 text-[14px] text-muted">#중학교 #영어 #교과서재구성 #내자료더하기</p>
-      <div class="mt-5 space-y-8">
+      <div class="mt-5 space-y-12">
         {
           videos.map((v) => (
-            <div>
-              <p class="mb-2 text-[15px] font-semibold text-ink">{v.title}</p>
+            <div class="rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
+              <div class="mb-4">
+                <p class="text-[16px] font-bold text-ink">{v.title}</p>
+                <p class="mt-1 text-[14px] text-muted">{v.desc}</p>
+                <a href={v.link} target="_blank" rel="noopener noreferrer" class="mt-2 inline-block text-[14px] font-medium text-primary-600 underline underline-offset-2 hover:text-primary-700">
+                  참고 링크 이동
+                </a>
+              </div>
               <YouTube id={v.id} title={v.title} />
             </div>
           ))

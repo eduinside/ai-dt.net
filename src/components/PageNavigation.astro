@@ -1,0 +1,49 @@
+---
+export interface PageLink {
+  title: string;
+  href: string;
+}
+
+interface Props {
+  prev?: PageLink;
+  next?: PageLink;
+  class?: string;
+}
+
+const { prev, next, class: cls = '' } = Astro.props;
+---
+
+<nav class:list={['mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between', cls]} aria-label="페이지 이동">
+  <div class="flex-1">
+    {
+      prev && (
+        <a
+          href={prev.href}
+          class="group flex flex-col items-start gap-1 rounded-[var(--radius-card)] border border-line bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-md"
+        >
+          <span class="text-[12px] font-semibold text-muted transition-colors group-hover:text-primary-600">이전 페이지</span>
+          <span class="text-[15px] font-bold text-ink flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            {prev.title}
+          </span>
+        </a>
+      )
+    }
+  </div>
+  <div class="flex-1 text-right">
+    {
+      next && (
+        <a
+          href={next.href}
+          class="group flex flex-col items-end gap-1 rounded-[var(--radius-card)] border border-line bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-md"
+        >
+          <span class="text-[12px] font-semibold text-muted transition-colors group-hover:text-primary-600">다음 페이지</span>
+          <span class="text-[15px] font-bold text-ink flex items-center gap-2">
+            {next.title}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </span>
+        </a>
+      )
+    }
+  </div>
+</nav>

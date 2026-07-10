@@ -3,6 +3,8 @@
  * 문의 및 장애 지원 — 원본(docs/original/CONTENT.md §14) 텍스트 그대로.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LinkButton from '../components/LinkButton.astro';
+import PageImages from '../components/PageImages.astro';
 ---
 
 <BaseLayout
@@ -64,6 +66,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           교육디지털원패스
           <span class="text-primary-600">콜센터 (☎ 1600-7440)</span>
         </h2>
+      </article>
+
+      <!-- 사용자 문의 이용 안내 -->
+      <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+        <h2 class="text-[18px] font-bold text-ink">사용자 문의 이용 안내</h2>
+        <p class="mt-2 text-[15px] leading-relaxed text-muted">
+          가입 및 이용방법 가이드를 먼저 확인해 보세요. 해결되지 않는 문제는 고객센터나 카카오톡 채널을 통해 문의하실 수 있습니다.
+        </p>
+        <div class="mt-5">
+          <PageImages slug="contact/guide" alt="가입 및 이용방법 가이드 이미지" note="사용자 가이드 안내 이미지 자리" />
+        </div>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <LinkButton href="https://www.aidtbook.kr" variant="ghost" external>
+            고객센터 문의하기
+          </LinkButton>
+          <LinkButton href="https://pf.kakao.com" variant="ghost" external>
+            카카오톡 채널 바로가기
+          </LinkButton>
+        </div>
       </article>
     </div>
   </section>

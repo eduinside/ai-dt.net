@@ -6,6 +6,7 @@
 import { YouTube } from 'astro-embed';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
+import PageImages from '../../components/PageImages.astro';
 
 const EDUNAVI_PKG = 'https://www.edunavi.kr/arc/ad/edunavi/arc/cp/selectChnnlPackageList.do';
 const EDUNAVI_AREA = 'https://www.edunavi.kr/arc/ad/edunavi/arc/cc/selectChnnlCntntsVidoList.do';
@@ -46,8 +47,9 @@ const strategyVideos = [
         학생들이 디지털 기술을 안전하고 책임감 있게 사용할 수 있도록 학교의 교육과정, 학사일정 등을
         고려하여 디지털 역량 교육 주간을 운영할 수 있습니다(3월 운영 권장).
       </p>
-      <div class="mt-4">
-        <LinkButton href="https://www.keris.or.kr/main/ad/pblcte/selectPblcteETCInfo.do" variant="ghost" external>자료 보기(KERIS)</LinkButton>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <LinkButton href="#" variant="ghost" external>초등 자료 보기(KERIS)</LinkButton>
+        <LinkButton href="#" variant="ghost" external>중등 자료 보기(KERIS)</LinkButton>
       </div>
     </section>
 
@@ -65,31 +67,56 @@ const strategyVideos = [
       <h2 class="text-[19px] font-bold text-ink">초등 AIDT 수업자료 <span class="text-[14px] font-normal text-muted">(대구광역시교육청 초등교육과, 대구쌤튜브)</span></h2>
 
       <div class="mt-5 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <p class="text-[15px] font-semibold text-ink">초등 3~4학년 수학 — 수업 전·중·후 활용 노하우</p>
-          <LinkButton href={EDUNAVI_PKG} variant="ghost" external>단원별 보기</LinkButton>
+        <div class="flex flex-col sm:flex-row gap-5">
+          <div class="w-full sm:w-1/3 shrink-0">
+            <PageImages slug="class/math-thumb" alt="초등 3~4학년 수학 썸네일" />
+          </div>
+          <div class="w-full">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p class="text-[15px] font-semibold text-ink">초등 3~4학년 수학 — 수업 전·중·후 활용 노하우</p>
+              <LinkButton href={EDUNAVI_PKG} variant="ghost" external>단원별 보기</LinkButton>
+            </div>
+            <div class="mt-4 space-y-3">
+              <div>
+                <p class="text-[14px] font-semibold text-ink">[3학년]</p>
+                <ul class="mt-1 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+                  {mathUnits.filter(u => u.startsWith('3')).map((u) => <li>{u}</li>)}
+                </ul>
+              </div>
+              <div>
+                <p class="text-[14px] font-semibold text-ink">[4학년]</p>
+                <ul class="mt-1 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+                  {mathUnits.filter(u => u.startsWith('4')).map((u) => <li>{u}</li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-        <ul class="mt-3 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
-          {mathUnits.map((u) => <li>{u}</li>)}
-        </ul>
       </div>
 
       <div class="mt-4 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <p class="text-[15px] font-semibold text-ink">초등 3~4학년 영어 — 수업 단계별 활용 노하우</p>
-          <LinkButton href={EDUNAVI_AREA} variant="ghost" external>영역별 보기</LinkButton>
-        </div>
-        <div class="mt-3 space-y-3">
-          {
-            Object.entries(engTopics).map(([area, items]) => (
-              <div>
-                <p class="text-[14px] font-semibold text-ink">[{area}]</p>
-                <ul class="mt-1 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
-                  {items.map((it) => <li>{it}</li>)}
-                </ul>
-              </div>
-            ))
-          }
+        <div class="flex flex-col sm:flex-row gap-5">
+          <div class="w-full sm:w-1/3 shrink-0">
+            <PageImages slug="class/eng-thumb" alt="초등 3~4학년 영어 썸네일" />
+          </div>
+          <div class="w-full">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p class="text-[15px] font-semibold text-ink">초등 3~4학년 영어 — 수업 단계별 활용 노하우</p>
+              <LinkButton href={EDUNAVI_AREA} variant="ghost" external>영역별 보기</LinkButton>
+            </div>
+            <div class="mt-3 space-y-3">
+              {
+                Object.entries(engTopics).map(([area, items]) => (
+                  <div>
+                    <p class="text-[14px] font-semibold text-ink">[{area}]</p>
+                    <ul class="mt-1 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
+                      {items.map((it) => <li>{it}</li>)}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -113,7 +140,10 @@ const strategyVideos = [
     <section class="mt-10">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h2 class="text-[19px] font-bold text-ink">발행사별 AI 디지털교과서 기능 및 사례 알아보기 <span class="text-[14px] font-normal text-muted">(대구교육연수원)</span></h2>
-        <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+        <div class="flex flex-wrap gap-2">
+          <LinkButton href="https://www.youtube.com/@dgedu/playlists" variant="ghost" external>영상목록 보기</LinkButton>
+          <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+        </div>
       </div>
       <p class="mt-2 text-[14px] text-muted">초·중·고 주요 발행사의 수학과·영어과 AI 디지털교과서 기능 및 수업 적용 사례를 소개합니다.</p>
       <div class="mt-4 space-y-3 text-[14px] leading-relaxed text-muted">
@@ -127,7 +157,10 @@ const strategyVideos = [
     <section class="mt-10">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h2 class="text-[19px] font-bold text-ink">AI 디지털교과서 정보 교과 활용 기초 <span class="text-[14px] font-normal text-muted">(대구창의융합교육원)</span></h2>
-        <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+        <div class="flex flex-wrap gap-2">
+          <LinkButton href="https://www.youtube.com/@%EB%8C%80%EA%B5%AC%EC%B0%BD%EC%9D%98%EC%9C%B5%ED%95%A9%EA%B5%90%EC%9C%A1%EC%9B%90/playlists" variant="ghost" external>영상목록 보기</LinkButton>
+          <LinkButton href={EDUNAVI_PKG} variant="ghost" external>더 보기</LinkButton>
+        </div>
       </div>
       <p class="mt-2 text-[14px] text-muted">초·중·고 주요 발행사의 정보과 AI 디지털교과서 기능 및 수업 적용 사례를 소개합니다.</p>
       <div class="mt-4 space-y-3 text-[14px] leading-relaxed text-muted">

@@ -3,9 +3,11 @@
  * 사전 준비사항 안내 — 원본(docs/original/CONTENT.md §3).
  * 텍스트·체크리스트 그대로. 교육부 자료·서식은 원본 구글 드라이브 링크 유지(C6).
  */
+import { YouTube } from 'astro-embed';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
 import PageImages from '../../components/PageImages.astro';
+import PageNavigation from '../../components/PageNavigation.astro';
 
 const moeDocs = [
   { label: '(교육부) FAQ 모음(2025)', href: 'https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link' },
@@ -42,7 +44,7 @@ const forms = [
         </li>
       </ul>
       <div class="mt-5">
-        <PageImages slug="manual/1-neis" alt="NEIS 학적 연동 안내 이미지" />
+        <PageImages slug="manual/1-neis" alt="NEIS 학적 연동 안내 이미지" note="1단계 과정 이미지 자리" />
       </div>
     </section>
 
@@ -57,8 +59,9 @@ const forms = [
         <li class="text-[14px]">* 영상 재생시 설정(⚙)을 눌러 고화질로 시청하세요.</li>
         <li>교육디지털원패스 교사 가입 방법</li>
       </ul>
-      <div class="mt-5">
-        <PageImages slug="manual/2-signup" alt="교육디지털원패스 가입 방법 안내 이미지·영상 캡처" note="원본의 가입 방법 영상·이미지 자리" />
+      <div class="mt-5 space-y-6">
+        <YouTube id="Z6tFzK7JpM0" title="교육디지털원패스 가입 안내 영상" />
+        <PageImages slug="manual/2-signup" alt="교육디지털원패스 가입 방법 안내 이미지" note="2단계 과정 이미지 자리" />
       </div>
     </section>
 
@@ -84,6 +87,9 @@ const forms = [
             </a>
           ))
         }
+      </div>
+      <div class="mt-5">
+        <PageImages slug="manual/3-help" alt="AI·디지털 교육자료 도움 자료 이미지" note="3단계 과정 이미지 자리" />
       </div>
     </section>
 
@@ -113,6 +119,14 @@ const forms = [
           ))
         }
       </div>
+      <div class="mt-5">
+        <PageImages slug="manual/4-guide" alt="AI·디지털 교육자료 활용 안내장 이미지" note="4단계 과정 이미지 자리" />
+      </div>
     </section>
+
+    <PageNavigation 
+      prev={{ title: '교육디지털원패스', href: '/index/eduonepass' }}
+      next={{ title: 'AI·디지털 교육자료 활용 도움자료', href: '/index/AIDT' }}
+    />
   </section>
 </BaseLayout>

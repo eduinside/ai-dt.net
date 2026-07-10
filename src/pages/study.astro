@@ -18,17 +18,7 @@ import portalButton from '../assets/pages/study/portal-button.png';
       AI·디지털 교육자료 집에서도 스스로 학습하기
     </h1>
 
-    <div class="mt-10">
-      <Image
-        src={poster}
-        alt="AI·디지털 교육자료로 집에서도 스스로 학습하기 안내 — 1단계 포털 로그인, 2단계 교육자료 열기, 3단계 스스로 학습하기, 건강한 디바이스 활용 자세와 약속"
-        widths={[720, 1280]}
-        sizes="(max-width: 768px) 100vw, 720px"
-        class="mx-auto w-full max-w-[900px] rounded-md border border-line shadow-[var(--shadow-card)]"
-      />
-    </div>
-
-    <div class="mt-8 text-center">
+    <div class="mt-8 mb-10 text-center">
       <a
         href="https://www.aidtbook.kr"
         target="_blank"
@@ -39,5 +29,53 @@ import portalButton from '../assets/pages/study/portal-button.png';
         <Image src={portalButton} alt="AI·디지털 교육자료 포털 바로가기" width={480} height={270} class="mx-auto w-full max-w-[360px]" />
       </a>
     </div>
+
+    <div class="mt-4 text-center">
+      <button 
+        id="poster-trigger"
+        class="cursor-zoom-in block w-full outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95"
+        aria-label="포스터 이미지 크게 보기"
+      >
+        <Image
+          src={poster}
+          alt="AI·디지털 교육자료로 집에서도 스스로 학습하기 안내 — 1단계 포털 로그인, 2단계 교육자료 열기, 3단계 스스로 학습하기, 건강한 디바이스 활용 자세와 약속"
+          widths={[720, 1280]}
+          sizes="(max-width: 768px) 100vw, 720px"
+          class="mx-auto w-full max-w-[900px] rounded-md border border-line shadow-[var(--shadow-card)]"
+        />
+      </button>
+    </div>
   </section>
+
+  <!-- Lightbox Dialog -->
+  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-modal="true">
+    <div class="relative w-full max-w-5xl max-h-full overflow-auto hide-scrollbar text-center flex items-center justify-center" aria-label="닫기">
+      <img src={poster.src} alt="스스로 학습 안내 크게 보기" class="max-w-full h-auto object-contain cursor-default bg-white rounded-md" />
+    </div>
+  </dialog>
 </BaseLayout>
+
+<script>
+  function setupLightbox() {
+    const trigger = document.getElementById('poster-trigger');
+    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+    if (!trigger || !dialog) return;
+
+    trigger.addEventListener('click', () => {
+      dialog.showModal();
+    });
+
+    dialog.addEventListener('click', () => {
+      dialog.close();
+    });
+  }
+
+  setupLightbox();
+  document.addEventListener('astro:page-load', setupLightbox);
+</script>
+
+<style>
+  dialog::backdrop {
+    background: transparent;
+  }
+</style>

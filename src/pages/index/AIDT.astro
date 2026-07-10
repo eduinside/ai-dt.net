@@ -5,6 +5,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
 
+import PageNavigation from '../../components/PageNavigation.astro';
+
 const cards = [
   { title: 'AI·디지털 교육자료 포털', href: 'https://www.aidtbook.kr/index.do' },
   { title: 'AI·디지털 교육자료 웹전시관', href: 'https://aidtshow.kr/' },
@@ -35,9 +37,17 @@ const cards = [
 
     <div class="mt-10">
       <h2 class="text-[18px] font-bold text-ink">활용 도움자료(대구교육청)</h2>
-      <div class="mt-4">
+      <div class="mt-4 flex flex-wrap gap-3">
+        <LinkButton href="https://drive.google.com/drive/u/0/folders/1gRLnIczv5SX_sVXbQ7H6nGMvCTAk8JKT" variant="primary" external>
+          구글드라이브 폴더 보기
+        </LinkButton>
         <LinkButton href="/index/manual" variant="ghost">사전 준비사항 안내</LinkButton>
       </div>
     </div>
+
+    <PageNavigation 
+      prev={{ title: '사전 준비사항 안내', href: '/index/manual' }}
+      next={{ title: '학습지원 소프트웨어', href: '/index/software' }}
+    />
   </section>
 </BaseLayout>

@@ -4,6 +4,14 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
+import Carousel from '../../components/Carousel.astro';
+import PageNavigation from '../../components/PageNavigation.astro';
+
+const slideImages = [
+  { src: '/images/placeholder/software-1.jpg', alt: '학습지원 소프트웨어 이미지 1', caption: '원본 네이버 블로그 참고' },
+  { src: '/images/placeholder/software-2.jpg', alt: '학습지원 소프트웨어 이미지 2', caption: '원본 네이버 블로그 참고' },
+  { src: '/images/placeholder/software-3.jpg', alt: '학습지원 소프트웨어 이미지 3', caption: '원본 네이버 블로그 참고' },
+];
 ---
 
 <BaseLayout
@@ -15,11 +23,19 @@ import LinkButton from '../../components/LinkButton.astro';
       학습지원 소프트웨어
     </h1>
 
+    <div class="mt-10">
+      <Carousel images={slideImages} />
+    </div>
+
     <div class="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-line bg-white p-5 shadow-[var(--shadow-card)]">
       <p class="text-[16px] font-semibold text-ink">학습지원 소프트웨어 선정기준 관련 자료 탑재 →</p>
       <LinkButton href="https://edzip.kr/utilization/learning-sw" variant="primary" external>
         자세히 보기(에듀집)
       </LinkButton>
     </div>
+
+    <PageNavigation 
+      prev={{ title: 'AI·디지털 교육자료 활용 도움자료', href: '/index/AIDT' }}
+    />
   </section>
 </BaseLayout>

@@ -5,6 +5,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
 import PageImages from '../../components/PageImages.astro';
+import PageNavigation from '../../components/PageNavigation.astro';
 
 const services = [
   { label: '나이스플러스', href: 'https://www.neisplus.kr/' },
@@ -70,8 +71,9 @@ const services = [
       </div>
     </div>
 
-    <div class="mt-10">
-      <LinkButton href="/index/manual" variant="ghost">AI 디지털교과서 사전 준비사항 안내</LinkButton>
-    </div>
+    <PageNavigation 
+      prev={{ title: '선도학교 운영 관련 FAQ', href: '/index/faq' }}
+      next={{ title: '사전 준비사항 안내', href: '/index/manual' }}
+    />
   </section>
 </BaseLayout>
