@@ -4,6 +4,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
+import PageImages from '../../components/PageImages.astro';
 
 const services = [
   { label: '나이스플러스', href: 'https://www.neisplus.kr/' },
@@ -43,6 +44,9 @@ const services = [
         <li>※ 학생이 직접 회원 가입하는 방법</li>
         <li>※ 교직원이 학생의 회원 가입을 도와주는 방법</li>
       </ul>
+      <div class="mt-5">
+        <PageImages slug="eduonepass/signup" alt="교육디지털원패스 회원 가입 방법 안내 이미지" note="원본의 가입 방법 이미지 자리" />
+      </div>
     </div>
 
     <div class="mt-8">

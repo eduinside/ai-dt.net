@@ -1,0 +1,50 @@
+---
+/**
+ * 페이지 이미지 슬롯 — src/assets/pages/{slug}/ 에 이미지를 넣으면 자동으로 정렬·표시.
+ * 인증이 걸려 자동 이관이 안 되는 원본 스크린샷(예: manual·eduonepass 단계 이미지)을
+ * 운영자가 직접 내려받아 폴더에 넣는 용도. 파일이 없으면 안내 플레이스홀더를 보여준다.
+ * 파일명은 01.png, 02.png … 순으로 두면 순서대로 표시됨.
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+  slug: string;   // src/assets/pages/{slug}
+  alt: string;    // 이미지 대체 텍스트(접근성)
+  note?: string;  // 플레이스홀더에 추가로 보여줄 안내
+}
+const { slug, alt, note } = Astro.props;
+
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/pages/**/*.{png,jpg,jpeg,webp}',
+  { eager: true }
+);
+const imgs = Object.entries(all)
+  .filter(([p]) => p.includes(`/pages/${slug}/`))
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
+---
+
+{
+  imgs.length > 0 ? (
+    <div class="space-y-4">
+      {imgs.map((img, i) => (
+        <Image
+          src={img}
+          alt={`${alt}${imgs.length > 1 ? ` (${i + 1})` : ''}`}
+          widths={[720, 1280]}
+          sizes="(max-width: 768px) 100vw, 720px"
+          class="mx-auto w-full max-w-[820px] rounded-md border border-line bg-white shadow-[var(--shadow-card)]"
+          loading="lazy"
+        />
+      ))}
+    </div>
+  ) : (
+    <div class="rounded-md border-2 border-dashed border-line bg-white/50 px-4 py-8 text-center">
+      <p class="text-[14px] font-semibold text-muted">이미지 자리 — {alt}</p>
+      <p class="mt-1.5 font-mono text-[12px] text-muted">
+        src/assets/pages/{slug}/ 에 01.png, 02.png … 를 넣으면 자동 표시됩니다
+      </p>
+      {note && <p class="mt-1 text-[12px] text-muted">{note}</p>}
+    </div>
+  )
+}

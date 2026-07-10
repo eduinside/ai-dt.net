@@ -5,6 +5,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
+import PageImages from '../../components/PageImages.astro';
 
 const moeDocs = [
   { label: '(교육부) FAQ 모음(2025)', href: 'https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link' },
@@ -40,6 +41,9 @@ const forms = [
           <span class="pl-5 text-[14px]">예) 시간표 수정, 진급, 전출입 등</span>
         </li>
       </ul>
+      <div class="mt-5">
+        <PageImages slug="manual/1-neis" alt="NEIS 학적 연동 안내 이미지" />
+      </div>
     </section>
 
     <!-- 2. 원패스 회원가입 -->
@@ -53,6 +57,9 @@ const forms = [
         <li class="text-[14px]">* 영상 재생시 설정(⚙)을 눌러 고화질로 시청하세요.</li>
         <li>교육디지털원패스 교사 가입 방법</li>
       </ul>
+      <div class="mt-5">
+        <PageImages slug="manual/2-signup" alt="교육디지털원패스 가입 방법 안내 이미지·영상 캡처" note="원본의 가입 방법 영상·이미지 자리" />
+      </div>
     </section>
 
     <!-- 3. 교육부 도움자료 -->
