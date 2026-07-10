@@ -17,7 +17,7 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
 
 <div class="carousel not-prose" data-carousel data-uid={uid}>
   <div
-    class="scroll-track flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth rounded-2xl"
+    class="scroll-track flex snap-x snap-mandatory gap-0 overflow-x-auto scroll-smooth rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
     role="group"
     aria-roledescription="캐러셀"
     tabindex="0"
@@ -29,7 +29,7 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
             src={img.src}
             alt={img.alt ?? `슬라이드 ${i + 1}`}
             loading={i === 0 ? 'eager' : 'lazy'}
-            class="aspect-[16/10] w-full rounded-2xl border border-line object-cover"
+            class="w-full h-auto rounded-2xl border border-line object-contain"
           />
           {img.caption && (
             <figcaption class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-ink/70 to-transparent px-4 py-3 text-sm text-white">
