@@ -20,7 +20,7 @@ import logo from '../assets/logo-512.webp';
       radial-gradient(800px 400px at 85% 10%, var(--color-hero-mid), transparent 65%),
       linear-gradient(150deg, var(--color-hero-from), var(--color-hero-to))"
   >
-    <div class="mx-auto max-w-4xl px-5 pb-16 pt-12 text-center sm:pb-20 sm:pt-16">
+    <div class="mx-auto max-w-4xl px-5 pb-16 pt-12 text-center sm:pb-20 sm:pt-16 animate-fade-in-up">
       <Image src={logo} alt="" width={192} height={192} class="mx-auto mb-5 h-20 w-20 sm:h-24 sm:w-24" loading="eager" />
       <p class="text-[17px] text-ink">대구광역시교육청</p>
       <h1 class="title-underline mt-2 text-[32px] font-bold leading-tight tracking-tight text-ink sm:text-[44px]">
@@ -36,7 +36,7 @@ import logo from '../assets/logo-512.webp';
   </section>
 
   <!-- 연회색 밴드 — 대표 연락처 2건 -->
-  <section class="border-b border-line bg-[var(--color-band)]">
+  <section class="border-b border-line bg-[var(--color-band)] animate-fade-in-up delay-75">
     <div class="mx-auto grid max-w-5xl gap-6 px-5 py-8 text-center sm:grid-cols-2">
       <div>
         <p class="font-bold text-ink">[AI·디지털 교육자료 포털]</p>
@@ -50,7 +50,7 @@ import logo from '../assets/logo-512.webp';
   </section>
 
   <!-- FAQ · 도움자료 섹션 -->
-  <section class="mx-auto max-w-4xl px-5 pt-12">
+  <section class="mx-auto max-w-4xl px-5 pt-12 animate-fade-in-up delay-150">
     <p class="text-[16px] font-semibold text-ink">
       ➡️ 선도학교 운영 관련 FAQ
       <a href="/index/faq" class="ml-1 underline underline-offset-2 hover:text-primary-500">👉 더 보기</a>
@@ -63,14 +63,14 @@ import logo from '../assets/logo-512.webp';
 
     <a
       href="/index/AIDT"
-      class="mt-6 block bg-primary-600 py-3.5 text-center text-[15px] font-semibold text-white transition-colors hover:bg-primary-700"
+      class="mt-6 block bg-primary-600 py-3.5 text-center text-[15px] font-semibold text-white transition-all duration-300 rounded-lg shadow-sm hover:shadow-md hover:bg-primary-700"
     >
       👉활용 도움자료 더 보기🔗
     </a>
   </section>
 
   <!-- 다크 밴드 — 절차 안내 -->
-  <section class="mt-14 bg-primary-600">
+  <section class="mt-14 bg-primary-600 animate-fade-in-up delay-200">
     <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row">
       <p class="text-[15px] font-semibold text-white sm:text-[16px]">
         AI·디지털 교육자료 활용을 위해 필요한 절차를 단계별로 정리해 보았습니다.
@@ -80,39 +80,51 @@ import logo from '../assets/logo-512.webp';
   </section>
 
   <!-- Step 컬럼 -->
-  <section class="mx-auto max-w-5xl px-5 py-12">
-    <div class="grid gap-10 sm:grid-cols-3">
-      <div class="flex flex-col gap-3">
-        <p class="text-[15px] leading-snug text-ink">
-          <span class="font-bold">Step 1.</span><br />
-          교육디지털원패스 접속 및 회원가입
-        </p>
-        <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>
-          교육디지털원패스 포털(바로가기)
-        </LinkButton>
-        <LinkButton href="/index/eduonepass" variant="ghost">도움자료</LinkButton>
+  <section class="mx-auto max-w-5xl px-5 py-12 animate-fade-in-up delay-300">
+    <div class="grid gap-6 sm:grid-cols-3">
+      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+        <div>
+          <p class="text-[15px] leading-snug text-ink">
+            <span class="font-bold text-primary-600">Step 1.</span><br />
+            교육디지털원패스 접속 및 회원가입
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 mt-2">
+          <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>
+            교육디지털원패스 포털(바로가기)
+          </LinkButton>
+          <LinkButton href="/index/eduonepass" variant="ghost">도움자료</LinkButton>
+        </div>
       </div>
 
-      <div class="flex flex-col gap-3">
-        <p class="text-[15px] leading-snug text-ink">
-          <span class="font-bold">Step 2.</span><br />
-          AI·디지털 교육자료 포털에서 수업 진행
-        </p>
-        <LinkButton href="https://www.aidtbook.kr/" variant="primary" external>
-          AI·디지털 교육자료 포털(바로가기)
-        </LinkButton>
-        <LinkButton href="/class/curriculum" variant="ghost">🔥수업사례 · 설계지원✨</LinkButton>
+      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+        <div>
+          <p class="text-[15px] leading-snug text-ink">
+            <span class="font-bold text-primary-600">Step 2.</span><br />
+            AI·디지털 교육자료 포털에서 수업 진행
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 mt-2">
+          <LinkButton href="https://www.aidtbook.kr/" variant="primary" external>
+            AI·디지털 교육자료 포털(바로가기)
+          </LinkButton>
+          <LinkButton href="/class/curriculum" variant="ghost">🔥수업사례 · 설계지원✨</LinkButton>
+        </div>
       </div>
 
-      <div class="flex flex-col gap-3">
-        <p class="text-[15px] leading-snug text-ink">📌자세히 알아보려면(추천자료👍)</p>
-        <LinkButton href="/index/manual" variant="ghost">🚩 사전 준비사항 안내✅</LinkButton>
+      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+        <div>
+          <p class="text-[15px] leading-snug text-ink">📌자세히 알아보려면(추천자료👍)</p>
+        </div>
+        <div class="flex flex-col gap-2 mt-2">
+          <LinkButton href="/index/manual" variant="ghost">🚩 사전 준비사항 안내✅</LinkButton>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- 다크 밴드 — 문의 안내 -->
-  <section class="bg-primary-600">
+  <section class="bg-primary-600 animate-fade-in-up delay-300">
     <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row">
       <p class="text-[15px] font-semibold text-white sm:text-[16px]">
         AI·디지털 교육자료 사용에 도움이 필요하시다면?
