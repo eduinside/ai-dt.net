@@ -3,26 +3,44 @@
  * 사전 준비사항 안내 — 원본(docs/original/CONTENT.md §3).
  * 탭 스타일 및 비디오 플레이스홀더 적용.
  */
-import { Image } from 'astro:assets';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import LinkButton from '../../components/LinkButton.astro';
-import PageNavigation from '../../components/PageNavigation.astro';
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LinkButton from "../../components/LinkButton.astro";
+import PageNavigation from "../../components/PageNavigation.astro";
 
 // 이미지 직접 임포트
-import imgNeis from '../../assets/pages/manual/1-neis/001.png';
-import imgSignup from '../../assets/pages/manual/2-signup/002.png';
-import imgHelp from '../../assets/pages/manual/3-help/003.png';
-import imgGuide from '../../assets/pages/manual/4-guide/004.png';
+import imgNeis from "../../assets/pages/manual/1-neis/001.png";
+import imgSignup from "../../assets/pages/manual/2-signup/002.png";
+import imgHelp from "../../assets/pages/manual/3-help/003.png";
+import imgGuide from "../../assets/pages/manual/4-guide/004.png";
 
 const moeDocs = [
-  { label: '(교육부) FAQ 모음(2025)', href: 'https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link' },
-  { label: '(교육부) AI 디지털교과서 준비(2025)', href: 'https://drive.google.com/file/d/1mUZ49TBxH63vriMFG5jlKhfe05RXT_It/view?usp=drive_link' },
-  { label: '(교육부) AI 디지털교과서 활용(2025)', href: 'https://drive.google.com/file/d/1vN89EsTm9O2sxX0FQFJ6PhyIqFyTFg-p/view?usp=drive_link' },
+  {
+    label: "(교육부) FAQ 모음(2025)",
+    href: "https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link",
+  },
+  {
+    label: "(교육부) AI 디지털교과서 준비(2025)",
+    href: "https://drive.google.com/file/d/1mUZ49TBxH63vriMFG5jlKhfe05RXT_It/view?usp=drive_link",
+  },
+  {
+    label: "(교육부) AI 디지털교과서 활용(2025)",
+    href: "https://drive.google.com/file/d/1vN89EsTm9O2sxX0FQFJ6PhyIqFyTFg-p/view?usp=drive_link",
+  },
 ];
 const forms = [
-  { label: '편집 가능 서식(Canva)', href: 'https://www.canva.com/design/DAGmKaC0BzU/kehQ-qNuicw8iWf11czrEA/view' },
-  { label: '웹포스터(PDF)', href: 'https://drive.google.com/file/d/1Bu01VtbzCK9F31OEA9nEJFtm0-TVEyYm/view?usp=drive_link' },
-  { label: '가정통신문(HWP)', href: 'https://drive.google.com/file/d/1cFZeSVh8JctirODhmfWOS-R3wqvMcQHO/view?usp=drive_link' },
+  {
+    label: "편집 가능 서식(Canva)",
+    href: "https://www.canva.com/design/DAGmKaC0BzU/kehQ-qNuicw8iWf11czrEA/view",
+  },
+  {
+    label: "웹포스터(PDF)",
+    href: "https://drive.google.com/file/d/1Bu01VtbzCK9F31OEA9nEJFtm0-TVEyYm/view?usp=drive_link",
+  },
+  {
+    label: "가정통신문(HWP)",
+    href: "https://drive.google.com/file/d/1cFZeSVh8JctirODhmfWOS-R3wqvMcQHO/view?usp=drive_link",
+  },
 ];
 ---
 
@@ -31,120 +49,242 @@ const forms = [
   description="AI·디지털 교육자료 사용을 위한 사전 준비사항 — NEIS 연동, 교육디지털원패스 가입, 교육부 도움자료, 안내장"
 >
   <section class="mx-auto max-w-4xl px-5 py-12 sm:py-14">
-    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+    <h1
+      class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]"
+    >
       AI·디지털 교육자료 사용을 위한 사전 준비사항 안내
     </h1>
 
     <!-- 1단계 ~ 4단계 대표 이미지 가로 배열 (맨 위 배치) -->
-    <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4" id="top-images-grid">
-      <button class="top-img-btn active cursor-pointer border-2 border-primary-500 rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none" data-target="step1" aria-label="1단계 보기">
-        <Image src={imgNeis} alt="1단계 NEIS 연동" class="w-full h-auto object-cover aspect-[4/3]" />
-        <div class="bg-primary-500 text-white text-[12px] font-bold py-1 text-center">1단계. NEIS 연동</div>
+    <div
+      class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4"
+      id="top-images-grid"
+    >
+      <button
+        class="top-img-btn active cursor-pointer border-2 border-primary-500 rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none"
+        data-target="step1"
+        aria-label="1단계 보기"
+      >
+        <Image
+          src={imgNeis}
+          alt="1단계 [교사] NEIS 교육과정 담당자"
+          class="w-full h-auto object-cover aspect-[4/3]"
+        />
+        <div
+          class="bg-primary-500 text-white text-[12px] font-bold py-1 text-center"
+        >
+          1단계 [교사] NEIS 교육과정 담당자
+        </div>
       </button>
-      <button class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none" data-target="step2" aria-label="2단계 보기">
-        <Image src={imgSignup} alt="2단계 원패스 가입" class="w-full h-auto object-cover aspect-[4/3]" />
-        <div class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center group-hover:bg-primary-500">2단계. 원패스 가입</div>
+      <button
+        class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none"
+        data-target="step2"
+        aria-label="2단계 보기"
+      >
+        <Image
+          src={imgSignup}
+          alt="2단계 [교사] 담임 및 지도교사"
+          class="w-full h-auto object-cover aspect-[4/3]"
+        />
+        <div
+          class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center group-hover:bg-primary-500"
+        >
+          2단계 [교사] 담임 및 지도교사
+        </div>
       </button>
-      <button class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none" data-target="step3" aria-label="3단계 보기">
-        <Image src={imgHelp} alt="3단계 도움 자료" class="w-full h-auto object-cover aspect-[4/3]" />
-        <div class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center">3단계. 도움 자료</div>
+      <button
+        class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none"
+        data-target="step3"
+        aria-label="3단계 보기"
+      >
+        <Image
+          src={imgHelp}
+          alt="3단계 [학생] 처음 가입 학생"
+          class="w-full h-auto object-cover aspect-[4/3]"
+        />
+        <div
+          class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center"
+        >
+          3단계 [학생] 처음 가입 학생
+        </div>
       </button>
-      <button class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none" data-target="step4" aria-label="4단계 보기">
-        <Image src={imgGuide} alt="4단계 활용 안내장" class="w-full h-auto object-cover aspect-[4/3]" />
-        <div class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center">4단계. 활용 안내장</div>
+      <button
+        class="top-img-btn cursor-pointer border-2 border-transparent rounded-lg overflow-hidden shadow-sm transition-all hover:scale-[1.02] outline-none"
+        data-target="step4"
+        aria-label="4단계 보기"
+      >
+        <Image
+          src={imgGuide}
+          alt="4단계 [학생] 계정 있는 학생"
+          class="w-full h-auto object-cover aspect-[4/3]"
+        />
+        <div
+          class="bg-gray-100 text-ink text-[12px] font-bold py-1 text-center"
+        >
+          4단계 [학생] 계정 있는 학생
+        </div>
       </button>
     </div>
 
     <!-- 탭 스타일 단계 표시 버튼 -->
-    <div class="mt-8 flex flex-wrap border-b border-line gap-2" role="tablist" id="manual-tablist">
-      <button class="manual-tab-btn active px-5 py-3 font-bold border-b-2 border-primary-500 text-primary-600 outline-none text-[15px] cursor-pointer" data-target="step1" role="tab" aria-selected="true">
-        Step 1. NEIS 연동
+    <div
+      class="mt-8 flex flex-wrap border-b border-line gap-2"
+      role="tablist"
+      id="manual-tablist"
+    >
+      <button
+        class="manual-tab-btn active px-5 py-3 font-bold border-b-2 border-primary-500 text-primary-600 outline-none text-[15px] cursor-pointer"
+        data-target="step1"
+        role="tab"
+        aria-selected="true"
+      >
+        1단계 [교사] NEIS 교육과정 담당자
       </button>
-      <button class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer" data-target="step2" role="tab" aria-selected="false">
-        Step 2. 원패스 가입
+      <button
+        class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer"
+        data-target="step2"
+        role="tab"
+        aria-selected="false"
+      >
+        2단계 [교사] 담임 및 지도교사
       </button>
-      <button class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer" data-target="step3" role="tab" aria-selected="false">
-        Step 3. 도움 자료
+      <button
+        class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer"
+        data-target="step3"
+        role="tab"
+        aria-selected="false"
+      >
+        3단계 [학생] 처음 가입 학생
       </button>
-      <button class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer" data-target="step4" role="tab" aria-selected="false">
-        Step 4. 활용 안내장
+      <button
+        class="manual-tab-btn px-5 py-3 font-medium border-b-2 border-transparent text-muted hover:text-ink outline-none text-[15px] cursor-pointer"
+        data-target="step4"
+        role="tab"
+        aria-selected="false"
+      >
+        4단계 [학생] 계정 있는 학생
       </button>
     </div>
 
     <!-- 탭 콘텐츠 영역 -->
     <div class="mt-8 min-h-[350px]">
-      <!-- 1단계: NEIS 연동 -->
+      <!-- 1단계 [교사] NEIS 교육과정 담당자 -->
       <div id="step1" class="manual-tab-content block space-y-6">
         <div class="flex flex-col md:flex-row gap-6 items-start">
           <div class="w-full md:w-1/2">
-            <Image src={imgNeis} alt="NEIS 학적 연동 안내 이미지" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+            <Image
+              src={imgNeis}
+              alt="1단계 [교사] NEIS 교육과정 담당자"
+              class="w-full h-auto rounded-lg border border-line shadow-sm"
+            />
           </div>
           <div class="w-full md:w-1/2">
             <h2 class="text-[19px] font-bold text-ink">
-              1. AI·디지털 교육자료 포털과 NEIS 자료 연동 <span class="text-primary-600">(필수 선행 작업)</span>
+              1단계 [교사] NEIS 교육과정 담당자
             </h2>
-            <p class="mt-2 text-[15px] font-semibold text-ink">나이스 학적 연동을 위한 선행 작업 (나이스 교육과정 담당자)</p>
-            <ul class="mt-4 space-y-2 text-[15px] leading-relaxed text-muted">
-              <li>✅ 교육디지털원패스 및 AI·디지털 교육자료 포털은 나이스의 학적 정보와 연동</li>
-              <li>✅ 학급시간표에서 AI·디지털 교육자료 과목 배정</li>
-              <li>✅ 나이스 변동 사항이 있을 경우 AI·디지털 교육자료 시스템에 반영은 익일<br />
-                <span class="pl-5 text-[14px]">예) 시간표 수정, 진급, 전출입 등</span>
+            <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
+              <li>
+                ✅ AI·디지털 교육자료 선정 및 구입 절차 이후 NEIS 담당자의
+                사전작업 필요함
               </li>
+              <li>✅ 초등 : [출결일괄편성]</li>
+              <li>✅ 중등 : [수강학생편성]</li>
             </ul>
           </div>
         </div>
         <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
-        <div class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5">
-          <p class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5">
+        <div
+          class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
+        >
+          <p
+            class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5"
+          >
             <span>🎥 1단계 안내 영상</span>
-            <span class="text-[12px] font-normal text-muted">(추후 R2 연계)</span>
           </p>
-          <video class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black" controls src="">
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를 연동해주세요.
+          <video
+            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
+            controls
+            src=""
+          >
+            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
+            연동해주세요.
           </video>
         </div>
       </div>
 
-      <!-- 2단계: 원패스 가입 -->
+      <!-- 2단계 [교사] 담임 및 지도교사 -->
       <div id="step2" class="manual-tab-content hidden space-y-6">
         <div class="flex flex-col md:flex-row gap-6 items-start">
           <div class="w-full md:w-1/2">
-            <Image src={imgSignup} alt="교육디지털원패스 가입 방법 안내 이미지" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+            <Image
+              src={imgSignup}
+              alt="2단계 [교사] 담임 및 지도교사"
+              class="w-full h-auto rounded-lg border border-line shadow-sm"
+            />
           </div>
           <div class="w-full md:w-1/2">
-            <h2 class="text-[19px] font-bold text-ink">2. 교육디지털원패스 회원가입(교사 및 학생)</h2>
-            <div class="mt-3">
-              <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>교육디지털원패스 포털(바로가기)</LinkButton>
-            </div>
-            <ul class="mt-4 space-y-2 text-[15px] leading-relaxed text-muted">
-              <li>교육디지털원패스 학생 가입 방법 — (유형1) 보호자와 학생이 직접 가입 / (유형2) 담임교사 지원 가입</li>
-              <li class="text-[14px]">* 영상 재생시 설정(⚙)을 눌러 고화질로 시청하세요.</li>
-              <li>교육디지털원패스 교사 가입 방법</li>
+            <h2 class="text-[19px] font-bold text-ink">
+              2단계 [교사] 담임 및 지도교사
+            </h2>
+            <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
+              <li>✅ 교육디지털원패스 회원에 가입하기</li>
+              <li>✅ AI·디지털 교육자료 포털에 로그인하기</li>
+              <li>✅ 약관 동의 후 사용하기</li>
             </ul>
+            <div class="mt-3">
+              <LinkButton
+                href="https://edupass.neisplus.kr/"
+                variant="primary"
+                external>교육디지털원패스(바로가기)</LinkButton
+              >
+            </div>
           </div>
         </div>
         <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
-        <div class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5">
-          <p class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5">
+        <div
+          class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
+        >
+          <p
+            class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5"
+          >
             <span>🎥 2단계 안내 영상</span>
-            <span class="text-[12px] font-normal text-muted">(추후 R2 연계)</span>
           </p>
-          <video class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black" controls src="">
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를 연동해주세요.
+          <video
+            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
+            controls
+            src=""
+          >
+            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
+            연동해주세요.
           </video>
         </div>
       </div>
 
-      <!-- 3단계: 도움 자료 -->
+      <!-- 3단계 [학생] 처음 가입 학생 -->
       <div id="step3" class="manual-tab-content hidden space-y-6">
         <div class="flex flex-col md:flex-row gap-6 items-start">
           <div class="w-full md:w-1/2">
-            <Image src={imgHelp} alt="AI·디지털 교육자료 도움 자료 이미지" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+            <Image
+              src={imgHelp}
+              alt="3단계 [학생] 처음 가입 학생"
+              class="w-full h-auto rounded-lg border border-line shadow-sm"
+            />
           </div>
           <div class="w-full md:w-1/2">
-            <h2 class="text-[19px] font-bold text-ink">3. AI·디지털 교육자료 도움 자료 (교육부 자료)</h2>
+            <h2 class="text-[19px] font-bold text-ink">
+              3단계 [학생] 처음 가입 학생
+            </h2>
+            <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
+              <li>✅ 교육디지털원패스 회원에 가입하기</li>
+              <li>✅ AI·디지털 교육자료 포털에 로그인하기</li>
+              <li>✅ 약관 동의 후 사용하기</li>
+            </ul>
             <div class="mt-3">
-              <LinkButton href="https://www.aidtbook.kr/index.do" variant="primary" external>AI·디지털 교육자료 포털(바로가기)</LinkButton>
+              <LinkButton
+                href="https://edupass.neisplus.kr/"
+                variant="primary"
+                external>교육디지털원패스(바로가기)</LinkButton
+              >
             </div>
             <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
               {
@@ -156,8 +296,21 @@ const forms = [
                     class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
                   >
                     {d.label}
-                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
-                      <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                      class="shrink-0 text-muted"
+                    >
+                      <path
+                        d="M3 11L11 3M5 3h6v6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
                     </svg>
                   </a>
                 ))
@@ -166,31 +319,56 @@ const forms = [
           </div>
         </div>
         <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
-        <div class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5">
-          <p class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5">
+        <div
+          class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
+        >
+          <p
+            class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5"
+          >
             <span>🎥 3단계 안내 영상</span>
-            <span class="text-[12px] font-normal text-muted">(추후 R2 연계)</span>
           </p>
-          <video class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black" controls src="">
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를 연동해주세요.
+          <video
+            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
+            controls
+            src=""
+          >
+            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
+            연동해주세요.
           </video>
         </div>
       </div>
 
-      <!-- 4단계: 활용 안내장 -->
+      <!-- 4단계 [학생] 계정 있는 학생 -->
       <div id="step4" class="manual-tab-content hidden space-y-6">
         <div class="flex flex-col md:flex-row gap-6 items-start">
           <div class="w-full md:w-1/2">
-            <Image src={imgGuide} alt="AI·디지털 교육자료 활용 안내장 이미지" class="w-full h-auto rounded-lg border border-line shadow-sm" />
+            <Image
+              src={imgGuide}
+              alt="4단계 [학생] 계정 있는 학생"
+              class="w-full h-auto rounded-lg border border-line shadow-sm"
+            />
           </div>
           <div class="w-full md:w-1/2">
-            <h2 class="text-[19px] font-bold text-ink">4. AI·디지털 교육자료 활용 안내장(2025)</h2>
-            <p class="mt-2 text-[15px] font-semibold text-ink">웹포스터 및 가정통신문 활용 안내</p>
+            <h2 class="text-[19px] font-bold text-ink">
+              4단계 [학생] 계정 있는 학생
+            </h2>
+            <p class="mt-2 text-[15px] font-semibold text-ink">
+              나의 계정을 확인하고 AI·디지털 교육자료에 로그인해요
+            </p>
             <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
-              <li>✅ 각 학교 상황에 맞게 수정하여 활용하시기 바랍니다.</li>
-              <li>✅ 타시도에서 활용하실 경우 출처를 밝혀주시기 바랍니다.</li>
-              <li>✅ Canva 템플릿 링크에서 본인 계정으로 로그인하면 자동 복제됩니다. (추가 요청 필요 없음)</li>
+              <li>
+                ✅ AI·디지털 교육자료 포털에 접속하고 '교육디지털원패스'로
+                로그인하기
+              </li>
+              <li>✅ AI·디지털 교육자료 약관 동의 후 사용하기</li>
             </ul>
+            <div class="mt-3">
+              <LinkButton
+                href="https://www.aidtbook.kr/index.do"
+                variant="primary"
+                external>AI·디지털 교육자료 포털(바로가기)</LinkButton
+              >
+            </div>
             <div class="mt-4 grid gap-3 grid-cols-1 sm:grid-cols-2">
               {
                 forms.map((f) => (
@@ -201,8 +379,21 @@ const forms = [
                     class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[14px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
                   >
                     {f.label}
-                    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
-                      <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      aria-hidden="true"
+                      class="shrink-0 text-muted"
+                    >
+                      <path
+                        d="M3 11L11 3M5 3h6v6"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
                     </svg>
                   </a>
                 ))
@@ -211,93 +402,107 @@ const forms = [
           </div>
         </div>
         <!-- 비디오 세트 (추후 R2에서 재생하도록 video 태그 플레이스홀더만 제시) -->
-        <div class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5">
-          <p class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5">
+        <div
+          class="mt-6 rounded-[var(--radius-card)] border border-line bg-gray-50 p-5"
+        >
+          <p
+            class="text-[15px] font-bold text-ink mb-3 flex items-center gap-1.5"
+          >
             <span>🎥 4단계 안내 영상</span>
-            <span class="text-[12px] font-normal text-muted">(추후 R2 연계)</span>
           </p>
-          <video class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black" controls src="">
-            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를 연동해주세요.
+          <video
+            class="w-full max-h-[360px] rounded-lg shadow-sm border border-line bg-black"
+            controls
+            src=""
+          >
+            지원하지 않는 브라우저입니다. R2 비디오 스트리밍 주소를
+            연동해주세요.
           </video>
         </div>
       </div>
     </div>
 
-    <PageNavigation 
-      next={{ title: 'AI·디지털 교육자료 활용 도움자료', href: '/index/AIDT' }}
+    <PageNavigation
+      next={{ title: "AI·디지털 교육자료 활용 도움자료", href: "/index/AIDT" }}
     />
   </section>
 </BaseLayout>
 
 <script>
   function setupManualTabs() {
-    const topBtns = document.querySelectorAll('.top-img-btn');
-    const tabBtns = document.querySelectorAll('.manual-tab-btn');
-    const contents = document.querySelectorAll('.manual-tab-content');
+    const topBtns = document.querySelectorAll(".top-img-btn");
+    const tabBtns = document.querySelectorAll(".manual-tab-btn");
+    const contents = document.querySelectorAll(".manual-tab-content");
 
     function activateTab(targetId: string) {
       // 1. 탑 이미지 보더 갱신
-      topBtns.forEach(btn => {
-        const target = btn.getAttribute('data-target');
-        const textDiv = btn.querySelector('div');
+      topBtns.forEach((btn) => {
+        const target = btn.getAttribute("data-target");
+        const textDiv = btn.querySelector("div");
         if (target === targetId) {
-          btn.classList.add('border-primary-500');
-          btn.classList.remove('border-transparent');
+          btn.classList.add("border-primary-500");
+          btn.classList.remove("border-transparent");
           if (textDiv) {
-            textDiv.className = 'bg-primary-500 text-white text-[12px] font-bold py-1 text-center';
+            textDiv.className =
+              "bg-primary-500 text-white text-[12px] font-bold py-1 text-center";
           }
         } else {
-          btn.classList.remove('border-primary-500');
-          btn.classList.add('border-transparent');
+          btn.classList.remove("border-primary-500");
+          btn.classList.add("border-transparent");
           if (textDiv) {
-            textDiv.className = 'bg-gray-100 text-ink text-[12px] font-bold py-1 text-center';
+            textDiv.className =
+              "bg-gray-100 text-ink text-[12px] font-bold py-1 text-center";
           }
         }
       });
 
       // 2. 탭 버튼 상태 갱신
-      tabBtns.forEach(btn => {
-        const target = btn.getAttribute('data-target');
+      tabBtns.forEach((btn) => {
+        const target = btn.getAttribute("data-target");
         if (target === targetId) {
-          btn.classList.add('active', 'border-primary-500', 'text-primary-600');
-          btn.classList.remove('border-transparent', 'text-muted');
-          btn.setAttribute('aria-selected', 'true');
+          btn.classList.add("active", "border-primary-500", "text-primary-600");
+          btn.classList.remove("border-transparent", "text-muted");
+          btn.setAttribute("aria-selected", "true");
         } else {
-          btn.classList.remove('active', 'border-primary-500', 'text-primary-600');
-          btn.classList.add('border-transparent', 'text-muted');
-          btn.setAttribute('aria-selected', 'false');
+          btn.classList.remove(
+            "active",
+            "border-primary-500",
+            "text-primary-600",
+          );
+          btn.classList.add("border-transparent", "text-muted");
+          btn.setAttribute("aria-selected", "false");
         }
       });
 
       // 3. 탭 콘텐츠 표시 전환
-      contents.forEach(content => {
+      contents.forEach((content) => {
         if (content.id === targetId) {
-          content.classList.remove('hidden');
-          content.classList.add('block');
+          content.classList.remove("hidden");
+          content.classList.add("block");
         } else {
-          content.classList.remove('block');
-          content.classList.add('hidden');
+          content.classList.remove("block");
+          content.classList.add("hidden");
         }
       });
     }
 
     // 탑 이미지 클릭 리스너
-    topBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-target');
+    topBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-target");
         if (target) activateTab(target);
       });
     });
 
     // 탭 버튼 클릭 리스너
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-target');
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-target");
         if (target) activateTab(target);
       });
     });
   }
 
   setupManualTabs();
-  document.addEventListener('astro:page-load', setupManualTabs);
+  document.addEventListener("astro:page-load", setupManualTabs);
 </script>
