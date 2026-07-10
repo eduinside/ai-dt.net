@@ -116,10 +116,24 @@ const isActive = (href: string) =>
       </ul>
     </nav>
 
-    <!-- 모바일 메뉴 -->
-    <details class="group relative md:hidden">
-      <summary
-        class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg text-ink hover:bg-primary-50"
+    <div class="flex items-center gap-1.5">
+      <!-- 검색 링크 -->
+      <a
+        href="/search"
+        class="grid h-10 w-10 cursor-pointer place-items-center rounded-lg text-muted hover:bg-primary-50 hover:text-ink transition-colors"
+        aria-label="검색"
+        data-pagefind-ignore
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8" />
+          <path d="M13.5 13.5L18 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+      </a>
+
+      <!-- 모바일 메뉴 -->
+      <details class="group relative md:hidden">
+        <summary
+          class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg text-ink hover:bg-primary-50"
         aria-label="메뉴 열기"
       >
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="group-open:hidden">

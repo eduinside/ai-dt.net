@@ -6,7 +6,7 @@
   "description": "AI·디지털 교육자료 수업 지원센터 (ai-dt.net)",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -17,5 +17,8 @@
     "astro-embed": "^0.9.0",
     "@tailwindcss/vite": "^4.0.6",
     "tailwindcss": "^4.0.6"
+  },
+  "devDependencies": {
+    "pagefind": "^1.1.8"
   }
 }
