@@ -22,6 +22,9 @@ import { faqRows } from '../../data/faq';
       <ReplyBoard rows={faqRows} showPublisher={false} />
     </div>
 
-    <PageNavigation next={{ title: '교육디지털원패스', href: '/index/eduonepass' }} />
+    <PageNavigation 
+      prev={{ title: '학습지원 소프트웨어', href: '/index/software' }}
+      next={{ title: '발행사 답변', href: '/index/feedback' }}
+    />
   </section>
 </BaseLayout>

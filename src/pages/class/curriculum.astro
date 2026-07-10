@@ -131,9 +131,16 @@ const strategyVideos = [
       <div class="mt-4 flex flex-wrap items-center gap-3">
         <LinkButton href={EDUNAVI_VIDEO} variant="ghost" external>영상 보기(에듀나비)</LinkButton>
       </div>
-      <ul class="mt-4 grid grid-cols-1 gap-1 text-[14px] text-muted sm:grid-cols-2">
-        {strategyVideos.map((v) => <li>{v}</li>)}
-      </ul>
+      <div class="mt-5 rounded-[var(--radius-card)] border border-line bg-gray-50/50 p-6 shadow-sm">
+        <ul class="grid grid-cols-1 gap-x-8 gap-y-3.5 text-[14px] sm:grid-cols-2">
+          {strategyVideos.map((v) => (
+            <li class="flex items-start gap-2.5">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 shrink-0 mt-1.5"></span>
+              <span class="text-muted leading-relaxed font-medium">{v}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
 
     <!-- 발행사별 기능·사례 -->

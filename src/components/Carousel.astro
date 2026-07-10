@@ -15,7 +15,34 @@ const { images } = Astro.props;
 const uid = 'car-' + Math.random().toString(36).slice(2, 8);
 ---
 
-<div class="carousel not-prose" data-carousel data-uid={uid}>
+<div class="carousel not-prose relative group/carousel" data-carousel data-uid={uid}>
+  {
+    images.length > 1 && (
+      <>
+        <button
+          type="button"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white/90 text-ink shadow-sm transition-all hover:bg-white hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 cursor-pointer"
+          data-prev-btn
+          aria-label="이전 슬라이드"
+        >
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-white/90 text-ink shadow-sm transition-all hover:bg-white hover:scale-105 active:scale-95 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 cursor-pointer"
+          data-next-btn
+          aria-label="다음 슬라이드"
+        >
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </>
+    )
+  }
+
   <div
     class="scroll-track flex snap-x snap-mandatory gap-0 overflow-x-auto scroll-smooth rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
     role="group"
@@ -68,10 +95,14 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
       const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
       if (!slides.length) return;
 
-      const setActive = (idx: number) =>
+      let currentIdx = 0;
+
+      const setActive = (idx: number) => {
+        currentIdx = idx;
         dots.forEach((d, i) =>
           i === idx ? d.setAttribute('data-active', '') : d.removeAttribute('data-active')
         );
+      };
       setActive(0);
 
       dots.forEach((dot) =>
@@ -80,6 +111,22 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
           slides[i]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         })
       );
+
+      // 좌우 버튼 바인딩
+      const prevBtn = root.querySelector<HTMLButtonElement>('[data-prev-btn]');
+      const nextBtn = root.querySelector<HTMLButtonElement>('[data-next-btn]');
+
+      prevBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = (currentIdx - 1 + slides.length) % slides.length;
+        slides[targetIdx]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+
+      nextBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = (currentIdx + 1) % slides.length;
+        slides[targetIdx]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
 
       const io = new IntersectionObserver(
         (entries) => {

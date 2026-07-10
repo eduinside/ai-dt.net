@@ -2,10 +2,14 @@
 /**
  * 교육디지털원패스 — 원본(docs/original/CONTENT.md §5).
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
-import PageImages from '../../components/PageImages.astro';
 import PageNavigation from '../../components/PageNavigation.astro';
+import img1 from '../../assets/pages/eduonepass/signup/01.png';
+import img2 from '../../assets/pages/eduonepass/signup/02.png';
+import img3 from '../../assets/pages/eduonepass/signup/03.png';
+import img4 from '../../assets/pages/eduonepass/signup/04.png';
 
 const services = [
   { label: '나이스플러스', href: 'https://www.neisplus.kr/' },
@@ -36,18 +40,58 @@ const services = [
         다양한 인증수단을 제공합니다. 간편 로그인 기능을 제공하여 회원가입 편리성을 제공하고,
         온라인 학생 신분 확인 및 학생 정보를 제공합니다.
       </p>
+      <div class="mt-5 text-center">
+        <Image src={img1} alt="교육디지털원패스란? 안내 이미지" class="mx-auto rounded-md border border-line shadow-sm w-full max-w-[720px] h-auto" />
+      </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-8 space-y-4">
       <h2 class="text-[18px] font-bold text-ink">교육디지털원패스 회원 가입 방법</h2>
-      <ul class="mt-4 space-y-2 text-[15px] leading-relaxed text-muted">
-        <li>※ 교직원</li>
-        <li>※ 학생이 직접 회원 가입하는 방법</li>
-        <li>※ 교직원이 학생의 회원 가입을 도와주는 방법</li>
-      </ul>
-      <div class="mt-5">
-        <PageImages slug="eduonepass/signup" alt="교육디지털원패스 회원 가입 방법 안내 이미지" note="원본의 가입 방법 이미지 자리" />
-      </div>
+      
+      <!-- 교직원 회원 가입 방법 -->
+      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
+          <span>※ 교직원 회원 가입 방법</span>
+          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-2">
+          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img2.src} aria-label="교직원 가입 방법 이미지 크게 보기">
+            <Image src={img2} alt="교직원 회원 가입 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+          </button>
+        </div>
+      </details>
+
+      <!-- 학생이 직접 회원 가입하는 방법 -->
+      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
+          <span>※ 학생이 직접 회원 가입하는 방법</span>
+          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-3">
+          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img3.src} aria-label="학생 직접 가입 방법 이미지 크게 보기">
+            <Image src={img3} alt="학생이 직접 회원 가입하는 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+          </button>
+        </div>
+      </details>
+
+      <!-- 교직원이 학생의 회원 가입을 도와주는 방법 -->
+      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
+          <span>※ 교직원이 학생의 회원 가입을 도와주는 방법</span>
+          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-4">
+          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img4.src} aria-label="도와주는 방법 이미지 크게 보기">
+            <Image src={img4} alt="교직원이 학생의 회원 가입을 도와주는 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+          </button>
+        </div>
+      </details>
     </div>
 
     <div class="mt-8">
@@ -72,8 +116,52 @@ const services = [
     </div>
 
     <PageNavigation 
-      prev={{ title: '선도학교 운영 관련 FAQ', href: '/index/faq' }}
-      next={{ title: '사전 준비사항 안내', href: '/index/manual' }}
+      prev={{ title: 'AI·디지털 교육자료 활용 도움자료', href: '/index/AIDT' }}
+      next={{ title: '학습지원 소프트웨어', href: '/index/software' }}
     />
   </section>
+
+  <!-- Lightbox Dialog -->
+  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-modal="true">
+    <div class="relative w-full max-w-[95vw] max-h-[95vh] overflow-auto hide-scrollbar text-center flex items-center justify-center">
+      <img id="lightbox-img" src="" alt="크게 보기" class="max-w-full max-h-[90vh] object-contain cursor-default bg-white rounded-md" />
+    </div>
+  </dialog>
 </BaseLayout>
+
+<script>
+  function setupLightbox() {
+    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    if (!dialog || !lightboxImg) return;
+
+    // 2, 3, 4번 아코디언 컨테이너 내의 버튼 이벤트 바인딩
+    [2, 3, 4].forEach(num => {
+      const container = document.getElementById(`accordion-container-${num}`);
+      const btn = container?.querySelector('button');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const src = btn.getAttribute('data-img-src');
+          if (src) {
+            lightboxImg.src = src;
+            dialog.showModal();
+          }
+        });
+      }
+    });
+
+    dialog.addEventListener('click', () => {
+      dialog.close();
+    });
+  }
+
+  setupLightbox();
+  document.addEventListener('astro:page-load', setupLightbox);
+</script>
+
+<style>
+  dialog::backdrop {
+    background: transparent;
+  }
+</style>
