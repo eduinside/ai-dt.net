@@ -1,7 +1,7 @@
 ---
 /**
  * 발행사 답변 허브 — 원본 제목·안내문(docs/original/CONTENT.md §8) + QnA형 게시판.
- * 전체 답변 목록을 먼저 보여주고, 발행사 칩을 누르면 해당 발행사만 목록형으로 필터(정적 페이지 이동).
+ * 초기에는 목록을 숨기고, 발행사 이름 칩을 누르면 해당 발행사 답변만 그 자리에서 표시(클라이언트 필터, 페이지 이동 없음).
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
@@ -35,25 +35,68 @@ const rows = publishers.flatMap((p) =>
       발행사별로 탑재해 두었으니 활용에 참고하시기 바랍니다. (가나다순)
     </p>
 
-    <!-- 발행사 필터 칩 -->
-    <nav class="mt-8 flex flex-wrap justify-center gap-2" aria-label="발행사 필터">
-      <span class="rounded-full bg-primary-600 px-3.5 py-1.5 text-[13px] font-semibold text-white" aria-current="page">
-        전체
-      </span>
+    <!-- 발행사 필터 칩 (누르면 그 자리에서 필터, 페이지 이동 없음) -->
+    <nav id="pub-filter" class="mt-8 flex flex-wrap justify-center gap-2" aria-label="발행사 선택">
       {
         publishers.map((p) => (
-          <a
-            href={`/index/feedback/${p.id}/`}
-            class="rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600"
+          <button
+            type="button"
+            data-pub={p.id}
+            aria-pressed="false"
+            class="pub-chip rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-primary-400 hover:text-primary-600 aria-pressed:border-primary-600 aria-pressed:bg-primary-600 aria-pressed:text-white"
           >
             {p.data.name}
-          </a>
+          </button>
         ))
       }
     </nav>
 
-    <div class="mt-8">
-      <ReplyBoard rows={rows} />
+    <!-- 안내 자리표시(발행사 선택 전) -->
+    <p id="pub-empty" class="mt-10 rounded-[var(--radius-card)] border border-dashed border-line bg-white/60 py-10 text-center text-[15px] text-muted">
+      위에서 발행사를 선택하면 해당 발행사의 답변이 여기에 표시됩니다.
+    </p>
+
+    <div id="pub-board" class="mt-6">
+      <ReplyBoard rows={rows} filterable />
     </div>
   </section>
+
+  <noscript>
+    <style>
+      #pub-empty { display: none; }
+      .reply-row[hidden] { display: block !important; }
+    </style>
+  </noscript>
 </BaseLayout>
+
+<script>
+  const filter = document.getElementById('pub-filter');
+  const empty = document.getElementById('pub-empty');
+  const rows = Array.from(document.querySelectorAll<HTMLDetailsElement>('.reply-row'));
+
+  function select(pub: string) {
+    let shown = 0;
+    for (const row of rows) {
+      const match = row.dataset.pub === pub;
+      row.hidden = !match;
+      if (!match) row.open = false;
+      if (match) shown++;
+    }
+    if (empty) empty.hidden = shown > 0;
+    for (const chip of filter?.querySelectorAll<HTMLButtonElement>('.pub-chip') ?? []) {
+      chip.setAttribute('aria-pressed', String(chip.dataset.pub === pub));
+    }
+  }
+
+  filter?.addEventListener('click', (e) => {
+    const chip = (e.target as HTMLElement).closest<HTMLButtonElement>('.pub-chip');
+    if (chip?.dataset.pub) select(chip.dataset.pub);
+  });
+
+  // 딥링크: /index/feedback#천재 또는 #cheonjae 진입 시 해당 발행사 자동 선택
+  const hash = decodeURIComponent(location.hash.replace('#', ''));
+  if (hash) {
+    const chip = filter?.querySelector<HTMLButtonElement>(`.pub-chip[data-pub="${hash}"]`);
+    if (chip) select(hash);
+  }
+</script>

@@ -16,8 +16,9 @@ interface Row {
 interface Props {
   rows: Row[];
   showPublisher?: boolean; // 허브(전체 목록)에서 발행사 배지 표시
+  filterable?: boolean;    // 허브에서 발행사 칩으로 클라이언트 필터링(초기 숨김)
 }
-const { rows, showPublisher = true } = Astro.props;
+const { rows, showPublisher = true, filterable = false } = Astro.props;
 
 const allImages = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/replies/**/*.png',
@@ -35,7 +36,12 @@ const imagesFor = (slug: string, dir: string) =>
     rows.map((row) => {
       const imgs = imagesFor(row.slug, row.dir);
       return (
-        <details class="group" id={`${row.slug}-${row.dir}`}>
+        <details
+          class="group reply-row"
+          id={`${row.slug}-${row.dir}`}
+          data-pub={row.slug}
+          hidden={filterable}
+        >
           <summary class="flex cursor-pointer list-none items-center gap-3 px-2 py-4 transition-colors hover:bg-primary-50/60">
             {showPublisher && (
               <span class="shrink-0 rounded-[4px] bg-primary-600 px-2.5 py-1 text-[13px] font-semibold text-white">

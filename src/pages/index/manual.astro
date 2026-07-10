@@ -5,7 +5,6 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LinkButton from '../../components/LinkButton.astro';
-import Accordion from '../../components/Accordion.astro';
 
 const moeDocs = [
   { label: '(교육부) FAQ 모음(2025)', href: 'https://drive.google.com/file/d/1wNKrj2p4mUO0uaq_ZU9nteewIxaKZbP_/view?usp=drive_link' },
@@ -28,16 +27,8 @@ const forms = [
       AI·디지털 교육자료 사용을 위한 사전 준비사항 안내
     </h1>
 
-    <!-- 대상별 안내 -->
-    <div class="mt-10 rounded-[var(--radius-card)] border border-line bg-white px-5 shadow-[var(--shadow-card)]">
-      <Accordion label="1. NEIS 교육과정 담당자" name="target" />
-      <Accordion label="2. 담임 및 지도교사" name="target" />
-      <Accordion label="3. 처음 교육디지털원패스 가입학생의 경우" name="target" />
-      <Accordion label="4. 기존 교육디지털원패스 가입학생의 경우" name="target" />
-    </div>
-
     <!-- 1. NEIS 연동 -->
-    <section class="mt-12">
+    <section class="mt-10">
       <h2 class="text-[19px] font-bold text-ink">
         1. AI·디지털 교육자료 포털과 NEIS 자료 연동 <span class="text-primary-600">(필수 선행 작업)</span>
       </h2>
