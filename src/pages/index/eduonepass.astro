@@ -2,23 +2,23 @@
 /**
  * 교육디지털원패스 — 원본(docs/original/CONTENT.md §5).
  */
-import { Image } from 'astro:assets';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import LinkButton from '../../components/LinkButton.astro';
-import PageNavigation from '../../components/PageNavigation.astro';
-import img1 from '../../assets/pages/eduonepass/signup/01.png';
-import img2 from '../../assets/pages/eduonepass/signup/02.png';
-import img3 from '../../assets/pages/eduonepass/signup/03.png';
-import img4 from '../../assets/pages/eduonepass/signup/04.png';
-import img5 from '../../assets/pages/eduonepass/signup/05.png';
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LinkButton from "../../components/LinkButton.astro";
+import PageNavigation from "../../components/PageNavigation.astro";
+import img1 from "../../assets/pages/eduonepass/signup/01.png";
+import img2 from "../../assets/pages/eduonepass/signup/02.png";
+import img3 from "../../assets/pages/eduonepass/signup/03.png";
+import img4 from "../../assets/pages/eduonepass/signup/04.png";
+import img5 from "../../assets/pages/eduonepass/signup/05.png";
 
 const services = [
-  { label: '나이스플러스', href: 'https://www.neisplus.kr/' },
-  { label: '교육설문 에듀로', href: 'https://eduro.go.kr/nxui/index.html' },
-  { label: '함께학교', href: 'https://www.togetherschool.go.kr/' },
-  { label: '똑똑수학탐험대', href: 'https://www.toctocmath.kr/' },
-  { label: '에듀넷', href: 'https://www.edunet.net/' },
-  { label: '대입정보포털 어디가', href: 'https://www.adiga.kr/' },
+  { label: "나이스플러스", href: "https://www.neisplus.kr/" },
+  { label: "교육설문 에듀로", href: "https://eduro.go.kr/nxui/index.html" },
+  { label: "함께학교", href: "https://www.togetherschool.go.kr/" },
+  { label: "똑똑수학탐험대", href: "https://www.toctocmath.kr/" },
+  { label: "에듀넷", href: "https://www.edunet.net/" },
+  { label: "대입정보포털 어디가", href: "https://www.adiga.kr/" },
 ];
 ---
 
@@ -27,101 +27,218 @@ const services = [
   description="교육디지털원패스 소개, 회원 가입 방법, 이용 가능한 교육 서비스 안내"
 >
   <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
-    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+    <h1
+      class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]"
+    >
       교육디지털원패스
     </h1>
 
-    <div class="mt-10 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+    <div
+      class="mt-10 rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]"
+    >
       <div class="flex flex-wrap items-center justify-between gap-3">
         <h2 class="text-[18px] font-bold text-ink">교육디지털원패스 개요</h2>
-        <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>바로가기</LinkButton>
+        <LinkButton
+          href="https://edupass.neisplus.kr/"
+          variant="primary"
+          external>바로가기</LinkButton
+        >
       </div>
       <p class="mt-4 text-[15px] leading-relaxed text-muted">
-        교직원 및 학생이 하나의 아이디로 교육디지털원패스와 연계된 교육관련 사이트를 이용할 수 있는
-        다양한 인증수단을 제공합니다. 간편 로그인 기능을 제공하여 회원가입 편리성을 제공하고,
-        온라인 학생 신분 확인 및 학생 정보를 제공합니다.
+        교직원 및 학생이 하나의 아이디로 교육디지털원패스와 연계된 교육관련
+        사이트를 이용할 수 있는 다양한 인증수단을 제공합니다. 간편 로그인 기능을
+        제공하여 회원가입 편리성을 제공하고, 온라인 학생 신분 확인 및 학생
+        정보를 제공합니다.
       </p>
       <div class="mt-5 text-center">
-        <Image src={img1} alt="교육디지털원패스란? 안내 이미지" class="mx-auto rounded-md border border-line shadow-sm w-full max-w-[720px] h-auto" />
+        <Image
+          src={img1}
+          alt="교육디지털원패스란? 안내 이미지"
+          class="mx-auto rounded-md border border-line shadow-sm w-full max-w-[720px] h-auto"
+        />
       </div>
     </div>
 
     <div class="mt-8 space-y-4">
-      <h2 class="text-[18px] font-bold text-ink">교육디지털원패스 회원 가입 방법</h2>
-      
+      <h2 class="text-[18px] font-bold text-ink">
+        교육디지털원패스 회원 가입 방법
+      </h2>
+
       <!-- 교직원 회원 가입 방법 -->
-      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
-        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
-          <span>※ 교직원 회원 가입 방법</span>
-          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <details
+        class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden"
+      >
+        <summary
+          class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50"
+        >
+          <span>회원 가입 방법 개요</span>
+          <svg
+            class="w-5 h-5 text-muted transition-transform group-open:rotate-180"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
           </svg>
         </summary>
-        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-2">
-          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img2.src} aria-label="교직원 가입 방법 이미지 크게 보기">
-            <Image src={img2} alt="교직원 회원 가입 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+        <div
+          class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50"
+          id="accordion-container-2"
+        >
+          <button
+            class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in"
+            data-img-src={img2.src}
+            aria-label="가입 방법 개요 이미지 크게 보기"
+          >
+            <Image
+              src={img2}
+              alt="회원 가입 방법 안내"
+              class="mx-auto rounded-md border border-line shadow-sm w-full h-auto"
+            />
           </button>
         </div>
       </details>
 
-      <!-- ※ 교직원 -->
-      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
-        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
-          <span>※ 교직원</span>
-          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <!-- 교직원 -->
+      <details
+        class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden"
+      >
+        <summary
+          class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50"
+        >
+          <span>교직원의 회원 가입 방법</span>
+          <svg
+            class="w-5 h-5 text-muted transition-transform group-open:rotate-180"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
           </svg>
         </summary>
-        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-5">
-          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img5.src} aria-label="교직원 이미지 크게 보기">
-            <Image src={img5} alt="교직원 가이드" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+        <div
+          class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50"
+          id="accordion-container-5"
+        >
+          <button
+            class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in"
+            data-img-src={img5.src}
+            aria-label="교직원의 회원 가입 방법 이미지 크게 보기"
+          >
+            <Image
+              src={img5}
+              alt="교직원의 회원 가입 방법"
+              class="mx-auto rounded-md border border-line shadow-sm w-full h-auto"
+            />
           </button>
         </div>
       </details>
 
       <!-- 학생이 직접 회원 가입하는 방법 -->
-      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
-        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
-          <span>※ 학생이 직접 회원 가입하는 방법</span>
-          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <details
+        class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden"
+      >
+        <summary
+          class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50"
+        >
+          <span>학생이 직접 회원 가입하는 방법(+📺영상)</span>
+          <svg
+            class="w-5 h-5 text-muted transition-transform group-open:rotate-180"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
           </svg>
         </summary>
-        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-3">
-          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img3.src} aria-label="학생 직접 가입 방법 이미지 크게 보기">
-            <Image src={img3} alt="학생이 직접 회원 가입하는 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+        <div
+          class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50"
+          id="accordion-container-3"
+        >
+          <button
+            class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in"
+            data-img-src={img3.src}
+            aria-label="학생 직접 가입 방법 이미지 크게 보기"
+          >
+            <Image
+              src={img3}
+              alt="학생이 직접 회원 가입하는 방법 안내"
+              class="mx-auto rounded-md border border-line shadow-sm w-full h-auto"
+            />
           </button>
-          <div class="mt-5 w-full max-w-[720px] mx-auto relative aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black">
-            <iframe 
-              src="https://player.vimeo.com/video/1064673016" 
-              class="absolute top-0 left-0 w-full h-full" 
-              frameborder="0" 
-              allow="autoplay; fullscreen; picture-in-picture" 
-              allowfullscreen>
+          <div
+            class="mt-5 w-full max-w-[720px] mx-auto relative aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
+          >
+            <iframe
+              src="https://player.vimeo.com/video/1064673016"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
             </iframe>
           </div>
         </div>
       </details>
 
       <!-- 교직원이 학생의 회원 가입을 도와주는 방법 -->
-      <details class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden">
-        <summary class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50">
-          <span>※ 교직원이 학생의 회원 가입을 도와주는 방법</span>
-          <svg class="w-5 h-5 text-muted transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <details
+        class="group rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)] [&_summary::-webkit-details-marker]:hidden"
+      >
+        <summary
+          class="flex items-center justify-between p-5 font-bold text-ink cursor-pointer list-none hover:bg-gray-50/50"
+        >
+          <span>교직원이 학생의 회원 가입을 도와주는 방법(+📺영상)</span>
+          <svg
+            class="w-5 h-5 text-muted transition-transform group-open:rotate-180"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
           </svg>
         </summary>
-        <div class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50" id="accordion-container-4">
-          <button class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" data-img-src={img4.src} aria-label="도와주는 방법 이미지 크게 보기">
-            <Image src={img4} alt="교직원이 학생의 회원 가입을 도와주는 방법 안내" class="mx-auto rounded-md border border-line shadow-sm w-full h-auto" />
+        <div
+          class="px-5 pb-5 border-t border-line pt-5 bg-gray-50/50"
+          id="accordion-container-4"
+        >
+          <button
+            class="w-full max-w-[720px] block mx-auto outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in"
+            data-img-src={img4.src}
+            aria-label="도와주는 방법 이미지 크게 보기"
+          >
+            <Image
+              src={img4}
+              alt="교직원이 학생의 회원 가입을 도와주는 방법 안내"
+              class="mx-auto rounded-md border border-line shadow-sm w-full h-auto"
+            />
           </button>
-          <div class="mt-5 w-full max-w-[720px] mx-auto relative aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black">
-            <iframe 
-              src="https://player.vimeo.com/video/1064664795" 
-              class="absolute top-0 left-0 w-full h-full" 
-              frameborder="0" 
-              allow="autoplay; fullscreen; picture-in-picture" 
-              allowfullscreen>
+          <div
+            class="mt-5 w-full max-w-[720px] mx-auto relative aspect-video rounded-lg overflow-hidden shadow-sm border border-line bg-black"
+          >
+            <iframe
+              src="https://player.vimeo.com/video/1064664795"
+              class="absolute top-0 left-0 w-full h-full"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            >
             </iframe>
           </div>
         </div>
@@ -129,7 +246,9 @@ const services = [
     </div>
 
     <div class="mt-8">
-      <h2 class="text-[18px] font-bold text-ink">교육디지털원패스로 이용 가능한 서비스</h2>
+      <h2 class="text-[18px] font-bold text-ink">
+        교육디지털원패스로 이용 가능한 서비스
+      </h2>
       <div class="mt-4 grid gap-3 sm:grid-cols-2">
         {
           services.map((s) => (
@@ -140,8 +259,21 @@ const services = [
               class="flex items-center justify-between gap-2 rounded-[var(--radius-card)] border border-line bg-white px-4 py-3 text-[15px] font-semibold text-ink shadow-[var(--shadow-card)] transition-colors hover:border-primary-400 hover:text-primary-600"
             >
               {s.label}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
-                <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden="true"
+                class="shrink-0 text-muted"
+              >
+                <path
+                  d="M3 11L11 3M5 3h6v6"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </a>
           ))
@@ -149,34 +281,47 @@ const services = [
       </div>
     </div>
 
-    <PageNavigation 
-      prev={{ title: 'AI·디지털 교육자료 활용 도움자료', href: '/index/AIDT' }}
-      next={{ title: '학습지원 소프트웨어', href: '/index/software' }}
+    <PageNavigation
+      prev={{ title: "AI·디지털 교육자료 활용 도움자료", href: "/index/AIDT" }}
+      next={{ title: "학습지원 소프트웨어", href: "/index/software" }}
     />
   </section>
 
   <!-- Lightbox Dialog -->
-  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-modal="true">
-    <div class="relative w-full max-w-[95vw] max-h-[95vh] overflow-auto hide-scrollbar text-center flex items-center justify-center">
-      <img id="lightbox-img" src="" alt="크게 보기" class="max-w-full max-h-[90vh] object-contain cursor-default bg-white rounded-md" />
+  <dialog
+    id="lightbox"
+    class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out"
+    aria-modal="true"
+  >
+    <div
+      class="relative w-full max-w-[95vw] max-h-[95vh] overflow-auto hide-scrollbar text-center flex items-center justify-center"
+    >
+      <img
+        id="lightbox-img"
+        src=""
+        alt="크게 보기"
+        class="max-w-full max-h-[90vh] object-contain cursor-default bg-white rounded-md"
+      />
     </div>
   </dialog>
 </BaseLayout>
 
 <script>
   function setupLightbox() {
-    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const dialog = document.getElementById("lightbox") as HTMLDialogElement;
+    const lightboxImg = document.getElementById(
+      "lightbox-img",
+    ) as HTMLImageElement;
     if (!dialog || !lightboxImg) return;
 
     // 2, 3, 4, 5번 아코디언 컨테이너 내의 버튼 이벤트 바인딩
-    [2, 3, 4, 5].forEach(num => {
+    [2, 3, 4, 5].forEach((num) => {
       const container = document.getElementById(`accordion-container-${num}`);
-      const btn = container?.querySelector('button');
+      const btn = container?.querySelector("button");
       if (btn) {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener("click", (e) => {
           e.preventDefault();
-          const src = btn.getAttribute('data-img-src');
+          const src = btn.getAttribute("data-img-src");
           if (src) {
             lightboxImg.src = src;
             dialog.showModal();
@@ -185,13 +330,13 @@ const services = [
       }
     });
 
-    dialog.addEventListener('click', () => {
+    dialog.addEventListener("click", () => {
       dialog.close();
     });
   }
 
   setupLightbox();
-  document.addEventListener('astro:page-load', setupLightbox);
+  document.addEventListener("astro:page-load", setupLightbox);
 </script>
 
 <style>

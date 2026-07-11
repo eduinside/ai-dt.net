@@ -146,7 +146,7 @@ const imagesFor = (slug: string, dir: string) =>
       if (details && details.tagName === 'DETAILS') {
         details.open = true;
         setTimeout(() => {
-          details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          details.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
       }
     }

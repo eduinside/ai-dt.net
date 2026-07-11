@@ -2,13 +2,12 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /**
- * 콘텐츠 컬렉션 스키마 (IMPLEMENTATION_PLAN.md §2)
- * - frontmatter는 zod로 빌드 타임 검증 → 동료가 준 파일의 메타 누락·오타를 빌드가 잡아줌.
- * - P1에서는 publishers 만 실사용. 나머지는 P2~P3에서 콘텐츠 채움.
+ * 콘텐츠 컬렉션 스키마
+ * - frontmatter는 zod로 빌드 타임 검증 → 메타 누락·오타를 빌드가 잡아줌.
  */
 
-// 발행사 (구 /index/feedback/{발행사} × 12) — 데이터만으로 페이지 자동 생성
-// 발행사 답변 = QnA형 게시판 데이터. 답변 문서 이미지는 src/assets/replies/{slug}/{dir}/*.png
+// 발행사 답변 QnA형 게시판 데이터.
+// 답변 문서 이미지는 src/assets/replies/{slug}/{dir}/*.png
 const publishers = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/publishers' }),
   schema: z.object({
@@ -26,40 +25,4 @@ const publishers = defineCollection({
   }),
 });
 
-// 일반 위지윅형 페이지 (홈·안내 등) — P3
-const pages = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages' }),
-  schema: z.object({
-    title: z.string(),
-    section: z.string().optional(),
-    order: z.number().default(0),
-    updated: z.coerce.date().optional(),
-  }),
-});
-
-// 매뉴얼·소프트웨어·도움자료 카드 — P2
-const resources = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/resources' }),
-  schema: z.object({
-    title: z.string(),
-    category: z.string(),                       // manual | software | help ...
-    target: z.enum(['교사', '학생', '공통']).default('교사'),
-    url: z.string().url().optional(),
-    thumb: z.string().optional(),
-    desc: z.string().optional(),
-    order: z.number().default(0),
-    updated: z.coerce.date().optional(),
-  }),
-});
-
-// FAQ — P2
-const faq = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/faq' }),
-  schema: z.object({
-    q: z.string(),
-    category: z.string().optional(),
-    order: z.number().default(0),
-  }),
-});
-
-export const collections = { publishers, pages, resources, faq };
+export const collections = { publishers };
