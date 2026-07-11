@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------
-   웹폰트 — P4에서 self-host 전환 (가변 글꼴 로컬 서빙).
-   본문·제목 모두 Pretendard Variable로 단일화.
+   웹폰트 — self-host 가변 글꼴 (Pretendard Variable).
+   본문·제목 모두 단일 글꼴, 굵기 대비(400↔800)로 위계를 만든다.
 ------------------------------------------------------------------ */
 @font-face {
   font-family: "Pretendard Variable";
@@ -13,43 +13,46 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   디자인 토큰 — 원본 키 색상 실측(docs/original/CONTENT.md §0)
-   · 다크 슬레이트 #263840 (밴드·버튼 주색)
-   · 흰 배경 + 연회색 밴드 + 밝은 시안 히어로
+   디자인 토큰 — 모던 공공 포털
+   · 딥 네이비(신뢰) 기반 + 웜 오렌지 액센트(절제 사용)
+   · 밝은 종이 배경, 은은한 블루 틴트 표면
 ------------------------------------------------------------------ */
 @theme {
   --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system, sans-serif;
   --font-display: var(--font-sans);
 
   /* 배경 / 표면 */
-  --color-paper: #ffffff;
+  --color-paper: #fdfdfc;
   --color-surface: #ffffff;
-  --color-ink: #212121;
-  --color-muted: #6a6a6a;
-  --color-line: #dadce0;
-  --color-band: #eef0f1;
-  /* 연회색 밴드 (연락처 줄) */
+  --color-ink: #14263c;
+  --color-muted: #5c6b7e;
+  --color-line: #dde3ea;
+  --color-band: #f1f4f8;
+  /* 연한 블루그레이 표면 (밴드·보조 배경) */
 
-  /* 주색 — 선명하고 세련된 바이브런트 스틸 슬레이트(Vibrant Steel Slate) 계열 */
-  --color-primary-50: #f0f4f6;
-  --color-primary-100: #e2ebf0;
-  --color-primary-200: #c5d7e2;
-  --color-primary-400: #6c94ac;
-  --color-primary-500: #47728d;
-  --color-primary-600: #2d4f64;
-  --color-primary-700: #1a3444;
+  /* 주색 — 딥 네이비 블루 */
+  --color-primary-50: #f0f5fa;
+  --color-primary-100: #dfeaf4;
+  --color-primary-200: #bcd4e8;
+  --color-primary-400: #4d7fae;
+  --color-primary-500: #2c5f92;
+  --color-primary-600: #1b4470;
+  --color-primary-700: #122f4f;
+  --color-primary-800: #0c2138;
 
-  /* 히어로 — 밝은 시안 (원본 배너 톤) */
-  --color-hero-from: #e8f7fa;
-  --color-hero-mid: #c9ecf3;
-  --color-hero-to: #dff2f0;
+  /* 히어로 — 종이 위 은은한 블루 틴트 (구 토큰명 유지: 하위 페이지 호환) */
+  --color-hero-from: #eef4fa;
+  --color-hero-mid: #e2ecf6;
+  --color-hero-to: #f6f9fc;
 
-  --radius-card: 0.75rem;
-  --shadow-card: 0 1px 2px rgba(33, 33, 33, 0.06), 0 4px 12px -6px rgba(33, 33, 33, 0.1);
-  --shadow-card-hover: 0 2px 4px rgba(33, 33, 33, 0.08), 0 10px 24px -10px rgba(33, 33, 33, 0.18);
+  --radius-card: 0.875rem;
+  --shadow-card: 0 1px 2px rgba(18, 47, 79, 0.05), 0 4px 14px -6px rgba(18, 47, 79, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(18, 47, 79, 0.06), 0 14px 32px -12px rgba(18, 47, 79, 0.22);
 
-  --color-accent: #e2623b;
-  --color-accent-hover: #d2502a;
+  /* 액센트 — 웜 오렌지: CTA·스텝 번호·강조 배지에만 */
+  --color-accent: #e05a2b;
+  --color-accent-hover: #c94a1e;
+  --color-accent-soft: #fdeee7;
 }
 
 /* ------------------------------------------------------------------
@@ -65,6 +68,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   line-height: 1.65;
+  font-feature-settings: "ss05";
 }
 
 ::selection {
@@ -81,18 +85,45 @@ body {
 
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
-/* 원본 패턴: 제목 아래 중앙 짧은 밑줄 장식 */
+/* 제목 장식 — 네이비·오렌지 듀오톤 마크 (구 중앙 밑줄 대체) */
 .title-underline::after {
   content: "";
   display: block;
-  width: 72px;
+  width: 56px;
   height: 4px;
-  margin: 0.9rem auto 0;
-  background: var(--color-primary-600);
+  margin: 1rem auto 0;
   border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-primary-600) 0 70%, var(--color-accent) 70% 100%);
+}
+
+/* 섹션 헤더 — 좌측 액센트 바 (홈·좌측 정렬 섹션용) */
+.section-mark {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.section-mark::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--color-primary-600), var(--color-primary-400));
+}
+
+/* 히어로 배경 — 은은한 도트 그리드 + 블루 틴트 */
+.hero-canvas {
+  background-color: var(--color-hero-to);
+  background-image:
+    radial-gradient(820px 460px at 12% -10%, var(--color-hero-from), transparent 68%),
+    radial-gradient(720px 420px at 95% 8%, var(--color-hero-mid), transparent 62%),
+    radial-gradient(rgba(27, 68, 112, 0.10) 1px, transparent 1px);
+  background-size: auto, auto, 22px 22px;
 }
 
 /* ------------------------------------------------------------------
@@ -101,7 +132,7 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px);
   }
 
   to {
@@ -112,7 +143,7 @@ body {
 
 .animate-fade-in-up {
   opacity: 0;
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .delay-75 {

@@ -1,7 +1,9 @@
 ---
 /**
- * 홈 — 원본(docs/original/CONTENT.md §2) 충실 재현.
- * 모든 문구는 원본 그대로. 부가 텍스트·요소 삽입 없음.
+ * 홈 — 원본(docs/original/CONTENT.md §2) 문구 유지, 모던 공공 포털 레이아웃.
+ * · 히어로: 비대칭 2열 (좌 타이틀 / 우 대표 연락처 카드 — 구 연회색 밴드 흡수)
+ * · 절차: 번호 레일(01·02·03) — 구 다크 밴드 문구를 섹션 헤딩으로 흡수
+ * · 마무리: 네이비 CTA 패널
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -9,51 +11,75 @@ import LinkButton from '../components/LinkButton.astro';
 import ReplyBoard from '../components/ReplyBoard.astro';
 import { faqRows } from '../data/faq';
 import logo from '../assets/logo-512.webp';
+
+const contacts = [
+  { label: 'AI·디지털 교육자료 포털', name: '중앙상담센터', tel: '1600-2525' },
+  { label: '회원가입 관련', name: '교육디지털원패스', tel: '1600-7440' },
+];
 ---
 
 <BaseLayout>
-  <!-- 히어로 — 밝은 시안 배경, 중앙 정렬 -->
-  <section
-    class="border-b border-line"
-    style="background:
-      radial-gradient(900px 420px at 20% 20%, var(--color-hero-from), transparent 70%),
-      radial-gradient(800px 400px at 85% 10%, var(--color-hero-mid), transparent 65%),
-      linear-gradient(150deg, var(--color-hero-from), var(--color-hero-to))"
-  >
-    <div class="mx-auto max-w-4xl px-5 pb-16 pt-12 text-center sm:pb-20 sm:pt-16 animate-fade-in-up">
-      <Image src={logo} alt="" width={192} height={192} class="mx-auto mb-5 h-20 w-20 sm:h-24 sm:w-24" loading="eager" />
-      <p class="text-[17px] text-ink">대구광역시교육청</p>
-      <h1 class="title-underline mt-2 text-[32px] font-bold leading-tight tracking-tight text-ink sm:text-[44px]">
-        AI·디지털 교육자료 수업 지원센터
-      </h1>
-      <p class="mx-auto mt-7 max-w-xl text-[16px] leading-relaxed text-ink sm:text-[17px]">
-        대구광역시교육청이 AI·디지털 교육자료를 손쉽게 활용하여<br
-          class="hidden sm:block"
-        />
-        창의적이고 효과적인 수업을 할 수 있도록 지원합니다.
-      </p>
-    </div>
-  </section>
-
-  <!-- 연회색 밴드 — 대표 연락처 2건 -->
-  <section class="border-b border-line bg-[var(--color-band)] animate-fade-in-up delay-75">
-    <div class="mx-auto grid max-w-5xl gap-6 px-5 py-8 text-center sm:grid-cols-2">
-      <div>
-        <p class="font-bold text-ink">[AI·디지털 교육자료 포털]</p>
-        <p class="mt-1 text-[18px] font-bold text-ink">중앙상담센터 1600-2525</p>
+  <!-- 히어로 — 비대칭 2열, 도트 그리드 캔버스 -->
+  <section class="hero-canvas border-b border-line">
+    <div
+      class="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-14 pt-12 sm:pb-20 sm:pt-16 lg:grid-cols-[1.35fr_1fr] lg:gap-14"
+    >
+      <div class="animate-fade-in-up">
+        <p class="flex items-center gap-2.5 text-[15px] font-semibold tracking-tight text-primary-600">
+          <Image src={logo} alt="" width={64} height={64} class="h-9 w-9 shrink-0" loading="eager" />
+          대구광역시교육청
+        </p>
+        <h1
+          class="font-display mt-5 text-[34px] font-extrabold leading-[1.16] text-ink sm:text-[52px]"
+        >
+          AI·디지털 교육자료<br />
+          <span class="text-primary-600">수업 지원센터</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-[16px] leading-relaxed text-muted sm:text-[17.5px]">
+          대구광역시교육청이 AI·디지털 교육자료를 손쉽게 활용하여<br class="hidden sm:block" />
+          창의적이고 효과적인 수업을 할 수 있도록 지원합니다.
+        </p>
       </div>
-      <div>
-        <p class="font-bold text-ink">[회원가입 관련]</p>
-        <p class="mt-1 text-[18px] font-bold text-ink">교육디지털원패스 1600-7440</p>
+
+      <!-- 대표 연락처 — 구 연회색 밴드의 2건을 히어로 우측 카드로 -->
+      <div class="flex flex-col gap-4 animate-fade-in-up delay-150">
+        {
+          contacts.map((c) => (
+            <a
+              href={`tel:${c.tel}`}
+              class="premium-card group flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-white/90 p-5 shadow-[var(--shadow-card)] backdrop-blur-sm"
+            >
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-600 group-hover:text-white">
+                <svg width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path
+                    d="M4.2 2.8h3l1.4 3.6-1.9 1.4a11.5 11.5 0 0 0 5.5 5.5l1.4-1.9 3.6 1.4v3a1.6 1.6 0 0 1-1.7 1.6C8.6 16.9 3.1 11.4 2.6 4.5a1.6 1.6 0 0 1 1.6-1.7Z"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span class="min-w-0">
+                <span class="block text-[13px] font-medium text-muted">[{c.label}]</span>
+                <span class="mt-0.5 block text-[17px] font-bold tracking-tight text-ink">
+                  {c.name} <span class="text-primary-600">{c.tel}</span>
+                </span>
+              </span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <!-- FAQ · 도움자료 섹션 -->
-  <section class="mx-auto max-w-4xl px-5 pt-12 animate-fade-in-up delay-150">
-    <div class="flex items-center justify-between border-b border-line pb-3">
-      <h2 class="text-[18px] font-bold text-ink">선도학교 운영 관련 FAQ</h2>
-      <a href="/index/faq" class="text-[14px] font-semibold text-primary-600 hover:text-primary-700 transition-colors flex items-center gap-1">
+  <section class="mx-auto max-w-4xl px-5 pt-14 animate-fade-in-up delay-150">
+    <div class="flex items-end justify-between pb-4">
+      <h2 class="section-mark text-[20px] font-bold tracking-tight text-ink">선도학교 운영 관련 FAQ</h2>
+      <a
+        href="/index/faq"
+        class="flex items-center gap-1 text-[14px] font-semibold text-primary-600 transition-colors hover:text-primary-700"
+      >
         더 보기
         <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0">
           <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -62,79 +88,127 @@ import logo from '../assets/logo-512.webp';
     </div>
 
     <!-- 원본 GAS QnA 게시판을 정적 FAQ 게시판으로 이관 (src/data/faq.ts 공유) -->
-    <div class="mt-4">
-      <ReplyBoard rows={faqRows} showPublisher={false} linkToFaq={true} />
-    </div>
+    <ReplyBoard rows={faqRows} showPublisher={false} linkToFaq={true} />
 
     <a
       href="/index/AIDT"
-      class="mt-6 block bg-primary-600 py-3.5 text-center text-[15px] font-semibold text-white transition-all duration-300 rounded-lg shadow-sm hover:shadow-md hover:bg-primary-700"
+      class="mt-6 flex items-center justify-center gap-2 rounded-xl border border-primary-200 bg-primary-50 py-3.5 text-center text-[15px] font-semibold text-primary-700 transition-all duration-300 hover:border-primary-400 hover:bg-primary-100"
     >
       활용 도움자료 더 보기
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
     </a>
   </section>
 
-  <!-- 다크 밴드 — 절차 안내 -->
-  <section class="mt-14 bg-primary-600 animate-fade-in-up delay-200">
-    <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row">
-      <p class="text-[15px] font-semibold text-white sm:text-[16px]">
+  <!-- 절차 안내 — 번호 레일 -->
+  <section class="mx-auto max-w-6xl px-5 pb-4 pt-16 animate-fade-in-up delay-200">
+    <div class="flex flex-col justify-between gap-3 pb-8 sm:flex-row sm:items-end">
+      <h2 class="section-mark max-w-2xl text-[20px] font-bold leading-snug tracking-tight text-ink">
         AI·디지털 교육자료 활용을 위해 필요한 절차를 단계별로 정리해 보았습니다.
-      </p>
-      <LinkButton href="/index/manual" variant="ghost-dark">자세히 보기</LinkButton>
+      </h2>
+      <a
+        href="/index/manual"
+        class="flex shrink-0 items-center gap-1 text-[14px] font-semibold text-primary-600 transition-colors hover:text-primary-700"
+      >
+        자세히 보기
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0">
+          <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
     </div>
-  </section>
 
-  <!-- Step 컬럼 -->
-  <section class="mx-auto max-w-5xl px-5 py-12 animate-fade-in-up delay-300">
-    <div class="grid gap-6 sm:grid-cols-3">
-      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+    <ol class="relative grid gap-6 sm:grid-cols-3">
+      <!-- 데스크톱 연결선 -->
+      <div
+        aria-hidden="true"
+        class="absolute left-[8%] right-[8%] top-[2.35rem] hidden h-px bg-[linear-gradient(90deg,transparent,var(--color-line)_15%,var(--color-line)_85%,transparent)] sm:block"
+      >
+      </div>
+
+      <li
+        class="premium-card relative flex flex-col justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-white p-6 pt-5 shadow-[var(--shadow-card)]"
+      >
         <div>
-          <p class="text-[15px] leading-snug text-ink">
-            <span class="font-bold text-primary-600">Step 1.</span><br />
+          <span
+            class="font-display relative z-10 inline-block bg-white pr-3 text-[26px] font-extrabold tracking-tight text-primary-200"
+          >
+            01
+          </span>
+          <p class="mt-2 text-[15.5px] font-semibold leading-snug text-ink">
             교육디지털원패스 접속 및 회원가입
           </p>
         </div>
-        <div class="flex flex-col gap-2 mt-2">
+        <div class="flex flex-col gap-2">
           <LinkButton href="https://edupass.neisplus.kr/" variant="primary" external>
             교육디지털원패스 포털(바로가기)
           </LinkButton>
           <LinkButton href="/index/eduonepass" variant="ghost">도움자료</LinkButton>
         </div>
-      </div>
+      </li>
 
-      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+      <li
+        class="premium-card relative flex flex-col justify-between gap-4 rounded-[var(--radius-card)] border border-line bg-white p-6 pt-5 shadow-[var(--shadow-card)]"
+      >
         <div>
-          <p class="text-[15px] leading-snug text-ink">
-            <span class="font-bold text-primary-600">Step 2.</span><br />
+          <span
+            class="font-display relative z-10 inline-block bg-white pr-3 text-[26px] font-extrabold tracking-tight text-primary-200"
+          >
+            02
+          </span>
+          <p class="mt-2 text-[15.5px] font-semibold leading-snug text-ink">
             AI·디지털 교육자료 포털에서 수업 진행
           </p>
         </div>
-        <div class="flex flex-col gap-2 mt-2">
+        <div class="flex flex-col gap-2">
           <LinkButton href="https://www.aidtbook.kr/" variant="primary" external>
             AI·디지털 교육자료 포털(바로가기)
           </LinkButton>
-          <LinkButton href="/class/curriculum" variant="ghost">🔥수업사례 · 설계지원✨</LinkButton>
+          <LinkButton href="/class/curriculum" variant="ghost">수업사례 · 설계지원</LinkButton>
         </div>
-      </div>
+      </li>
 
-      <div class="flex flex-col gap-3 premium-card rounded-xl border border-line bg-white p-6 shadow-sm justify-between">
+      <li
+        class="premium-card relative flex flex-col justify-between gap-4 rounded-[var(--radius-card)] border border-primary-200 bg-primary-50/60 p-6 pt-5 shadow-[var(--shadow-card)]"
+      >
         <div>
-          <p class="text-[15px] leading-snug text-ink">📌자세히 알아보려면(추천자료👍)</p>
+          <span
+            class="relative z-10 inline-flex items-center rounded-full bg-[var(--color-accent-soft)] px-2.5 py-1 text-[12px] font-bold tracking-tight text-accent"
+          >
+            추천자료
+          </span>
+          <p class="mt-3 text-[15.5px] font-semibold leading-snug text-ink">자세히 알아보려면</p>
         </div>
-        <div class="flex flex-col gap-2 mt-2">
-          <LinkButton href="/index/manual" variant="ghost">🚩 사전 준비사항 안내✅</LinkButton>
+        <div class="flex flex-col gap-2">
+          <LinkButton href="/index/manual" variant="primary">사전 준비사항 안내</LinkButton>
         </div>
-      </div>
-    </div>
+      </li>
+    </ol>
   </section>
 
-  <!-- 다크 밴드 — 문의 안내 -->
-  <section class="bg-primary-600 animate-fade-in-up delay-300">
-    <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 py-6 sm:flex-row">
-      <p class="text-[15px] font-semibold text-white sm:text-[16px]">
-        AI·디지털 교육자료 사용에 도움이 필요하시다면?
-      </p>
-      <LinkButton href="/contact" variant="ghost-dark">문의 및 장애 지원</LinkButton>
+  <!-- 마무리 CTA — 네이비 패널 -->
+  <section class="mx-auto max-w-6xl px-5 py-14 animate-fade-in-up delay-300">
+    <div
+      class="relative overflow-hidden rounded-2xl bg-primary-700 px-6 py-9 sm:px-10"
+      style="background-image:
+        radial-gradient(560px 280px at 88% -20%, rgba(77, 127, 174, 0.5), transparent 70%),
+        radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: auto, 20px 20px;"
+    >
+      <div class="flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+        <p class="text-[18px] font-bold leading-snug tracking-tight text-white sm:text-[21px]">
+          AI·디지털 교육자료 사용에<br class="sm:hidden" /> 도움이 필요하시다면?
+        </p>
+        <a
+          href="/contact"
+          class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-6 py-3 text-[15px] font-bold text-primary-700 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+        >
+          문의 및 장애 지원
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M5 12l5-5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>

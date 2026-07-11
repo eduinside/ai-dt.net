@@ -36,9 +36,8 @@ src/
   layouts/BaseLayout.astro
   pages/
     index.astro                        홈
-    index/feedback/index.astro         발행사 답변 허브
-    index/feedback/[id].astro          발행사 상세(데이터→자동 생성)
-  styles/global.css        디자인 토큰(@theme) + 웹폰트
+    index/feedback/index.astro         발행사 답변 허브(칩 클릭 → 제자리 필터)
+  styles/global.css        디자인 토큰(@theme) + 웹폰트 — 상세: docs/DESIGN.md
 ```
 
 ## 콘텐츠 추가 방법 (운영자)
@@ -58,10 +57,11 @@ order: 13       # 가나다순
 </Accordion>
 ```
 
-페이지 틀(`'{이름}' 회신 내용` 제목 + ◀ 돌아가기)은 자동 생성된다.
+허브(`/index/feedback`)의 필터 칩과 아코디언 목록에 자동 반영된다.
 빌드가 frontmatter를 검증하므로 필수 항목 누락 시 배포 전에 걸러진다.
 
 ## 문서
 
 - [구현 계획서](docs/IMPLEMENTATION_PLAN.md)
 - [진행 현황](docs/STATUS.md)
+- [디자인 시스템(토큰·레이아웃 문법)](docs/DESIGN.md)

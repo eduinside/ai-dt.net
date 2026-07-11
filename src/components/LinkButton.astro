@@ -7,11 +7,11 @@ interface Props {
 }
 const { href, variant = 'primary', external = false, class: cls = '' } = Astro.props;
 
-// 원본 버튼 톤: 다크 슬레이트 채움 / 흰 바탕 아웃라인 (사각형에 가까운 라운드)
+// 버튼 톤: 딥 네이비 채움 / 흰 바탕 아웃라인
 const baseStyles: Record<string, string> = {
   primary: 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm border border-transparent',
   ghost: 'bg-white text-ink border hover:bg-primary-50 hover:text-primary-600',
-  'ghost-dark': 'bg-white text-ink hover:bg-primary-50 border border-transparent',
+  'ghost-dark': 'bg-white text-primary-700 hover:bg-primary-50 border border-transparent',
 };
 const externalStyle = external ? 'border-primary-400 text-primary-700 shadow-sm bg-primary-50/30' : 'border-line';
 const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
@@ -21,7 +21,7 @@ const ext = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   href={href}
   {...ext}
   class:list={[
-    'inline-flex items-center justify-center gap-1.5 rounded-[4px] px-5 py-2.5 text-[14px] font-semibold transition-all active:scale-[0.99]',
+    'inline-flex items-center justify-center gap-1.5 rounded-lg px-5 py-2.5 text-[14px] font-semibold transition-all active:scale-[0.99]',
     baseStyles[variant],
     variant === 'ghost' ? externalStyle : '',
     cls,

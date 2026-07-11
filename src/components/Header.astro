@@ -66,8 +66,8 @@ const isActive = (href: string) =>
                 class:list={[
                   'flex items-center gap-1 rounded-lg px-3 py-2 font-medium transition-colors',
                   isActive(item.href)
-                    ? 'font-semibold text-primary-600 underline decoration-2 underline-offset-8'
-                    : 'text-muted hover:text-ink',
+                    ? 'font-semibold text-primary-700 bg-primary-50'
+                    : 'text-muted hover:text-ink hover:bg-primary-50/60',
                 ]}
               >
                 {item.label}
