@@ -69,6 +69,17 @@ body {
   font-family: var(--font-sans);
   line-height: 1.65;
   font-feature-settings: "ss05";
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+body > main {
+  flex: 1 0 auto;
+}
+
+body > footer {
+  flex-shrink: 0;
 }
 
 ::selection {
