@@ -22,6 +22,14 @@ const fullTitle =
 <!doctype html>
 <html lang="ko">
   <head>
+    <!-- pages.dev 기본 도메인 접속 시 커스텀 도메인(www.ai-dt.net)으로 즉시 이전 -->
+    <script is:inline>
+      (function () {
+        if (window.location.hostname.endsWith('.pages.dev')) {
+          window.location.replace('https://www.ai-dt.net' + window.location.pathname + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKY11ZHVML" is:inline></script>
     <script is:inline>
