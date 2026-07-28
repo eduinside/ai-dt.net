@@ -1,10 +1,112 @@
 ---
 /**
  * 문의 및 장애 지원 — 원본(docs/original/CONTENT.md §14) 텍스트 그대로.
+ * 하단 두 카드(공동CS센터·발행사 지원센터)는 안내 이미지 대신 구조화된 텍스트로 제공한다.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LinkButton from '../components/LinkButton.astro';
-import PageImages from '../components/PageImages.astro';
+
+// 발행사 문의 창구 — 같은 모양 카드 2장(공동CS 참여사 / 미참여사)
+interface Item {
+  text: string;
+  subs?: string[];
+}
+interface Desk {
+  title: string;
+  tel?: string;
+  memberLabel: string;
+  members: string[];
+  groups: { heading: string; items: Item[] }[];
+}
+
+const desks: Desk[] = [
+  {
+    title: '공동CS 센터',
+    tel: '1661-0777',
+    memberLabel: '참여사',
+    members: [
+      '교문사', '도서출판 길벗', '동아출판', '디딤돌교육', '비상교육', '씨마스',
+      '아이스크림미디어', '엔이능률', '와이비엠', '천재교과서', '천재교육',
+    ],
+    groups: [
+      {
+        heading: '지원 내용',
+        items: [
+          { text: '공동CS센터 운영 및 고객상담 지원' },
+          {
+            text: '각 발행사 AIDT 플랫폼 이용 방법 안내',
+            subs: ['메뉴 및 기능 이용 문의', '평가, 모둠활동, 실습 등 기능 문의'],
+          },
+          {
+            text: '플랫폼 기술 오류 및 장애 접수',
+            subs: ['접속 장애, 채점·동영상 등 학습 뷰어 오류'],
+          },
+          {
+            text: '콘텐츠 구성·오류 및 기능 개선 문의 접수',
+            subs: ['오탈자 수정, 콘텐츠 기능 개선 및 불만 사항'],
+          },
+        ],
+      },
+      {
+        heading: '접수 / 처리 내용',
+        items: [
+          {
+            text: '플랫폼 이용 문의',
+            subs: ['발행사별 상담 매뉴얼에 따라 공동CS센터 상담사가 직접 응대·조치'],
+          },
+          {
+            text: '플랫폼 장애 문의',
+            subs: [
+              '공동CS센터에서 문의 접수 후 해당 발행사 담당자에게 이관',
+              '담당자 답변 및 조치 내용을 확인하여 고객에게 회신',
+            ],
+          },
+          {
+            text: '콘텐츠 관련 문의',
+            subs: [
+              '공동CS센터에서 문의 접수 후 해당 발행사 담당자에게 이관',
+              '발행사 담당자가 관련 내용 조치',
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: 'AI·디지털 교육자료 발행사 지원 센터',
+    memberLabel: '미참여사',
+    members: ['교학사', '금성출판사', '미래엔', '지학사', '클래스팅', '잇플'],
+    groups: [
+      {
+        heading: '지원 내용',
+        items: [
+          { text: '미참여사 AI 디지털 교육자료 관련 문의' },
+          {
+            text: 'AI 디지털 교육자료 선정·주문 후 계약·정산 문의',
+            subs: ['나라장터·학교장터 계약', '구독료 등 정산'],
+          },
+          {
+            text: 'AI 디지털 교육자료 외 타 에듀테크·플랫폼 문의',
+            subs: ['밀크T, 비바샘, 띵커벨 등'],
+          },
+        ],
+      },
+      {
+        heading: '접수 / 처리 내용',
+        items: [
+          { text: '미참여사 교육자료 문의', subs: ['해당 발행사별 개별 CS센터로 문의'] },
+          {
+            text: '계약·정산 문의',
+            subs: ['각 발행사 AIDT 계약 담당자 또는 해당 사 지원센터 이용'],
+          },
+          {
+            text: '타 에듀테크 문의',
+            subs: ['해당 에듀테크 운영사 또는 발행사 지원센터로 문의'],
+          },
+        ],
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
@@ -68,76 +170,68 @@ import PageImages from '../components/PageImages.astro';
         </h2>
       </article>
 
-      <!-- 발행사 공동 CS 센터 -->
-      <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
-        <h2 class="text-[18px] font-bold text-ink">
-          AI·디지털 교육자료 11개 발행사
-          <span class="text-primary-600">공동 CS 센터 (☎ 1661-0777)</span>
-        </h2>
-        <dl class="mt-4 space-y-3 text-[15px] leading-relaxed">
-          <div>
-            <dt class="font-semibold text-ink">지원 내용</dt>
-            <dd class="text-muted">발행사 AI·디지털 교육자료 이용 문의 및 장애 접수</dd>
-          </div>
-        </dl>
-      </article>
+      <!-- 발행사 문의 창구 — 공동CS 참여사 / 미참여사 -->
+      {
+        desks.map((desk) => (
+          <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+            <h2 class="text-[18px] font-bold text-ink">
+              {desk.title}
+              {desk.tel && <span class="text-primary-600"> (☎ {desk.tel})</span>}
+            </h2>
 
-      <!-- 사용자 문의 이용 안내 -->
-      <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
-        <h2 class="text-[18px] font-bold text-ink">사용자 문의 이용 안내</h2>
-        <div class="mt-5 text-center" id="guide-container">
-          <button class="w-full max-w-[900px] outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95 cursor-zoom-in" aria-label="가이드 이미지 크게 보기">
-            <PageImages slug="contact/guide" alt="가입 및 이용방법 가이드 이미지" note="사용자 가이드 안내 이미지 자리" />
-          </button>
-        </div>
-      </article>
+            <div class="mt-4">
+              <p class="text-[14px] font-semibold text-ink">{desk.memberLabel}</p>
+              <ul class="mt-2 flex flex-wrap gap-1.5">
+                {desk.members.map((m) => (
+                  <li class="rounded-full border border-line bg-primary-50/60 px-2.5 py-1 text-[13px] text-ink">
+                    {m}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <dl class="mt-5 space-y-4 text-[15px] leading-relaxed">
+              {desk.groups.map((g) => (
+                <div>
+                  <dt class="font-semibold text-ink">{g.heading}</dt>
+                  <dd class="mt-1.5">
+                    <ul class="space-y-1.5 text-muted">
+                      {g.items.map((item) => (
+                        <li class="pl-4 -indent-4">
+                          <span class="mr-1.5 text-primary-500">•</span>
+                          {item.text}
+                          {item.subs && (
+                            <ul class="mt-1 space-y-1 pl-4 indent-0 text-[14px]">
+                              {item.subs.map((s) => (
+                                <li class="pl-3 -indent-3">
+                                  <span class="mr-1.5 text-line">–</span>
+                                  {s}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            {desk.tel && (
+              <p class="mt-5 border-t border-line pt-4 text-[15px]">
+                <span class="font-semibold text-ink">{desk.title} 전화번호</span>
+                <a
+                  href={`tel:${desk.tel}`}
+                  class="ml-2 font-bold text-primary-600 underline underline-offset-2"
+                >
+                  {desk.tel}
+                </a>
+              </p>
+            )}
+          </article>
+        ))
+      }
     </div>
   </section>
-
-  <!-- Lightbox Dialog -->
-  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-label="닫기">
-    <div class="relative w-full max-w-5xl max-h-full overflow-auto hide-scrollbar text-center flex items-center justify-center">
-      <img id="lightbox-img" src="" alt="크게 보기" class="max-w-full h-auto object-contain cursor-default bg-white rounded-md" />
-    </div>
-  </dialog>
 </BaseLayout>
-
-<script>
-  function setupLightbox() {
-    const container = document.getElementById('guide-container');
-    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-    
-    if (!container || !dialog || !lightboxImg) return;
-
-    // container 안의 이미지를 클릭하면 해당 src를 dialog에 띄움
-    container.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'IMG') {
-        const img = target as HTMLImageElement;
-        lightboxImg.src = img.src;
-        dialog.showModal();
-      } else {
-        // img를 직접 클릭하지 않았으나 버튼 영역인 경우, 첫 번째 이미지를 띄움
-        const firstImg = container.querySelector('img');
-        if (firstImg) {
-          lightboxImg.src = firstImg.src;
-          dialog.showModal();
-        }
-      }
-    });
-
-    dialog.addEventListener('click', () => {
-      dialog.close();
-    });
-  }
-
-  setupLightbox();
-  document.addEventListener('astro:page-load', setupLightbox);
-</script>
-
-<style>
-  dialog::backdrop {
-    background: transparent;
-  }
-</style>
