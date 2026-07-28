@@ -7,6 +7,7 @@
  * ratio    : '16/9' 처럼 고정 비율. 지정하면 플레이스홀더도 같은 비율로 잡힌다.
  * autoplay : 자동 넘김(Carousel에 위임 — 오버·포커스 시 정지, 감속 선호 시 미동작)
  */
+import { getImage } from 'astro:assets';
 import Carousel from './Carousel.astro';
 
 interface Props {
@@ -24,14 +25,29 @@ const all = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/pages/**/*.{png,jpg,jpeg,webp}',
   { eager: true }
 );
-const images = Object.entries(all)
+const sources = Object.entries(all)
   .filter(([p]) => p.includes(`/pages/${slug}/`))
   .sort(([a], [b]) => a.localeCompare(b))
-  .map(([, m], i) => ({
-    src: m.default.src,
-    alt: `${alt} ${i + 1}`,
-    caption,
-  }));
+  .map(([, m]) => m.default);
+
+// 원본(PNG 1MB대)을 WebP로 변환해 화질은 유지하고 용량만 줄인다.
+// 원본보다 크게 늘리지 않도록 폭을 제한하고, 표시 폭에 맞춰 srcset을 준다.
+const WIDTHS = [800, 1600];
+const images = await Promise.all(
+  sources.map(async (src, i) => {
+    const widths = [...new Set(WIDTHS.map((w) => Math.min(w, src.width)))].sort((a, b) => a - b);
+    const variants = await Promise.all(
+      widths.map((width) => getImage({ src, width, format: 'webp', quality: 85 }))
+    );
+    return {
+      src: variants[variants.length - 1].src,
+      srcset: variants.map((v, n) => `${v.src} ${widths[n]}w`).join(', '),
+      sizes: '(max-width: 768px) 100vw, 900px',
+      alt: `${alt} ${i + 1}`,
+      caption,
+    };
+  })
+);
 ---
 
 {
