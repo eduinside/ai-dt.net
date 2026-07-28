@@ -5,7 +5,11 @@
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { nav } from '../../data/nav';
 import linkToMathImg from '../../assets/pages/class/link-to-math.png';
+
+// 허브 카드는 헤더 메뉴(수업이야기 하위)와 같은 목록을 쓴다 — 메뉴가 늘면 카드도 자동으로 늘어난다.
+const classMenu = nav.find((n) => n.href === '/class')?.children ?? [];
 
 const tutoring = [
   { label: '교사', href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/teacher' },
@@ -50,27 +54,29 @@ const tutoring = [
       }
     </div>
 
-    <!-- 수업설계 지원 / 웹전시관 -->
+    <!-- 수업이야기 하위 메뉴 카드 -->
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
-      <a
-        href="/class/curriculum"
-        class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-[var(--shadow-card-hover)]"
-      >
-        <p class="text-[18px] font-bold text-ink">수업설계 지원</p>
-        <p class="mt-1 text-[14px] text-muted">AI·디지털 교육자료를 활용한 수업설계 도움자료</p>
-      </a>
-      <a
-        href="https://aidtshow.kr/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-[var(--shadow-card-hover)]"
-      >
-        <p class="text-[18px] font-bold text-ink">AI·디지털 교육자료 웹전시관</p>
-        <span class="mt-1 inline-flex items-center gap-1 text-[14px] font-semibold text-primary-600">
-          바로가기
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-        </span>
-      </a>
+      {
+        classMenu
+          .filter((m) => m.href !== 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/home')
+          .map((m) => (
+            <a
+              href={m.href}
+              {...(m.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-[var(--shadow-card-hover)]"
+            >
+              <p class="flex items-center gap-1.5 text-[18px] font-bold text-ink">
+                {m.label}
+                {m.external && (
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-primary-600">
+                    <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                )}
+              </p>
+              {m.desc && <p class="mt-1 text-[14px] text-muted">{m.desc}</p>}
+            </a>
+          ))
+      }
     </div>
   </section>
 </BaseLayout>

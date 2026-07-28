@@ -5,8 +5,16 @@
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
 import poster from '../assets/pages/study/poster.png';
 import portalButton from '../assets/pages/study/portal-button.png';
+
+const posterImages = [
+  {
+    src: poster.src,
+    alt: 'AI·디지털 교육자료로 집에서도 스스로 학습하기 안내 포스터',
+  },
+];
 ---
 
 <BaseLayout
@@ -31,8 +39,11 @@ import portalButton from '../assets/pages/study/portal-button.png';
     </div>
 
     <div class="mt-4 text-center">
-      <button 
-        id="poster-trigger"
+      <button
+        type="button"
+        data-lightbox
+        data-images={JSON.stringify(posterImages)}
+        data-title="AI·디지털 교육자료 집에서도 스스로 학습하기"
         class="cursor-zoom-in block w-full outline-none focus:ring-4 focus:ring-primary-500 rounded-md transition-transform hover:opacity-95"
         aria-label="포스터 이미지 크게 보기"
       >
@@ -47,35 +58,5 @@ import portalButton from '../assets/pages/study/portal-button.png';
     </div>
   </section>
 
-  <!-- Lightbox Dialog -->
-  <dialog id="lightbox" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100 cursor-zoom-out" aria-modal="true">
-    <div class="relative w-full max-w-[98vw] max-h-[98vh] overflow-auto hide-scrollbar text-center flex items-center justify-center" aria-label="닫기">
-      <img src={poster.src} alt="스스로 학습 안내 크게 보기" class="max-w-full max-h-[96vh] object-contain cursor-default bg-white rounded-md" />
-    </div>
-  </dialog>
+  <Lightbox />
 </BaseLayout>
-
-<script>
-  function setupLightbox() {
-    const trigger = document.getElementById('poster-trigger');
-    const dialog = document.getElementById('lightbox') as HTMLDialogElement;
-    if (!trigger || !dialog) return;
-
-    trigger.addEventListener('click', () => {
-      dialog.showModal();
-    });
-
-    dialog.addEventListener('click', () => {
-      dialog.close();
-    });
-  }
-
-  setupLightbox();
-  document.addEventListener('astro:page-load', setupLightbox);
-</script>
-
-<style>
-  dialog::backdrop {
-    background: transparent;
-  }
-</style>

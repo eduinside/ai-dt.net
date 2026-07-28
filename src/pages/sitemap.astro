@@ -1,37 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LinkButton from '../components/LinkButton.astro';
-
-const nav = [
-  {
-    href: '/index',
-    label: '지원센터',
-    children: [
-      { href: '/index/manual', label: '사전 준비사항 안내' },
-      { href: '/index/AIDT', label: 'AI·디지털 교육자료 활용 도움자료' },
-      { href: '/index/eduonepass', label: '교육디지털원패스' },
-      { href: '/index/software', label: '학습지원 소프트웨어' },
-      { href: '/index/faq', label: '선도학교 운영 관련 FAQ' },
-      { href: '/index/feedback', label: '발행사 답변' },
-    ],
-  },
-  {
-    href: '/class',
-    label: '수업이야기',
-    children: [
-      { href: '/class/curriculum', label: '수업설계 지원' },
-      { href: '/class/mid', label: '중등 AI·디지털 교육자료 지원' },
-      {
-        href: 'https://sites.google.com/dge.go.kr/aidt-tutoring-t/home',
-        label: 'AI수학 디지털 교육자료 튜터링',
-        external: true,
-      },
-      { href: 'https://aidtshow.kr/', label: '웹전시관 바로가기', external: true },
-    ],
-  },
-  { href: '/study', label: '스스로 학습 안내' },
-  { href: '/contact', label: '문의 및 장애 지원' },
-];
+import { nav, standalone } from '../data/nav';
 ---
 
 <BaseLayout title="사이트맵" description="AI·디지털 교육자료 수업 지원센터 사이트맵">
@@ -75,6 +44,26 @@ const nav = [
           </div>
         ))
       }
+    </div>
+
+    <!-- 네비 그룹에 없는 단독 페이지 -->
+    <div class="mt-12 border-t border-line pt-8">
+      <p class="text-[18px] font-bold text-ink">그 밖의 페이지</p>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+        {
+          standalone.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                class="flex items-center text-[15px] text-muted transition-colors hover:text-primary-600"
+              >
+                <span class="mr-2 text-line">—</span>
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 </BaseLayout>

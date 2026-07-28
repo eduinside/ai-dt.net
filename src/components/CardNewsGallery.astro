@@ -1,0 +1,149 @@
+---
+/**
+ * 카드뉴스 갤러리 — 대분류(초·중·고) 아래 3열 갤러리.
+ * 썸네일은 카드뉴스 1면(1:1), 누르면 라이트박스에서 장을 넘겨본다.
+ *
+ * 이미지: src/assets/cards/{section}/{id}/01.png …  (목록·제목은 src/data/classCards.ts)
+ */
+import { getImage } from 'astro:assets';
+import Lightbox from './Lightbox.astro';
+import {
+  classCards,
+  levelLabels,
+  levelOrder,
+  type Level,
+  type Section,
+} from '../data/classCards';
+
+interface Props {
+  section: Section;
+  /** case 섹션처럼 라이트박스 하단에 PDF 버튼을 둘지 */
+  showPdf?: boolean;
+}
+const { section, showPdf = false } = Astro.props;
+
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/cards/**/*.{png,jpg,jpeg,webp}',
+  { eager: true }
+);
+
+const THUMB_W = 480;
+const FULL_W = [800, 1400];
+
+const items = await Promise.all(
+  classCards[section].map(async (item) => {
+    const sources = Object.entries(all)
+      .filter(([p]) => p.includes(`/cards/${section}/${item.id}/`))
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([, m]) => m.default);
+
+    const thumb = sources[0]
+      ? await getImage({
+          src: sources[0],
+          width: Math.min(THUMB_W, sources[0].width),
+          format: 'webp',
+          quality: 80,
+        })
+      : null;
+
+    const images = await Promise.all(
+      sources.map(async (src, i) => {
+        const widths = [...new Set(FULL_W.map((w) => Math.min(w, src.width)))].sort((a, b) => a - b);
+        const variants = await Promise.all(
+          widths.map((width) => getImage({ src, width, format: 'webp', quality: 85 }))
+        );
+        return {
+          src: variants[variants.length - 1].src,
+          srcset: variants.map((v, n) => `${v.src} ${widths[n]}w`).join(', '),
+          alt: `${item.title} ${i + 1}면`,
+        };
+      })
+    );
+
+    return { ...item, thumb, images };
+  })
+);
+
+const byLevel = (level: Level) => items.filter((i) => i.level === level);
+const hasAny = items.length > 0;
+---
+
+<div class="mt-10 space-y-12">
+  {
+    levelOrder.map((level) => {
+      const list = byLevel(level);
+      return (
+        <section>
+          <h2 class="section-mark text-[20px] font-bold tracking-tight text-ink">
+            {levelLabels[level]}
+          </h2>
+
+          <ul class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {list.length > 0
+              ? list.map((item) => (
+                  <li>
+                    <button
+                      type="button"
+                      data-lightbox
+                      data-images={JSON.stringify(item.images)}
+                      data-title={item.title}
+                      data-pdf={showPdf && item.pdf ? `/pdf/case/${item.pdf}` : undefined}
+                      data-pdf-note={showPdf ? 'PDF 파일은 추후 업데이트 예정입니다.' : undefined}
+                      class="group w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-card)] border border-line bg-white text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-[var(--shadow-card-hover)]"
+                    >
+                      {item.thumb ? (
+                        <img
+                          src={item.thumb.src}
+                          alt={`${item.title} 카드뉴스 1면`}
+                          loading="lazy"
+                          class="aspect-square w-full object-cover"
+                        />
+                      ) : (
+                        <span class="grid aspect-square w-full place-content-center border-b border-dashed border-line bg-primary-50/40 text-center text-[13px] text-muted">
+                          이미지 준비 중
+                          <span class="mt-1 block font-mono text-[11px]">
+                            src/assets/cards/{section}/{item.id}/
+                          </span>
+                        </span>
+                      )}
+                      <span class="block px-4 py-3.5">
+                        <span class="block text-[15px] font-semibold leading-snug text-ink group-hover:text-primary-700">
+                          {item.title}
+                        </span>
+                        {showPdf && (
+                          <span class="mt-1 block text-[13px] text-muted">
+                            {item.pdf ? 'PDF 내려받기 제공' : 'PDF 준비 중'}
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  </li>
+                ))
+              : [0, 1, 2].map(() => (
+                  <li>
+                    <div class="overflow-hidden rounded-[var(--radius-card)] border-2 border-dashed border-line bg-white/50">
+                      <span class="grid aspect-square w-full place-content-center px-3 text-center text-[13px] text-muted">
+                        카드뉴스 자리
+                      </span>
+                      <span class="block border-t border-dashed border-line px-4 py-3.5 text-[13px] text-muted">
+                        준비 중입니다
+                      </span>
+                    </div>
+                  </li>
+                ))}
+          </ul>
+        </section>
+      );
+    })
+  }
+</div>
+
+{
+  !hasAny && (
+    <p class="mt-10 rounded-[var(--radius-card)] border border-line bg-white p-5 text-center text-[14px] text-muted">
+      자료가 준비되는 대로 학교급별 카드뉴스가 이 자리에 올라옵니다.
+    </p>
+  )
+}
+
+<Lightbox />

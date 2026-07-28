@@ -1,0 +1,179 @@
+---
+/**
+ * 라이트박스 — 페이지에 한 번만 두고, 트리거 쪽에서 이미지 목록을 넘긴다.
+ *
+ * 트리거(버튼/링크 등)에 아래 속성을 달면 클릭 시 열린다.
+ *   data-lightbox            (필수) 트리거 표시
+ *   data-images='[{"src":"…","srcset":"…","alt":"…"}]'  (필수) 이미지 목록 JSON
+ *   data-title="…"           (선택) 상단 제목
+ *   data-pdf="/pdf/…"        (선택) 하단 PDF 내려받기 버튼
+ *   data-pdf-note="…"        (선택) PDF가 아직 없을 때 안내 문구
+ *
+ * 여러 장이면 좌우 버튼·←/→ 키로 넘긴다. Esc·배경 클릭으로 닫히고,
+ * 닫으면 열었던 트리거로 포커스가 돌아간다.
+ */
+---
+
+<dialog
+  id="lightbox"
+  data-pagefind-ignore
+  class="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none flex-col items-center justify-center bg-black/80 p-4 opacity-0 backdrop-blur-sm transition-opacity duration-300 open:flex open:opacity-100"
+  aria-modal="true"
+>
+  <!-- 닫기 -->
+  <button
+    type="button"
+    data-lb-close
+    class="absolute right-4 top-4 z-10 grid h-11 w-11 cursor-pointer place-items-center rounded-full bg-white/90 text-ink transition hover:bg-white"
+    aria-label="닫기"
+  >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+  </button>
+
+  <p data-lb-title class="mb-3 max-w-[90vw] text-center text-[15px] font-semibold text-white sm:text-[17px]"></p>
+
+  <div class="relative flex w-full max-w-[min(96vw,900px)] items-center justify-center">
+    <button
+      type="button"
+      data-lb-prev
+      class="absolute left-0 z-10 grid h-11 w-11 -translate-x-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-ink shadow-sm transition hover:bg-white sm:-translate-x-[130%]"
+      aria-label="이전 장"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <img
+      data-lb-img
+      src=""
+      alt=""
+      class="max-h-[74vh] w-full rounded-lg bg-white object-contain"
+    />
+
+    <button
+      type="button"
+      data-lb-next
+      class="absolute right-0 z-10 grid h-11 w-11 translate-x-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-ink shadow-sm transition hover:bg-white sm:translate-x-[130%]"
+      aria-label="다음 장"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="mt-4 flex flex-col items-center gap-3">
+    <p data-lb-counter class="text-[14px] font-medium text-white/80"></p>
+    <a
+      data-lb-pdf
+      href="#"
+      download
+      class="hidden items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[15px] font-bold text-primary-700 shadow-sm transition hover:-translate-y-0.5"
+    >
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 3v9m0 0l-3.5-3.5M10 12l3.5-3.5M4 15.5h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      PDF 내려받기
+    </a>
+    <p data-lb-pdf-note class="hidden text-[13px] text-white/70"></p>
+  </div>
+</dialog>
+
+<script>
+  interface LbImage {
+    src: string;
+    srcset?: string;
+    alt?: string;
+  }
+
+  function setupLightbox() {
+    const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+    if (!dialog || dialog.dataset.init) return;
+    dialog.dataset.init = '1';
+
+    const img = dialog.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const titleEl = dialog.querySelector<HTMLElement>('[data-lb-title]')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-lb-counter]')!;
+    const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+    const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+    const pdfLink = dialog.querySelector<HTMLAnchorElement>('[data-lb-pdf]')!;
+    const pdfNote = dialog.querySelector<HTMLElement>('[data-lb-pdf-note]')!;
+
+    let images: LbImage[] = [];
+    let idx = 0;
+    let opener: HTMLElement | null = null;
+
+    const render = () => {
+      const cur = images[idx];
+      if (!cur) return;
+      img.src = cur.src;
+      if (cur.srcset) img.srcset = cur.srcset;
+      else img.removeAttribute('srcset');
+      img.alt = cur.alt ?? '';
+      const many = images.length > 1;
+      counter.textContent = many ? `${idx + 1} / ${images.length}` : '';
+      prevBtn.hidden = !many;
+      nextBtn.hidden = !many;
+    };
+
+    const move = (step: number) => {
+      idx = (idx + step + images.length) % images.length;
+      render();
+    };
+
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox]');
+      if (!trigger) return;
+      e.preventDefault();
+
+      try {
+        images = JSON.parse(trigger.dataset.images || '[]');
+      } catch {
+        images = [];
+      }
+      if (!images.length) return;
+
+      opener = trigger;
+      idx = 0;
+      titleEl.textContent = trigger.dataset.title ?? '';
+
+      const pdf = trigger.dataset.pdf;
+      const note = trigger.dataset.pdfNote;
+      pdfLink.classList.toggle('hidden', !pdf);
+      pdfLink.classList.toggle('inline-flex', !!pdf);
+      if (pdf) pdfLink.href = pdf;
+      pdfNote.textContent = !pdf && note ? note : '';
+      pdfNote.classList.toggle('hidden', !!pdf || !note);
+
+      render();
+      dialog.showModal();
+    });
+
+    prevBtn.addEventListener('click', () => move(-1));
+    nextBtn.addEventListener('click', () => move(1));
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') move(-1);
+      if (e.key === 'ArrowRight') move(1);
+    });
+
+    // 배경(=dialog 자체) 클릭만 닫기 — 이미지·버튼 클릭은 통과시킨다
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.querySelector('[data-lb-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+
+  setupLightbox();
+  document.addEventListener('astro:page-load', setupLightbox);
+</script>
+
+<style>
+  dialog::backdrop {
+    background: transparent;
+  }
+</style>

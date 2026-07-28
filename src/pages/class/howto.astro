@@ -1,0 +1,28 @@
+---
+/**
+ * 이럴 땐 이렇게 — 상황별 해결 방법 카드뉴스 갤러리.
+ * 목록·제목은 src/data/classCards.ts, 이미지는 src/assets/cards/howto/{id}/.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CardNewsGallery from '../../components/CardNewsGallery.astro';
+import PageNavigation from '../../components/PageNavigation.astro';
+import { sectionMeta } from '../../data/classCards';
+
+const meta = sectionMeta.howto;
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <section class="mx-auto max-w-5xl px-5 py-12 sm:py-14">
+    <h1 class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]">
+      {meta.title}
+    </h1>
+    <p class="mt-8 text-center text-[16px] text-ink">{meta.lead}</p>
+
+    <CardNewsGallery section="howto" />
+
+    <PageNavigation
+      prev={{ title: '활용 수업 사례', href: '/class/case' }}
+      next={{ title: '에듀테크 활용 수업 사례', href: '/class/edtech' }}
+    />
+  </section>
+</BaseLayout>
