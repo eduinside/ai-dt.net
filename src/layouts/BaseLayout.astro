@@ -22,10 +22,14 @@ const fullTitle =
 <!doctype html>
 <html lang="ko">
   <head>
-    <!-- pages.dev 기본 도메인 접속 시 커스텀 도메인(www.ai-dt.net)으로 즉시 이전 -->
+    <!--
+      pages.dev 기본 도메인 접속 시 커스텀 도메인(www.ai-dt.net)으로 즉시 이전.
+      정본 프리뷰 호스트와 정확히 일치할 때만 이전한다 — 분기 프리뷰(예: 2608.ai-dt-net.pages.dev)는
+      검수용이므로 그대로 머물러야 한다.
+    -->
     <script is:inline>
       (function () {
-        if (window.location.hostname.endsWith('.pages.dev')) {
+        if (window.location.hostname === 'ai-dt-net.pages.dev') {
           window.location.replace('https://www.ai-dt.net' + window.location.pathname + window.location.search + window.location.hash);
         }
       })();

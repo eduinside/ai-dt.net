@@ -1,0 +1,55 @@
+---
+/**
+ * 슬라이드 묶음 — src/assets/pages/{slug}/ 의 이미지를 모아 캐러셀로 표시.
+ * 파일이 없으면 같은 자리에 점선 플레이스홀더를 보여준다(운영자 드롭인 안내).
+ * 파일명은 01.png, 02.png … 순으로 두면 그 순서대로 표시됨. (정지 이미지 나열은 PageImages)
+ *
+ * ratio    : '16/9' 처럼 고정 비율. 지정하면 플레이스홀더도 같은 비율로 잡힌다.
+ * autoplay : 자동 넘김(Carousel에 위임 — 오버·포커스 시 정지, 감속 선호 시 미동작)
+ */
+import Carousel from './Carousel.astro';
+
+interface Props {
+  slug: string; // src/assets/pages/{slug}
+  alt: string; // 대체 텍스트 접두어 겸 플레이스홀더 제목
+  ratio?: string;
+  autoplay?: boolean;
+  interval?: number;
+  caption?: string;
+  note?: string; // 플레이스홀더에 덧붙일 안내
+}
+const { slug, alt, ratio, autoplay = false, interval, caption, note } = Astro.props;
+
+const all = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/pages/**/*.{png,jpg,jpeg,webp}',
+  { eager: true }
+);
+const images = Object.entries(all)
+  .filter(([p]) => p.includes(`/pages/${slug}/`))
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m], i) => ({
+    src: m.default.src,
+    alt: `${alt} ${i + 1}`,
+    caption,
+  }));
+---
+
+{
+  images.length > 0 ? (
+    <Carousel images={images} autoplay={autoplay} interval={interval} ratio={ratio} />
+  ) : (
+    <div
+      style={ratio ? `aspect-ratio:${ratio}` : undefined}
+      class:list={[
+        'grid place-content-center rounded-2xl border-2 border-dashed border-line bg-white/50 px-4 text-center',
+        ratio ? '' : 'py-8',
+      ]}
+    >
+      <p class="text-[14px] font-semibold text-muted">슬라이드 자리 — {alt}</p>
+      <p class="mt-1.5 font-mono text-[12px] text-muted">
+        src/assets/pages/{slug}/ 에 01.png, 02.png … 를 넣으면 자동 표시됩니다
+      </p>
+      {note && <p class="mt-1 text-[12px] text-muted">{note}</p>}
+    </div>
+  )
+}

@@ -2,6 +2,10 @@
 /**
  * 캐러셀 — CSS scroll-snap 기반. 모바일 스와이프 자연 지원, JS는 점 표시/이동만(경량).
  * MDX: <Carousel images={[{ src, alt }, ...]} />
+ *
+ * autoplay: 자동 넘김(기본 off). 마우스 오버·포커스·탭 비활성 시 정지하고,
+ *           prefers-reduced-motion: reduce 이면 아예 동작하지 않는다.
+ * ratio:    슬라이드 고정 비율(예: '16/9', '1/1'). 지정하지 않으면 이미지 원본 비율.
  */
 interface Slide {
   src: string;
@@ -10,12 +14,20 @@ interface Slide {
 }
 interface Props {
   images: Slide[];
+  autoplay?: boolean;
+  interval?: number;
+  ratio?: string;
 }
-const { images } = Astro.props;
+const { images, autoplay = false, interval = 5000, ratio } = Astro.props;
 const uid = 'car-' + Math.random().toString(36).slice(2, 8);
 ---
 
-<div class="carousel not-prose relative group/carousel" data-carousel data-uid={uid}>
+<div
+  class="carousel not-prose relative group/carousel"
+  data-carousel
+  data-uid={uid}
+  data-autoplay={autoplay ? String(interval) : undefined}
+>
   {
     images.length > 1 && (
       <>
@@ -56,7 +68,11 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
             src={img.src}
             alt={img.alt ?? `슬라이드 ${i + 1}`}
             loading={i === 0 ? 'eager' : 'lazy'}
-            class="w-full h-auto rounded-2xl border border-line object-contain"
+            style={ratio ? `aspect-ratio:${ratio}` : undefined}
+            class:list={[
+              'w-full rounded-2xl border border-line',
+              ratio ? 'h-full object-cover' : 'h-auto object-contain',
+            ]}
           />
           {img.caption && (
             <figcaption class="absolute inset-x-0 bottom-0 rounded-b-2xl bg-gradient-to-t from-ink/70 to-transparent px-4 py-3 text-sm text-white">
@@ -97,6 +113,15 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
 
       let currentIdx = 0;
 
+      // 현재 위치는 스크롤 좌표에서 직접 계산한다.
+      // (IntersectionObserver는 점 표시 갱신용 — 콜백이 늦으면 이동 목표가 어긋난다)
+      const indexFromScroll = () =>
+        Math.min(slides.length - 1, Math.round(track.scrollLeft / track.clientWidth));
+
+      const goTo = (idx: number) => {
+        slides[idx]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      };
+
       const setActive = (idx: number) => {
         currentIdx = idx;
         dots.forEach((d, i) =>
@@ -106,10 +131,7 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
       setActive(0);
 
       dots.forEach((dot) =>
-        dot.addEventListener('click', () => {
-          const i = Number(dot.dataset.index);
-          slides[i]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        })
+        dot.addEventListener('click', () => goTo(Number(dot.dataset.index)))
       );
 
       // 좌우 버튼 바인딩
@@ -118,14 +140,12 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
 
       prevBtn?.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetIdx = (currentIdx - 1 + slides.length) % slides.length;
-        slides[targetIdx]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        goTo((indexFromScroll() - 1 + slides.length) % slides.length);
       });
 
       nextBtn?.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetIdx = (currentIdx + 1) % slides.length;
-        slides[targetIdx]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        goTo((indexFromScroll() + 1) % slides.length);
       });
 
       const io = new IntersectionObserver(
@@ -137,6 +157,32 @@ const uid = 'car-' + Math.random().toString(36).slice(2, 8);
         { root: track, threshold: 0.6 }
       );
       slides.forEach((s) => io.observe(s));
+
+      // 자동 넘김 — data-autoplay="{ms}" 가 있을 때만. 접근성상 감속 선호 시 미동작.
+      const delay = Number(root.dataset.autoplay);
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!delay || slides.length < 2 || reduceMotion) return;
+
+      let timer: ReturnType<typeof setInterval> | null = null;
+      const stop = () => {
+        if (timer) clearInterval(timer);
+        timer = null;
+      };
+      const start = () => {
+        if (timer) return;
+        timer = setInterval(() => goTo((indexFromScroll() + 1) % slides.length), delay);
+      };
+
+      // 조작 중(오버·포커스·터치)에는 멈추고, 벗어나면 재개
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('focusout', start);
+      root.addEventListener('touchstart', stop, { passive: true });
+      document.addEventListener('visibilitychange', () =>
+        document.hidden ? stop() : start()
+      );
+      start();
     });
   }
   initCarousels();
