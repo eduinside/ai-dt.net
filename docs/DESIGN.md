@@ -1,6 +1,6 @@
 # 디자인 시스템 — 모던 공공 포털
 
-최종 갱신: 2026-07-11 (구글 사이트풍 → 모던 공공 포털 리디자인)
+최종 갱신: 2026-07-28 (이미지 컴포넌트 3종·캐러셀·라이트박스 규칙 추가)
 
 모든 토큰은 `src/styles/global.css`의 `@theme` 블록에 정의되어 있고,
 Tailwind 4 유틸리티(`text-primary-600`, `bg-band` 등)와 `var(--color-…)` 양쪽에서 사용할 수 있다.
@@ -73,6 +73,30 @@ Tailwind 4 유틸리티(`text-primary-600`, `bg-band` 등)와 `var(--color-…)`
 | `.hero-canvas` | 히어로 배경: 블루 틴트 radial ×2 + 22px 도트 그리드 |
 | `.premium-card` | 호버 시 -4px 부상 + 그림자 전환 |
 | `.animate-fade-in-up` + `.delay-{75,150,200,300}` | 진입 애니메이션(섹션별 시차) |
+
+## 4-1. 이미지 컴포넌트 3종 (역할 구분)
+
+| 컴포넌트 | 언제 | 소스 | 비고 |
+|---|---|---|---|
+| `PageImages` | 스크린샷을 **위에서 아래로 나열** | `src/assets/pages/{slug}/` | 정지 이미지, 라이트박스 없음 |
+| `SlideDeck` | **캐러셀 한 덩어리**(홈 카드뉴스, 학습지원 SW) | `src/assets/pages/{slug}/` | 폴더 glob + 캐러셀 + 플레이스홀더 일체. `ratio`(예: `16/9`), `autoplay`, `caption` |
+| `CardNewsGallery` | **여러 묶음을 격자로** 늘어놓고 눌러서 넘겨보기 | `src/assets/cards/{섹션}/{id}/` | 목록·제목은 `src/data/classCards.ts`, 라이트박스 사용 |
+
+공통 규칙
+- 이미지는 `public/`이 아니라 **`src/assets/` 아래**에 둔다. `public/`은 최적화를 거치지 않고 원본이 그대로 배포된다.
+- 변환은 `getImage`로 **WebP(q80~85) + `srcset`** 생성이 기본. 실측: PNG 5.6MB → WebP 1600w 약 310KB.
+- 파일명은 `01.png`, `02.png` … 순번. **01번이 대표(썸네일·첫 장)** 이다.
+- 자료가 아직 없으면 **점선 플레이스홀더**를 같은 자리·같은 비율로 보여준다(레이아웃이 흔들리지 않게).
+
+### 캐러셀(`Carousel`)
+- `autoplay`는 기본 off. 켜면 마우스 오버·포커스·탭 비활성 시 정지하고, `prefers-reduced-motion: reduce`면 아예 동작하지 않는다.
+- 현재 위치는 **스크롤 좌표에서 계산**한다(IntersectionObserver는 점 표시 갱신 전용 — 콜백이 늦으면 이동 목표가 어긋난다).
+
+### 라이트박스(`Lightbox`)
+- 페이지에 **하나만** 두고, 트리거 쪽에서 `data-lightbox` + `data-images`(JSON)로 이미지를 넘긴다.
+  `data-title`, `data-pdf`, `data-pdf-note`는 선택.
+- 좌우 버튼·←/→ 키·Esc·배경 클릭 닫기, `n / 총 n` 카운터, 닫으면 트리거로 포커스 복귀.
+- 이미지가 1장이면 화살표·카운터를 자동으로 숨긴다.
 
 ## 5. 레이아웃 문법 (구글 사이트풍 방지 규칙)
 

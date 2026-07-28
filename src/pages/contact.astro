@@ -10,11 +10,17 @@ interface Item {
   text: string;
   subs?: string[];
 }
+/** url·tel이 있으면 칩 대신 아코디언으로 펼쳐 보여준다 */
+interface Member {
+  name: string;
+  url?: string;
+  tel?: string;
+}
 interface Desk {
   title: string;
   tel?: string;
   memberLabel: string;
-  members: string[];
+  members: Member[];
   groups: { heading: string; items: Item[] }[];
 }
 
@@ -26,7 +32,7 @@ const desks: Desk[] = [
     members: [
       '교문사', '도서출판 길벗', '동아출판', '디딤돌교육', '비상교육', '씨마스',
       '아이스크림미디어', '엔이능률', '와이비엠', '천재교과서', '천재교육',
-    ],
+    ].map((name) => ({ name })),
     groups: [
       {
         heading: '지원 내용',
@@ -72,9 +78,20 @@ const desks: Desk[] = [
     ],
   },
   {
-    title: 'AI·디지털 교육자료 발행사 지원 센터',
+    title: 'AI·디지털 교육자료 발행사별 지원 센터',
     memberLabel: '미참여사',
-    members: ['교학사', '금성출판사', '미래엔', '지학사', '클래스팅', '잇플'],
+    members: [
+      { name: '교학사', url: 'https://aidt.kyohak.co.kr/', tel: '1566-1053' },
+      {
+        name: '금성출판사',
+        url: 'https://cs.kumsung.co.kr/member/customer/callCenter.do',
+        tel: '080-969-1000',
+      },
+      { name: '미래엔', url: 'https://aidt.m-teacher.co.kr/', tel: '1800-8890' },
+      { name: '지학사', url: 'https://textbook.jihak.co.kr/AIDT22/index.html', tel: '02-330-5291' },
+      { name: '클래스팅', url: 'https://support.classting.com/hc/ko' }, // 콜센터 미운영
+      { name: '잇플', url: 'https://www.itpleinfo.com/default/07/01.php', tel: '0502-600-4925' },
+    ],
     groups: [
       {
         heading: '지원 내용',
@@ -181,13 +198,40 @@ const desks: Desk[] = [
 
             <div class="mt-4">
               <p class="text-[14px] font-semibold text-ink">{desk.memberLabel}</p>
-              <ul class="mt-2 flex flex-wrap gap-1.5">
-                {desk.members.map((m) => (
-                  <li class="rounded-full border border-line bg-primary-50/60 px-2.5 py-1 text-[13px] text-ink">
-                    {m}
-                  </li>
-                ))}
-              </ul>
+
+              {/* 개별 창구가 있는 발행사는 칩을 누르면 바로 아래 패널에 링크·연락처가 열린다 */}
+              <div data-chip-group>
+                <ul class="mt-2 flex flex-wrap gap-1.5">
+                  {desk.members.map((m) =>
+                    m.url || m.tel ? (
+                      <li>
+                        <button
+                          type="button"
+                          data-chip
+                          data-name={m.name}
+                          data-url={m.url}
+                          data-tel={m.tel}
+                          aria-expanded="false"
+                          class="cursor-pointer rounded-full border border-line bg-primary-50/60 px-2.5 py-1 text-[13px] text-ink transition-colors hover:border-primary-400 hover:text-primary-700 aria-expanded:border-primary-600 aria-expanded:bg-primary-600 aria-expanded:text-white"
+                        >
+                          {m.name}
+                        </button>
+                      </li>
+                    ) : (
+                      <li class="rounded-full border border-line bg-primary-50/60 px-2.5 py-1 text-[13px] text-ink">
+                        {m.name}
+                      </li>
+                    )
+                  )}
+                </ul>
+
+                <div
+                  data-chip-panel
+                  hidden
+                  class="mt-2.5 rounded-xl border border-primary-200 bg-primary-50/50 px-4 py-3 text-[14px] leading-relaxed"
+                >
+                </div>
+              </div>
             </div>
 
             <dl class="mt-5 space-y-4 text-[15px] leading-relaxed">
@@ -223,3 +267,52 @@ const desks: Desk[] = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  /** 발행사 칩 → 바로 아래 패널에 링크·연락처 표시(같은 칩을 다시 누르면 닫힘) */
+  function setupChips() {
+    document.querySelectorAll<HTMLElement>('[data-chip-group]').forEach((group) => {
+      if (group.dataset.init) return;
+      group.dataset.init = '1';
+
+      const panel = group.querySelector<HTMLElement>('[data-chip-panel]')!;
+      const chips = Array.from(group.querySelectorAll<HTMLButtonElement>('[data-chip]'));
+
+      const close = () => {
+        chips.forEach((c) => c.setAttribute('aria-expanded', 'false'));
+        panel.hidden = true;
+        panel.innerHTML = '';
+      };
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          if (chip.getAttribute('aria-expanded') === 'true') {
+            close();
+            return;
+          }
+          close();
+          chip.setAttribute('aria-expanded', 'true');
+
+          const { name, url, tel } = chip.dataset;
+          const rows: string[] = [`<span class="font-bold text-ink">${name}</span>`];
+          if (url) {
+            rows.push(
+              `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2 break-all">${url}</a>`
+            );
+          }
+          rows.push(
+            tel
+              ? `<span class="text-ink">문의 전화 <a href="tel:${tel}" class="font-bold text-primary-600 underline underline-offset-2">${tel}</a></span>`
+              : `<span class="text-muted">콜센터 미운영 — 위 링크의 온라인 문의를 이용해 주세요.</span>`
+          );
+
+          panel.innerHTML = `<div class="flex flex-col gap-1">${rows.join('')}</div>`;
+          panel.hidden = false;
+        });
+      });
+    });
+  }
+
+  setupChips();
+  document.addEventListener('astro:page-load', setupChips);
+</script>

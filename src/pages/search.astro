@@ -1,5 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { nav } from '../data/nav';
+
+// 검색 결과가 없거나 아직 입력 전일 때 보여줄 바로가기 — 메뉴 데이터에서 뽑는다.
+const shortcuts = [
+  ...(nav.find((n) => n.href === '/index')?.children ?? []),
+  ...(nav.find((n) => n.href === '/class')?.children ?? []),
+].filter((c) => !c.external);
 ---
 
 <BaseLayout title="검색" description="사이트 내 문서 및 자료 통합 검색">
@@ -10,6 +17,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Pagefind가 검색 인터페이스를 렌더링할 타겟 컨테이너 -->
     <div id="search" class="min-h-[300px]"></div>
+
+    <!-- 검색이 막혔을 때의 탈출구 -->
+    <nav aria-label="주요 페이지 바로가기" class="mt-12 border-t border-line pt-8" data-pagefind-ignore>
+      <p class="text-[15px] font-bold text-ink">찾는 내용이 없다면</p>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {
+          shortcuts.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                class="inline-block rounded-full border border-line bg-white px-3.5 py-1.5 text-[14px] text-ink transition-colors hover:border-primary-400 hover:text-primary-700"
+              >
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
   </div>
 </BaseLayout>
 
@@ -23,16 +49,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       new PagefindUI({
         element: '#search',
         showSubResults: true,
+        // 자리표시자 이름은 Pagefind 규격을 따른다([SEARCH_TERM]/[COUNT]/[DIFFERENT_TERM]).
+        // 소문자 [search]·[count]로 쓰면 치환되지 않고 그대로 노출된다.
         translations: {
           placeholder: "검색어를 입력해 주세요 (예: NEIS, 교육디지털원패스, 금성)",
           clear_search: "지우기",
           load_more: "결과 더 보기",
           search_label: "검색",
           filters_label: "필터",
-          zero_results: "[search]에 대한 검색 결과가 없습니다.",
-          many_results: "[search]에 대한 [count]개의 검색 결과",
-          one_result: "[search]에 대한 [count]개의 검색 결과",
-          alt_search: "[search]에 대한 다른 검색 결과가 있습니다. 검색어를 다시 확인해 주세요."
+          zero_results: "'[SEARCH_TERM]'에 대한 검색 결과가 없습니다.",
+          many_results: "'[SEARCH_TERM]'에 대한 검색 결과 [COUNT]개",
+          one_result: "'[SEARCH_TERM]'에 대한 검색 결과 [COUNT]개",
+          alt_search: "'[SEARCH_TERM]'에 대한 결과가 없어 '[DIFFERENT_TERM]' 결과를 보여드립니다.",
+          searching: "'[SEARCH_TERM]' 검색 중…"
         }
       });
     } else {
@@ -47,16 +76,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </script>
 
 <style is:global>
-  /* Pagefind UI의 스타일을 프로젝트 디자인 테마(딥 틸 #0f7d84, 웜 코랄 #e2623b)와 어울리도록 커스텀 */
-  :root {
-    --pagefind-ui-primary: #0f7d84;
-    --pagefind-ui-text: #1d2c33;
-    --pagefind-ui-background: #ffffff;
-    --pagefind-ui-border: #e2e8f0;
-    --pagefind-ui-tag: #f1f5f9;
+  /*
+    Pagefind UI를 현재 디자인 토큰(딥 네이비 + 웜 오렌지)에 맞춘다.
+    pagefind-ui.css가 이 페이지 스타일보다 나중에 로드되며 같은 :root 변수를 정의하므로,
+    :root에 선언하면 덮어써진다 → 컨테이너(#search)에 선언해 내부로 상속시킨다.
+  */
+  #search {
+    --pagefind-ui-primary: var(--color-primary-600);
+    --pagefind-ui-text: var(--color-ink);
+    --pagefind-ui-background: var(--color-surface);
+    --pagefind-ui-border: var(--color-line);
+    --pagefind-ui-tag: var(--color-band);
   }
   
-  .pagefind-ui .pagefind-ui__search-input {
+  #search .pagefind-ui__search-input {
     font-size: 1rem;
     font-weight: 500;
     border-radius: 0.5rem;
@@ -64,43 +97,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     transition: all 0.2s ease;
   }
 
-  .pagefind-ui .pagefind-ui__search-input:focus {
+  #search .pagefind-ui__search-input:focus {
     outline: none;
     border-color: var(--pagefind-ui-primary);
-    box-shadow: 0 0 0 3px rgba(15, 125, 132, 0.15);
+    box-shadow: 0 0 0 3px rgba(27, 68, 112, 0.15);
   }
 
-  .pagefind-ui .pagefind-ui__search-clear {
+  #search .pagefind-ui__search-clear {
     border-radius: 0.375rem;
     background-color: var(--pagefind-ui-tag);
     color: var(--pagefind-ui-text);
   }
 
-  .pagefind-ui .pagefind-ui__result {
+  #search .pagefind-ui__result {
     border-top: 1px solid var(--pagefind-ui-border);
     padding: 1.5rem 0;
   }
 
-  .pagefind-ui .pagefind-ui__result-title a {
+  #search .pagefind-ui__result-title a {
     color: var(--pagefind-ui-primary);
     font-weight: 700;
     text-decoration: none;
   }
 
-  .pagefind-ui .pagefind-ui__result-title a:hover {
+  #search .pagefind-ui__result-title a:hover {
     text-decoration: underline;
   }
 
-  .pagefind-ui .pagefind-ui__result-excerpt {
-    color: #4a5d66;
+  #search .pagefind-ui__result-excerpt {
+    color: var(--color-muted);
     font-size: 0.925rem;
     margin-top: 0.5rem;
     line-height: 1.6;
   }
 
-  .pagefind-ui .pagefind-ui__result-excerpt mark {
-    background-color: rgba(226, 98, 59, 0.15); /* 웜 코랄 투명 배경 */
-    color: #e2623b; /* 웜 코랄 강조 색상 */
+  #search .pagefind-ui__result-excerpt mark {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent); /* 웜 오렌지 강조 */
     font-weight: 600;
     padding: 0 0.125rem;
     border-radius: 0.125rem;
