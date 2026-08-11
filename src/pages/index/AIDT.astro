@@ -6,13 +6,14 @@ import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LinkButton from "../../components/LinkButton.astro";
 import PageNavigation from "../../components/PageNavigation.astro";
+import SlideDeck from "../../components/SlideDeck.astro";
 
 import imgGuide11 from "../../assets/pages/manual/11.png";
 import imgGuide12 from "../../assets/pages/manual/12.png";
 
 const cards = [
   {
-    title: "AI·디지털 교육자료 포털", href: "https://www.aidtbook.kr/index.do",
+    title: "학습데이터 분석·활용 포털", href: "https://www.edupath.kr/index.do",
   },
   { title: "AI·디지털 교육자료 웹전시관", href: "https://aidtshow.kr/" },
 ];
@@ -42,7 +43,7 @@ const dgeDocs = [
     href: "https://drive.google.com/file/d/1jOjOYVLc6FTi19zMc_4CFMzsmOxrxgQ4/view",
   },
   {
-    label: "붙임4_[교사] AI·디지털 교육자료 포털 서비스 이용 준비.pdf",
+    label: "붙임4_[교사] 학습데이터 분석·활용 포털 서비스 이용 준비.pdf",
     href: "https://drive.google.com/file/d/1asrRTpB4UdmjwsY0vUqsgPS8Ba9Oi9Gn/view",
   },
   {
@@ -54,7 +55,7 @@ const dgeDocs = [
     href: "https://drive.google.com/file/d/1s6NpvO8S-T7FFPk3tt8rlaXGVkuamh_v/view",
   },
   {
-    label: "붙임5_[학생] AI·디지털 교육자료 포털 서비스 이용 준비.pdf",
+    label: "붙임5_[학생] 학습데이터 분석·활용 포털 서비스 이용 준비.pdf",
     href: "https://drive.google.com/file/d/17wQGtOMtdm5cWR8snjARu04hBXJ4mQny/view",
   },
 ];
@@ -76,15 +77,28 @@ const forms = [
 
 <BaseLayout
   title="AI·디지털 교육자료 활용 도움자료"
-  description="AI·디지털 교육자료 포털·웹전시관과 대구교육청 활용 도움자료 안내"
+  description="학습데이터 분석·활용 포털·웹전시관과 대구교육청 활용 도움자료 안내"
 >
-  <section class="mx-auto max-w-3xl px-5 py-12 sm:py-14">
+  <section class="mx-auto max-w-3xl px-5 pt-12 sm:pt-14">
     <h1
       class="title-underline text-center text-[24px] font-bold leading-tight text-ink sm:text-[30px]"
     >
       AI·디지털 교육자료 활용 도움자료
     </h1>
+  </section>
 
+  <!-- 카드뉴스 — 16:9 자동 넘김, 제목 없음 -->
+  <section class="mx-auto max-w-4xl px-5 pt-10">
+    <SlideDeck
+      slug="index/cardnews"
+      alt="AI·디지털 교육자료 카드뉴스"
+      ratio="16/9"
+      autoplay
+      note="여러 장을 넣으면 자동으로 넘어갑니다."
+    />
+  </section>
+
+  <section class="mx-auto max-w-3xl px-5 pb-12 sm:pb-14">
     <div class="mt-10 space-y-4">
       {
         cards.map((c) => (

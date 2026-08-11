@@ -4,6 +4,7 @@
  * 하단 두 카드(공동CS센터·발행사 지원센터)는 안내 이미지 대신 구조화된 텍스트로 제공한다.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 
 // 발행사 문의 창구 — 같은 모양 카드 2장(공동CS 참여사 / 미참여사)
 interface Item {
@@ -30,8 +31,8 @@ const desks: Desk[] = [
     tel: '1661-0777',
     memberLabel: '참여사',
     members: [
-      '교문사', '도서출판 길벗', '동아출판', '디딤돌교육', '비상교육', '씨마스',
-      '아이스크림미디어', '엔이능률', '와이비엠', '천재교과서', '천재교육',
+      '교문사', '도서출판 길벗', '동아출판', '씨마스',
+      '아이스크림미디어', '엘리스그룹', '와이비엠', '잇플',
     ].map((name) => ({ name })),
     groups: [
       {
@@ -81,16 +82,19 @@ const desks: Desk[] = [
     title: 'AI·디지털 교육자료 발행사별 지원 센터',
     memberLabel: '미참여사',
     members: [
-      { name: '교학사', url: 'https://aidt.kyohak.co.kr/', tel: '1566-1053' },
+      { name: '미래엔', url: 'https://aidt.m-teacher.co.kr/', tel: '02-3475-4021' },
       {
         name: '금성출판사',
         url: 'https://cs.kumsung.co.kr/member/customer/callCenter.do',
-        tel: '080-969-1000',
+        tel: '02-2077-8233',
       },
-      { name: '미래엔', url: 'https://aidt.m-teacher.co.kr/', tel: '1800-8890' },
-      { name: '지학사', url: 'https://textbook.jihak.co.kr/AIDT22/index.html', tel: '02-330-5291' },
-      { name: '클래스팅', url: 'https://support.classting.com/hc/ko' }, // 콜센터 미운영
-      { name: '잇플', url: 'https://www.itpleinfo.com/default/07/01.php', tel: '0502-600-4925' },
+      { name: '지학사', url: 'https://textbook.jihak.co.kr/AIDT22/index.html', tel: '1566-1053' },
+      { name: '교학사', url: 'https://aidt.kyohak.co.kr/', tel: '1566-1053' },
+      { name: '디딤돌교육', tel: '1566-1053' },
+      { name: '비상교육', tel: '1544-0554' },
+      { name: '천재교육', tel: '1522-1955' },
+      { name: '천재교과서', tel: '1522-1955' },
+      { name: '엔이능률', tel: '1833-8368' },
     ],
     groups: [
       {
@@ -136,10 +140,10 @@ const desks: Desk[] = [
     </h1>
 
     <div class="mt-10 space-y-5">
-      <!-- 교육부 중앙상담센터 -->
+      <!-- 학습데이터 분석·활용 포털 문의 -->
       <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
         <h2 class="text-[18px] font-bold text-ink">
-          [교육부] AI·디지털 교육자료 중앙상담센터
+          학습데이터 분석·활용 포털 문의
           <span class="text-primary-600">(☎ 1600-2525)</span>
         </h2>
         <dl class="mt-4 space-y-3 text-[15px] leading-relaxed">
@@ -150,16 +154,104 @@ const desks: Desk[] = [
           <div>
             <dt class="font-semibold text-ink">접수 / 처리</dt>
             <dd class="text-muted">
-              ARS(1600-2525) ·
-              <a href="https://www.aidtbook.kr" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2">온라인(www.aidtbook.kr)</a>
+              ARS(☎ 1600-2525) ·
+              <a href="https://www.edupath.kr" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2">
+                온라인(www.edupath.kr)<ArrowIcon />
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+        <!-- 문의 발생시 대처요령 -->
+        <div class="mt-5 rounded-xl border border-primary-200 bg-primary-50/50 p-5">
+          <h3 class="text-[15px] font-bold text-ink">
+            💡 학습데이터 분석·활용 포털에서 [스마트문의]로 쉽게 문의하고 답변 확인하기
+          </h3>
+          <p class="mt-1 text-[13px] text-muted">
+            포털 우측 퀵메뉴를 통해 <b class="text-ink">스마트문의</b>에 진입합니다.
+          </p>
+
+          <ol class="mt-4 grid gap-3 sm:grid-cols-2">
+            <li class="rounded-xl border border-line bg-white p-4">
+              <p class="text-[14px] font-bold text-ink">
+                <span class="text-primary-600">1.</span> [스마트문의등록]에서 문의 등록하기
+              </p>
+              <ul class="mt-2 space-y-1 text-[13px] leading-relaxed text-muted">
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>스마트문의대응 화면에서 문의사항과 개선의견을 자유롭게 작성할 수 있습니다.</li>
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>도형 그리기, 파일첨부 등 부가기능을 이용하시면 더욱 정확한 답변을 받을 수 있습니다.</li>
+              </ul>
+            </li>
+            <li class="rounded-xl border border-line bg-white p-4">
+              <p class="text-[14px] font-bold text-ink">
+                <span class="text-primary-600">2.</span> [스마트문의목록]에서 답변 확인하기
+              </p>
+              <ul class="mt-2 space-y-1 text-[13px] leading-relaxed text-muted">
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>선생님께서 등록하신 문의 처리상태와 등록된 답변을 확인할 수 있습니다.</li>
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>답변을 확인한 후에는 화면 하단 [최종완료] 버튼을 클릭합니다.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <p class="mt-4 text-[13px] leading-relaxed text-muted">
+            평일 <b class="text-ink">08시~18시</b>에 상담 서비스를 제공합니다(일부 출판사 별도 시간 운영). 기타 다양한 활용 안내는 포털 공지사항·매뉴얼을 확인해주세요!<br />
+            학습용 단말기(디바이스) 점검 안내 등은 공지사항에 게시된 자료를 참고해주시기 바랍니다.
+          </p>
+        </div>
+      </article>
+
+      <!-- 회원가입 관련 문의 -->
+      <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
+        <h2 class="text-[18px] font-bold text-ink">
+          회원가입 관련 문의
+          <span class="text-primary-600">(☎ 1600-7440)</span>
+        </h2>
+        <dl class="mt-4 space-y-3 text-[15px] leading-relaxed">
+          <div>
+            <dt class="font-semibold text-ink">지원 내용</dt>
+            <dd class="text-muted">
+              <ul class="space-y-1.5">
+                <li class="pl-4 -indent-4">
+                  <span class="mr-1.5 text-primary-500">•</span>교육디지털원패스 회원가입 및 로그인 지원
+                  <ul class="mt-1 space-y-1 pl-4 indent-0 text-[14px]">
+                    <li class="pl-3 -indent-3"><span class="mr-1.5 text-line">–</span>하나의 아이디로 연계된 교육 사이트를 간편 로그인으로 이용</li>
+                    <li class="pl-3 -indent-3"><span class="mr-1.5 text-line">–</span>온라인 학생 신분 확인 및 학생 정보 제공</li>
+                  </ul>
+                </li>
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>비밀번호 찾기·계정 잠금 등 계정 관련 문의</li>
+                <li class="pl-4 -indent-4"><span class="mr-1.5 text-primary-500">•</span>학습데이터 분석·활용 포털 등 연계 서비스 접속 문의</li>
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-ink">접수 / 처리 내용</dt>
+            <dd class="text-muted">
+              <ul class="space-y-1.5">
+                <li class="pl-4 -indent-4">
+                  <span class="mr-1.5 text-primary-500">•</span>콜센터 문의
+                  <span class="text-[14px]">(☎ 1600-7440)</span>
+                </li>
+                <li class="pl-4 -indent-4">
+                  <span class="mr-1.5 text-primary-500">•</span>온라인 문의 ·
+                  <a href="https://edupass.neisplus.kr/" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2">
+                    교육디지털원패스(edupass.neisplus.kr)<ArrowIcon />
+                  </a>
+                </li>
+                <li class="pl-4 -indent-4">
+                  <span class="mr-1.5 text-primary-500">•</span>자세한 가입 방법은
+                  <a href="/index/eduonepass" class="text-primary-600 underline underline-offset-2">교육디지털원패스 안내 페이지</a>에서 확인
+                </li>
+              </ul>
             </dd>
           </div>
         </dl>
       </article>
 
-      <!-- 우리교육청 테크센터 -->
+      <!-- 대구광역시교육청 테크센터 운영 -->
       <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
-        <h2 class="text-[18px] font-bold text-ink">[우리교육청] 테크센터 운영</h2>
+        <h2 class="text-[18px] font-bold text-ink">
+          대구광역시교육청 테크센터 운영
+          <span class="text-primary-600">(☎ 053-235-9999)</span>
+        </h2>
         <dl class="mt-4 space-y-3 text-[15px] leading-relaxed">
           <div>
             <dt class="font-semibold text-ink">지원 내용</dt>
@@ -172,19 +264,13 @@ const desks: Desk[] = [
             <dt class="font-semibold text-ink">접수 / 처리</dt>
             <dd class="text-muted">
               통합콜센터 (☎ 053-235-9999) 근무시간 : 09:00 ~ 18:00(공휴일, 점심시간 제외)<br />
-              <a href="https://tech.dge.go.kr" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2">테크센터포털(tech.dge.go.kr)</a>
+              <a href="https://tech.dge.go.kr" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2">
+                테크센터포털(tech.dge.go.kr)<ArrowIcon />
+              </a>
               : 운영 관련 시스템(무선인증, MDM) 연결 지원
             </dd>
           </div>
         </dl>
-      </article>
-
-      <!-- 교육디지털원패스 -->
-      <article class="rounded-[var(--radius-card)] border border-line bg-white p-6 shadow-[var(--shadow-card)]">
-        <h2 class="text-[18px] font-bold text-ink">
-          교육디지털원패스
-          <span class="text-primary-600">콜센터 (☎ 1600-7440)</span>
-        </h2>
       </article>
 
       <!-- 발행사 문의 창구 — 공동CS 참여사 / 미참여사 -->
@@ -294,15 +380,17 @@ const desks: Desk[] = [
           chip.setAttribute('aria-expanded', 'true');
 
           const { name, url, tel } = chip.dataset;
+          const arrowIcon =
+            '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="inline-block shrink-0 ml-1 -translate-y-px"><path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
           const rows: string[] = [`<span class="font-bold text-ink">${name}</span>`];
           if (url) {
             rows.push(
-              `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2 break-all">${url}</a>`
+              `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary-600 underline underline-offset-2 break-all">${url}${arrowIcon}</a>`
             );
           }
           rows.push(
             tel
-              ? `<span class="text-ink">문의 전화 <a href="tel:${tel}" class="font-bold text-primary-600 underline underline-offset-2">${tel}</a></span>`
+              ? `<span class="text-ink">문의 전화 ☎ <a href="tel:${tel}" class="font-bold text-primary-600 underline underline-offset-2">${tel}</a></span>`
               : `<span class="text-muted">콜센터 미운영 — 위 링크의 온라인 문의를 이용해 주세요.</span>`
           );
 

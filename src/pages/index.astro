@@ -8,14 +8,13 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LinkButton from '../components/LinkButton.astro';
-import SlideDeck from '../components/SlideDeck.astro';
 import logo from '../assets/logo-512.webp';
 
 // 연락처는 전화번호를 그대로 노출하되, 클릭 시 문의 페이지로 유도한다.
 const contacts = [
-  { label: 'AI·디지털 교육자료 포털', name: '중앙상담센터', tel: '1600-2525' },
+  { label: '학습데이터 분석·활용 포털', name: '중앙상담센터', tel: '1600-2525' },
   { label: '회원가입 관련', name: '교육디지털원패스', tel: '1600-7440' },
-  { label: 'AI·디지털 교육자료 11개 발행사', name: '공동 CS 센터', tel: '1661-0777' },
+  { label: 'AI·디지털 교육자료 8개 발행사', name: '공동 CS 센터', tel: '1661-0777' },
 ];
 ---
 
@@ -74,20 +73,33 @@ const contacts = [
     </div>
   </section>
 
-  <!-- 카드뉴스 — 16:9 자동 넘김 -->
-  <section class="mx-auto max-w-4xl px-5 pt-14 animate-fade-in-up delay-150">
-    <div class="flex items-end justify-between pb-4">
-      <h2 class="section-mark text-[20px] font-bold tracking-tight text-ink">AI·디지털 교육자료</h2>
+  <!-- 홍보 영상 — R2(edulink-pages-media/ai-dt-net) 호스팅, edu-link 워커의 /media/* 프록시로 서빙 -->
+  <!-- 모바일은 좌우 여백 없이 꽉 채우고, sm 이상부터는 아래 CTA 패널(max-w-6xl)과 동일한 폭 -->
+  <section class="mx-auto max-w-6xl pt-14 animate-fade-in-up delay-150 sm:px-5">
+    <div
+      class="premium-card overflow-hidden border-0 border-line bg-black shadow-[var(--shadow-card)] sm:rounded-[var(--radius-card)] sm:border"
+      style="aspect-ratio: 16/9"
+    >
+      <video
+        id="promo-video"
+        src="https://dgedu.link/media/ai-dt-net/202608_promo.mp4"
+        class="h-full w-full cursor-pointer object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-label="AI·디지털 교육자료 수업 지원센터 홍보 영상 — 클릭하면 재생 컨트롤이 나타납니다"
+      />
     </div>
-
-    <SlideDeck
-      slug="index/cardnews"
-      alt="AI·디지털 교육자료 카드뉴스"
-      ratio="16/9"
-      autoplay
-      note="여러 장을 넣으면 자동으로 넘어갑니다."
-    />
   </section>
+
+  <script>
+    document.getElementById('promo-video')?.addEventListener('click', function () {
+      const video = this as HTMLVideoElement;
+      video.controls = !video.controls;
+    });
+  </script>
 
   <!-- 절차 안내 — 번호 레일 -->
   <section class="mx-auto max-w-6xl px-5 pb-4 pt-16 animate-fade-in-up delay-200">
@@ -145,12 +157,12 @@ const contacts = [
             02
           </span>
           <p class="mt-2 text-[15.5px] font-semibold leading-snug text-ink">
-            AI·디지털 교육자료 포털에서 수업 진행
+            학습데이터 분석·활용 포털에서 수업 진행
           </p>
         </div>
         <div class="flex flex-col gap-2">
-          <LinkButton href="https://www.aidtbook.kr/" variant="primary" external>
-            AI·디지털 교육자료 포털(바로가기)
+          <LinkButton href="https://www.edupath.kr/" variant="primary" external>
+            학습데이터 분석·활용 포털(바로가기)
           </LinkButton>
           <LinkButton href="/class/curriculum" variant="ghost">수업사례 · 설계지원</LinkButton>
         </div>
