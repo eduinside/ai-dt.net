@@ -15,6 +15,7 @@ import {
   levelOrder,
   subjectFamilyOf,
   subjectFamilyOrder,
+  type CardNewsItem,
   type Level,
   type Section,
 } from '../data/classCards';
@@ -93,6 +94,18 @@ const items = await Promise.all(
 
 const levelIndex = (level: Level) => levelOrder.indexOf(level);
 
+// 그룹 안 정렬 키 — 'levelIndex'는 학교급 표시 순서(초→중→고)로 비교
+type SortKey = keyof CardNewsItem | 'levelIndex';
+const compareBy = (a: CardNewsItem, b: CardNewsItem, keys: SortKey[]) => {
+  for (const k of keys) {
+    const av = k === 'levelIndex' ? String(levelIndex(a.level)) : String(a[k] ?? '');
+    const bv = k === 'levelIndex' ? String(levelIndex(b.level)) : String(b[k] ?? '');
+    const cmp = av.localeCompare(bv, 'ko');
+    if (cmp !== 0) return cmp;
+  }
+  return 0;
+};
+
 const groups =
   groupBy === 'subject'
     ? subjectFamilyOrder.map((family) => ({
@@ -100,16 +113,16 @@ const groups =
         label: family as string,
         list: items
           .filter((i) => subjectFamilyOf(i.subject) === family)
-          .sort((a, b) => {
-            const byLevel = levelIndex(a.level) - levelIndex(b.level);
-            if (byLevel !== 0) return byLevel;
-            return (a.tool ?? '').localeCompare(b.tool ?? '', 'ko');
-          }),
+          .sort((a, b) => compareBy(a, b, ['levelIndex', 'tool'])),
       }))
     : levelOrder.map((level) => ({
         key: level as string,
         label: levelLabels[level],
-        list: items.filter((i) => i.level === level),
+        list: items
+          .filter((i) => i.level === level)
+          .sort((a, b) =>
+            section === 'case' ? compareBy(a, b, ['subject', 'gradeTerm']) : 0
+          ),
       }));
 
 const hasAny = items.length > 0;

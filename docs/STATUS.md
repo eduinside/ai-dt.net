@@ -49,12 +49,16 @@
 - 팀 전달용 `docs/class-cards-guide.md`·`docs/class-cards-template.csv` 추가.
 
 **3. `class/case`·`class/edtech` 카드 정렬 기준 변경 (금일)**
-- `class/case`: 대분류(초·중·고)는 유지, 각 대분류 안에서 **1차 발행사(가나다순) → 2차 학년(오름차순)**
-  으로 재정렬(기존에는 과목별로 묶여 있었음). `src/data/classCards.ts`의 `case` 배열 순서만 변경.
-- `class/edtech`: 대분류를 학교급(초·중·고) → **과목(수학 → 영어 → 정보)**으로 전환, 각 대분류 안에서
-  **1차 학교급(초→중→고) → 2차 같은 도구끼리** 정렬. `CardNewsGallery.astro`에 `groupBy` prop
-  ('level'|'subject')을 추가하고 `classCards.ts`에 `subjectFamilyOf()`(subject 접미사로 수학/영어/
-  정보 판정)·`subjectFamilyOrder`를 신설 — 그룹핑·정렬은 렌더링 시 계산(데이터 배열 순서는 그대로 둠).
+- `class/case`: 대분류(초·중·고, 학교급)는 유지, 각 대분류 안에서 **1차 교과(수학→영어→정보) →
+  2차 학년학기(오름차순)**로 정렬(기존에는 과목별로만 묶여 있었음).
+- `class/edtech`: 대분류를 학교급(초·중·고) → **교과(수학 → 영어 → 정보)**로 전환, 각 대분류 안에서
+  **1차 학교급(초→중→고) → 2차 도구 이름**으로 정렬.
+- `CardNewsGallery.astro`에 `groupBy` prop('level'|'subject')과 `compareBy()` 정렬 헬퍼를 추가,
+  `classCards.ts`에 `subjectFamilyOf()`(subject 접미사로 수학/영어/정보 판정)·`subjectFamilyOrder`를
+  신설 — 그룹핑·정렬은 렌더링 시 계산(데이터 배열 물리적 순서와 무관).
+- 라이트박스 데스크톱 좌우 네비게이션 버튼을 반투명 흰 배경(`bg-white/10`)에서 검은 반투명 배경 +
+  흰 테두리 + 그림자(`bg-black/40`, `border-white/40`, shadow, backdrop-blur)로 교체 — 밝은 카드뉴스
+  이미지 위에서 대비가 약해 잘 안 보이던 문제 수정.
 
 **4. 검색(Pagefind) 개선**
 - `/search` 진입 시 검색창 자동 포커스, 지우기 버튼 고정폭으로 인한 줄바꿈 깨짐 수정.
