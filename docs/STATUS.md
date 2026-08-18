@@ -48,10 +48,13 @@
 - `class/howto` 네비게이션 숨김(콘텐츠 없음), `case`/`edtech`에 NEW 배지 추가.
 - 팀 전달용 `docs/class-cards-guide.md`·`docs/class-cards-template.csv` 추가.
 
-**3. `class/case` 카드 정렬 기준 변경 (금일)**
-- 대분류(초·중·고)는 유지, 각 대분류 안에서 **1차 발행사(가나다순) → 2차 학년(오름차순)**으로 재정렬.
-  기존에는 과목별로 묶여 있었음. `src/data/classCards.ts`의 `case` 배열 순서만 변경(렌더링은
-  `CardNewsGallery.astro`가 배열 순서를 그대로 사용하므로 데이터 순서 수정으로 충분).
+**3. `class/case`·`class/edtech` 카드 정렬 기준 변경 (금일)**
+- `class/case`: 대분류(초·중·고)는 유지, 각 대분류 안에서 **1차 발행사(가나다순) → 2차 학년(오름차순)**
+  으로 재정렬(기존에는 과목별로 묶여 있었음). `src/data/classCards.ts`의 `case` 배열 순서만 변경.
+- `class/edtech`: 대분류를 학교급(초·중·고) → **과목(수학 → 영어 → 정보)**으로 전환, 각 대분류 안에서
+  **1차 학교급(초→중→고) → 2차 같은 도구끼리** 정렬. `CardNewsGallery.astro`에 `groupBy` prop
+  ('level'|'subject')을 추가하고 `classCards.ts`에 `subjectFamilyOf()`(subject 접미사로 수학/영어/
+  정보 판정)·`subjectFamilyOrder`를 신설 — 그룹핑·정렬은 렌더링 시 계산(데이터 배열 순서는 그대로 둠).
 
 **4. 검색(Pagefind) 개선**
 - `/search` 진입 시 검색창 자동 포커스, 지우기 버튼 고정폭으로 인한 줄바꿈 깨짐 수정.

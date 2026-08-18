@@ -1,6 +1,6 @@
 ---
 /**
- * 에듀테크 활용 수업 사례 — 학교급별 카드뉴스 갤러리.
+ * 에듀테크 활용 수업 사례 — 과목별(수학·영어·정보) 카드뉴스 갤러리.
  * 목록·제목은 src/data/classCards.ts, 이미지는 src/assets/cards/edtech/{id}/.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -18,7 +18,7 @@ const meta = sectionMeta.edtech;
     </h1>
     <p class="mt-8 text-center text-[16px] text-ink">{meta.lead}</p>
 
-    <CardNewsGallery section="edtech" />
+    <CardNewsGallery section="edtech" groupBy="subject" />
 
     <PageNavigation
       prev={{ title: '활용 수업 사례', href: '/class/case' }}

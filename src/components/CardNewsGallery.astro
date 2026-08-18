@@ -13,6 +13,8 @@ import {
   classCards,
   levelLabels,
   levelOrder,
+  subjectFamilyOf,
+  subjectFamilyOrder,
   type Level,
   type Section,
 } from '../data/classCards';
@@ -22,8 +24,10 @@ interface Props {
   section: Section;
   /** case 섹션처럼 라이트박스 하단에 PDF 버튼을 둘지 */
   showPdf?: boolean;
+  /** 대분류 기준 — level(기본, 초·중·고) 또는 subject(edtech 전용, 수학·영어·정보) */
+  groupBy?: 'level' | 'subject';
 }
-const { section, showPdf = false } = Astro.props;
+const { section, showPdf = false, groupBy = 'level' } = Astro.props;
 
 const all = import.meta.glob<{ default: ImageMetadata }>(
   '/src/assets/cards/**/*.{png,jpg,jpeg,webp}',
@@ -87,18 +91,37 @@ const items = await Promise.all(
   })
 );
 
-const byLevel = (level: Level) => items.filter((i) => i.level === level);
+const levelIndex = (level: Level) => levelOrder.indexOf(level);
+
+const groups =
+  groupBy === 'subject'
+    ? subjectFamilyOrder.map((family) => ({
+        key: family as string,
+        label: family as string,
+        list: items
+          .filter((i) => subjectFamilyOf(i.subject) === family)
+          .sort((a, b) => {
+            const byLevel = levelIndex(a.level) - levelIndex(b.level);
+            if (byLevel !== 0) return byLevel;
+            return (a.tool ?? '').localeCompare(b.tool ?? '', 'ko');
+          }),
+      }))
+    : levelOrder.map((level) => ({
+        key: level as string,
+        label: levelLabels[level],
+        list: items.filter((i) => i.level === level),
+      }));
+
 const hasAny = items.length > 0;
 ---
 
 <div class="mt-10 space-y-12">
   {
-    levelOrder.map((level) => {
-      const list = byLevel(level);
+    groups.map(({ key, label, list }) => {
       return (
         <section>
           <h2 class="section-mark text-[20px] font-bold tracking-tight text-ink">
-            {levelLabels[level]}
+            {label}
           </h2>
 
           <ul class="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">

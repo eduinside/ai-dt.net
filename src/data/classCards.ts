@@ -36,6 +36,15 @@ export const levelLabels: Record<Level, string> = {
 /** 대분류 표시 순서 */
 export const levelOrder: Level[] = ['elem', 'mid', 'high'];
 
+/** edtech 전용 대분류(과목) 표시 순서 — subject 마지막 두 글자로 판정 */
+export const subjectFamilyOrder = ['수학', '영어', '정보'] as const;
+export type SubjectFamily = (typeof subjectFamilyOrder)[number];
+
+export function subjectFamilyOf(subject?: string): SubjectFamily | undefined {
+  if (!subject) return undefined;
+  return subjectFamilyOrder.find((f) => subject.endsWith(f));
+}
+
 export const sectionMeta: Record<Section, { title: string; lead: string; description: string }> = {
   case: {
     title: 'AI·디지털 교육자료 활용 수업 사례',
@@ -74,7 +83,7 @@ export const classCards: Record<Section, CardNewsItem[]> = {
   ],
   howto: [],
   edtech: [
-    // 초등 — 영어
+    // 대분류(수학·영어·정보)·정렬(학교급 → 도구)은 CardNewsGallery가 렌더링 시 계산 — 아래 순서는 참고용
     { id: 'edtech-elem-eng-01', level: 'elem', title: 'AI·디지털 교육자료와 패들렛 아케이드게임을 활용한 초등 영어 단어 어휘 수업', desc: 'AI·디지털 교육자료 재구성에 패들렛 아케이드의 게임 요소를 더해 초등 영어 단어와 어휘를 즐겁게 익히고 학생의 배움을 확인하는 수업', subject: '초등영어', tool: '패들렛' },
     { id: 'edtech-elem-eng-02', level: 'elem', title: 'AI·디지털 교육자료와 캔바AI를 활용한 영어 수업', desc: 'AI·디지털 교육자료 재구성에 캔바 코드로 제작한 어휘 학습 앱을 통해 초등 영어 단어와 어휘를 즐겁게 익히고 학생의 배움을 확인하는 수업', subject: '초등영어', tool: '캔바' },
     // 중등 — 수학
