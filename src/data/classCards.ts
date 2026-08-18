@@ -56,23 +56,21 @@ export const sectionMeta: Record<Section, { title: string; lead: string; descrip
 
 export const classCards: Record<Section, CardNewsItem[]> = {
   case: [
-    // 초등 — 수학
-    { id: 'case-elem-math-01', level: 'elem', title: '자료를 수집하여 그래프를 활용한 캠페인 포스터 만들기', desc: 'AI·디지털 교과자료의 학급칠판 투표를 활용해 자료를 수집하고 수학교구 그래프로 나타내기로 포스터 만들기 수업', publisher: '천재교과서', subject: '초등수학', gradeTerm: '6학년 1학기' },
+    // 초등학교 — 발행사 → 학년 오름차순
     { id: 'case-elem-math-02', level: 'elem', title: '대응관계를 활용하여 생활 속 문제 해결하기', desc: 'AI·디지털 교과자료의 학급 게시판과 설문을 활용해 자료를 수집하고 캔바로 물 절약 홍보 캠페인 포스터 만들기 수업', publisher: '아이스크림', subject: '초등수학', gradeTerm: '5학년 1학기', tool: '캔바' },
     { id: 'case-elem-math-03', level: 'elem', title: '사각형 그리기와 분류하기', desc: 'AI·디지털 교과자료의 알지오매스키즈2D를 활용해 도형을 그리고, 학급칠판으로 공유하기 수업', publisher: '천재교과서', subject: '초등수학', gradeTerm: '4학년 2학기' },
     { id: 'case-elem-math-04', level: 'elem', title: '다각형의 넓이 구하기', desc: 'AI·디지털 교과자료의 학습현황-노트를 활용해 공유하고 수학교구로 활용해 평행사변형을 조작하여 넓이 구하는 방법 탐구하기', publisher: '천재교과서', subject: '초등수학', gradeTerm: '5학년 1학기' },
-    // 중등 — 수학
-    { id: 'case-mid-math-01', level: 'mid', title: '일차방정식을 활용한 세금 분석하기', desc: 'AI·디지털 교과자료의 교사재구성을 활용해 개념 기반 탐구 수업을 설계하고 모둠 손필기를 활용한 협력 학습', publisher: '지학사', subject: '중학수학', gradeTerm: '1학년 1학기' },
-    { id: 'case-mid-math-02', level: 'mid', title: '일차함수를 활용하여 문제 해결하기', publisher: '동아출판', subject: '중학수학', gradeTerm: '2학년 1학기' },
-    // 중등 — 영어
-    { id: 'case-mid-eng-03', level: 'mid', title: '자기소개 글쓰기', desc: 'AI·디지털 교과자료의 학급칠판을 활용해 학생의 글을 공유하고 학생들과 교사의 피드백이 활발히 이루어지는 수업 만들기', publisher: '천재교과서', subject: '중학영어', gradeTerm: '1학년 1학기' },
-    { id: 'case-mid-eng-04', level: 'mid', title: 'AI 디지털 교육자료 × 의견 보드 연계 활동으로 완성하는 글쓰기', desc: '지문 생성 마스터(외부연계), 의견보드, AI Writing', publisher: '비상교육', subject: '중학영어', gradeTerm: '2학년 1학기' },
-    // 중등 — 정보
+    { id: 'case-elem-math-01', level: 'elem', title: '자료를 수집하여 그래프를 활용한 캠페인 포스터 만들기', desc: 'AI·디지털 교과자료의 학급칠판 투표를 활용해 자료를 수집하고 수학교구 그래프로 나타내기로 포스터 만들기 수업', publisher: '천재교과서', subject: '초등수학', gradeTerm: '6학년 1학기' },
+    // 중학교 — 발행사 → 학년 오름차순
     { id: 'case-mid-com-05', level: 'mid', title: '인공지능 학습에서 데이터의 중요성 이해하기', desc: 'AI·디지털 교육자료의 영상 콘텐츠와 내장된 엔트리로 실습하고 자동채점해주는 기능을 활용해 인공지능 학습에서 데이터의 중요성을 이해하고 다양한 분류 문제에 적용해 보는 수업', publisher: '길벗', subject: '중학정보', gradeTerm: '2학년', tool: '엔트리' },
+    { id: 'case-mid-math-02', level: 'mid', title: '일차함수를 활용하여 문제 해결하기', publisher: '동아출판', subject: '중학수학', gradeTerm: '2학년 1학기' },
+    { id: 'case-mid-eng-04', level: 'mid', title: 'AI 디지털 교육자료 × 의견 보드 연계 활동으로 완성하는 글쓰기', desc: '지문 생성 마스터(외부연계), 의견보드, AI Writing', publisher: '비상교육', subject: '중학영어', gradeTerm: '2학년 1학기' },
+    { id: 'case-mid-math-01', level: 'mid', title: '일차방정식을 활용한 세금 분석하기', desc: 'AI·디지털 교과자료의 교사재구성을 활용해 개념 기반 탐구 수업을 설계하고 모둠 손필기를 활용한 협력 학습', publisher: '지학사', subject: '중학수학', gradeTerm: '1학년 1학기' },
+    { id: 'case-mid-eng-03', level: 'mid', title: '자기소개 글쓰기', desc: 'AI·디지털 교과자료의 학급칠판을 활용해 학생의 글을 공유하고 학생들과 교사의 피드백이 활발히 이루어지는 수업 만들기', publisher: '천재교과서', subject: '중학영어', gradeTerm: '1학년 1학기' },
     { id: 'case-mid-com-06', level: 'mid', title: '음식 주문 시스템으로 알고리즘의 조건 이해하기', desc: 'AI 디지털교육자료의 영상 학습 및 Matching Test 활동을 활용해 알고리즘의 다섯 조건을 하나씩 짚어보며 이해하는 수업', publisher: '천재교과서', subject: '중학정보', gradeTerm: '1학년' },
-    // 고등 — 정보
-    { id: 'case-high-com-01', level: 'high', title: '바이브코딩 기반 문제 해결 프로그램 구현', publisher: '천재교과서', subject: '고등정보', gradeTerm: '1학년' },
+    // 고등학교 — 발행사 → 학년 오름차순
     { id: 'case-high-com-02', level: 'high', title: '사물인터넷 설계', publisher: '금성출판사', subject: '고등정보', gradeTerm: '1학년' },
+    { id: 'case-high-com-01', level: 'high', title: '바이브코딩 기반 문제 해결 프로그램 구현', publisher: '천재교과서', subject: '고등정보', gradeTerm: '1학년' },
   ],
   howto: [],
   edtech: [
