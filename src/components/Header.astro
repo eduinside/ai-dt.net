@@ -69,7 +69,14 @@ const isActive = (href: string) =>
                           isActive(child.href) ? 'font-semibold text-primary-600' : 'text-ink',
                         ]}
                       >
-                        {child.label}
+                        <span class="flex items-center gap-1.5">
+                          {child.label}
+                          {'isNew' in child && child.isNew && (
+                            <span class="inline-flex shrink-0 items-center rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+                              NEW
+                            </span>
+                          )}
+                        </span>
                         {'external' in child && child.external && (
                           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
                             <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -145,6 +152,11 @@ const isActive = (href: string) =>
                           ]}
                         >
                           {child.label}
+                          {'isNew' in child && child.isNew && (
+                            <span class="inline-flex shrink-0 items-center rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+                              NEW
+                            </span>
+                          )}
                           {'external' in child && child.external && (
                           <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true" class="shrink-0 text-muted">
                             <path d="M3 11L11 3M5 3h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />

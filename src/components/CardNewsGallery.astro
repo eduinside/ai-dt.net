@@ -1,9 +1,11 @@
 ---
 /**
  * 카드뉴스 갤러리 — 대분류(초·중·고) 아래 3열 갤러리.
- * 썸네일은 카드뉴스 1면(1:1), 누르면 라이트박스에서 장을 넘겨본다.
+ * 썸네일은 카드뉴스 1면(1688×2110 비율), 누르면 라이트박스에서 장을 넘겨본다.
  *
  * 이미지: src/assets/cards/{section}/{id}/01.png …  (목록·제목은 src/data/classCards.ts)
+ * PDF(case 전용): 같은 폴더 안에 아무 이름의 .pdf 파일 하나를 두면 자동으로 인식된다.
+ * 원본 이미지를 그대로 두면 빌드 시 getImage()가 webp로 재생성하므로 용량이 큰 원본도 그대로 커밋해도 된다.
  */
 import { getImage } from 'astro:assets';
 import Lightbox from './Lightbox.astro';
@@ -14,6 +16,7 @@ import {
   type Level,
   type Section,
 } from '../data/classCards';
+import { toolLinks } from '../data/toolLinks';
 
 interface Props {
   section: Section;
@@ -27,6 +30,14 @@ const all = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 
+const pdfUrls = import.meta.glob<string>('/src/assets/cards/**/*.pdf', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+// 카드뉴스 원본 비율(1688×2110)
+const CARD_RATIO = 1688 / 2110;
 const THUMB_W = 480;
 const FULL_W = [800, 1400];
 
@@ -60,7 +71,19 @@ const items = await Promise.all(
       })
     );
 
-    return { ...item, thumb, images };
+    const tags = [item.publisher, item.subject, item.gradeTerm, item.tool].filter(
+      (v): v is string => Boolean(v)
+    );
+
+    // PDF는 같은 폴더 안에 파일이 실제로 있을 때만 제공 — 없으면 "탑재 예정"으로 표시
+    const pdfUrl = Object.entries(pdfUrls).find(([p]) =>
+      p.includes(`/cards/${section}/${item.id}/`)
+    )?.[1];
+    const pdfReady = showPdf && Boolean(pdfUrl);
+
+    const toolUrl = item.tool ? toolLinks[item.tool] : undefined;
+
+    return { ...item, thumb, images, tags, pdfUrl, pdfReady, toolUrl };
   })
 );
 
@@ -78,7 +101,7 @@ const hasAny = items.length > 0;
             {levelLabels[level]}
           </h2>
 
-          <ul class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul class="mt-5 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
             {list.length > 0
               ? list.map((item) => (
                   <li>
@@ -87,8 +110,12 @@ const hasAny = items.length > 0;
                       data-lightbox
                       data-images={JSON.stringify(item.images)}
                       data-title={item.title}
-                      data-pdf={showPdf && item.pdf ? `/pdf/case/${item.pdf}` : undefined}
-                      data-pdf-note={showPdf ? 'PDF 파일은 추후 업데이트 예정입니다.' : undefined}
+                      data-tags={JSON.stringify(item.tags)}
+                      data-desc={item.desc}
+                      data-tool={item.tool}
+                      data-tool-url={item.toolUrl}
+                      data-pdf={item.pdfReady ? item.pdfUrl : undefined}
+                      data-pdf-note={showPdf ? '탑재 예정입니다.' : undefined}
                       class="group w-full cursor-zoom-in overflow-hidden rounded-[var(--radius-card)] border border-line bg-white text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-[var(--shadow-card-hover)]"
                     >
                       {item.thumb ? (
@@ -96,13 +123,16 @@ const hasAny = items.length > 0;
                           src={item.thumb.src}
                           alt={`${item.title} 카드뉴스 1면`}
                           loading="lazy"
-                          class="aspect-square w-full object-cover"
+                          class="w-full object-cover"
+                          style={`aspect-ratio: ${CARD_RATIO}`}
                         />
                       ) : (
-                        <span class="grid aspect-square w-full place-content-center border-b border-dashed border-line bg-primary-50/40 text-center text-[13px] text-muted">
-                          이미지 준비 중
-                          <span class="mt-1 block font-mono text-[11px]">
-                            src/assets/cards/{section}/{item.id}/
+                        <span
+                          class="grid w-full place-content-center gap-1.5 border-b border-dashed border-line bg-primary-50/40 text-center text-[13px] text-muted"
+                          style={`aspect-ratio: ${CARD_RATIO}`}
+                        >
+                          <span class="mx-auto inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-bold text-accent">
+                            탑재 예정
                           </span>
                         </span>
                       )}
@@ -110,10 +140,18 @@ const hasAny = items.length > 0;
                         <span class="block text-[15px] font-semibold leading-snug text-ink group-hover:text-primary-700">
                           {item.title}
                         </span>
-                        {showPdf && (
-                          <span class="mt-1 block text-[13px] text-muted">
-                            {item.pdf ? 'PDF 내려받기 제공' : 'PDF 준비 중'}
+                        {item.desc && <span class="sr-only">{item.desc}</span>}
+                        {item.tags.length > 0 && (
+                          <span class="mt-2 flex flex-wrap gap-1.5">
+                            {item.tags.map((tag) => (
+                              <span class="inline-flex items-center rounded-full bg-primary-50 px-2 py-0.5 text-[11px] font-medium text-primary-700">
+                                {tag}
+                              </span>
+                            ))}
                           </span>
+                        )}
+                        {showPdf && !item.pdfReady && (
+                          <span class="mt-1 block text-[13px] text-muted">탑재 예정</span>
                         )}
                       </span>
                     </button>
@@ -122,7 +160,10 @@ const hasAny = items.length > 0;
               : [0, 1, 2].map(() => (
                   <li>
                     <div class="overflow-hidden rounded-[var(--radius-card)] border-2 border-dashed border-line bg-white/50">
-                      <span class="grid aspect-square w-full place-content-center px-3 text-center text-[13px] text-muted">
+                      <span
+                        class="grid w-full place-content-center px-3 text-center text-[13px] text-muted"
+                        style={`aspect-ratio: ${CARD_RATIO}`}
+                      >
                         카드뉴스 자리
                       </span>
                       <span class="block border-t border-dashed border-line px-4 py-3.5 text-[13px] text-muted">

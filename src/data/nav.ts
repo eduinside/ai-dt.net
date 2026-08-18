@@ -9,6 +9,8 @@ export interface NavChild {
   /** 카드형 노출(수업이야기 허브 등)에서 쓰는 한 줄 설명 */
   desc?: string;
   external?: boolean;
+  /** 네비게이션 메뉴에 "NEW" 배지를 붙일지 */
+  isNew?: boolean;
 }
 
 export interface NavItem {
@@ -36,18 +38,15 @@ export const nav: NavItem[] = [
     children: [
       {
         href: '/class/case',
-        label: '활용 수업 사례',
+        label: 'AI·디지털 교육자료 활용 수업 사례',
         desc: 'AI·디지털 교육자료를 활용한 수업 사례 카드뉴스',
-      },
-      {
-        href: '/class/howto',
-        label: '이럴 땐 이렇게',
-        desc: '수업 중 자주 마주치는 상황별 해결 방법',
+        isNew: true,
       },
       {
         href: '/class/edtech',
         label: '에듀테크 활용 수업 사례',
-        desc: '에듀테크 도구를 곁들인 수업 사례',
+        desc: '에듀테크 도구를 AI·디지털 교육자료와 함께 활용한 수업 사례',
+        isNew: true,
       },
       {
         href: '/class/curriculum',
