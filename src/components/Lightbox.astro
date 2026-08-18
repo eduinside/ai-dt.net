@@ -283,8 +283,24 @@
     dialog.addEventListener('close', () => opener?.focus());
   }
 
+  // 검색 결과 등에서 #카드id로 들어왔을 때 해당 카드의 라이트박스를 바로 연다.
+  function openFromHash() {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    const heading = document.getElementById(id);
+    const trigger = heading?.closest<HTMLElement>('[data-lightbox]');
+    if (!trigger) return;
+    trigger.scrollIntoView({ block: 'center' });
+    trigger.click();
+  }
+
   setupLightbox();
-  document.addEventListener('astro:page-load', setupLightbox);
+  openFromHash();
+  document.addEventListener('astro:page-load', () => {
+    setupLightbox();
+    openFromHash();
+  });
+  window.addEventListener('hashchange', openFromHash);
 </script>
 
 <style>
