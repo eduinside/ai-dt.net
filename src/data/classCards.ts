@@ -102,7 +102,7 @@ export const classCards: Record<Section, CardNewsItem[]> = {
     { id: 'edtech-high-math-10', level: 'high', title: 'AI·디지털 교육자료 바이브코딩으로 수학을 게임으로 만드는 수학 수업', desc: '맞춤형 비계로 완성하는 모둠 참여형 영어 수업', subject: '고등수학', tool: '매직스쿨' },
     { id: 'edtech-high-math-11', level: 'high', title: 'AI·디지털 교육자료, 스쿨플랫과 함께하는 참여형 수학 탐구 수업', subject: '고등수학', tool: '스쿨플랫' },
     // 고등 — 영어
-    { id: 'edtech-high-eng-12', level: 'high', title: 'AI·디지털 교육자료 재구성에 제미나이 노트북을 더해 서술형·구술평가 채점과 맞춤형 피드백을 지원하는 영어 수업', desc: '영어 서술형과 구술평가를 더 효율적으로 평가하는 AI 활용', subject: '고등영어', tool: '제미나이' },
+    { id: 'edtech-high-eng-12', level: 'high', title: 'AI·디지털 교육자료 재구성에 제미나이 노트북을 더해 서술형·구술평가 채점과 맞춤형 피드백을 지원하는 영어 수업', desc: '영어 서술형과 구술평가를 더 효율적으로 평가하는 AI 활용', subject: '고등영어', tool: '제미나이 노트북' },
     { id: 'edtech-high-eng-13', level: 'high', title: 'AI·디지털 교육자료 재구성에 블루킷을 더해 영어 어휘·문법을 게임으로 반복 학습하는 참여형 영어 수업', desc: '게임과 퀴즈로 영어 학습 참여도를 높이는 수업 활동', subject: '고등영어', tool: '블루킷' },
     { id: 'edtech-high-eng-14', level: 'high', title: 'AI·디지털 교육자료 재구성! 매직스쿨로 맞춤형 비계를 완성하는 모둠 참여형 영어 수업', desc: '맞춤형 비계로 완성하는 모둠 참여형 영어 수업', subject: '고등영어', tool: '매직스쿨' },
     { id: 'edtech-high-eng-15', level: 'high', title: 'AI·디지털 교육자료에 QuillBot을 더해 서술형 평가에 맞춤형 문법 및 표현 첨삭을 지원하는 영어 수업', desc: '문법·표현 첨삭으로 지원하는 서술형 수행평가 피드백', subject: '고등영어', tool: '퀼봇' },

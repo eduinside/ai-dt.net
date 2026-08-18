@@ -9,7 +9,7 @@ export const toolLinks: Record<string, string> = {
   캔바: 'https://www.canva.com/',
   패들렛: 'https://padlet.com/',
   Gems: 'https://gemini.google.com/',
-  제미나이: 'https://gemini.google.com/',
+  '제미나이 노트북': 'https://notebook.google/?hl=ko',
   앱스스크립트: 'https://script.google.com/',
   통그라미: 'https://tong.mods.go.kr/',
   블루킷: 'https://www.blooket.com/',
