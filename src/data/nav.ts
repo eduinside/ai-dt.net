@@ -44,7 +44,7 @@ export const nav: NavItem[] = [
       },
       {
         href: '/class/edtech',
-        label: '에듀테크 활용 수업 활동 사례',
+        label: 'AI·디지털 교육자료X에듀테크 활용 수업 활동 사례',
         desc: '에듀테크 도구를 AI·디지털 교육자료와 함께 활용한 수업 사례',
         isNew: true,
       },

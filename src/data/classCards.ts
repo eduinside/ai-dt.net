@@ -57,7 +57,7 @@ export const sectionMeta: Record<Section, { title: string; lead: string; descrip
     description: 'AI·디지털 교육자료 수업 중 자주 마주치는 상황별 해결 방법 안내',
   },
   edtech: {
-    title: '에듀테크 활용 수업 활동 사례',
+    title: 'AI·디지털 교육자료X에듀테크 활용 수업 활동 사례',
     lead: 'AI·디지털 교육자료 수업에 에듀테크를 함께 활용해 수업을 풍성하게 만든 사례를 살펴보세요.',
     description: 'AI·디지털 교육자료 수업에 에듀테크 도구를 활용한 학교급별 수업 사례 카드뉴스',
   },
