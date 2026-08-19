@@ -20,4 +20,5 @@ export const toolLinks: Record<string, string> = {
   퀼봇: 'https://quillbot.com/',
   폴리패드: 'https://polypad.amplify.com/',
   앰플리파이: 'https://amplify.com/',
+  메이크코드: 'https://makecode.microbit.org/',
 };
