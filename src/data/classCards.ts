@@ -57,7 +57,7 @@ export const sectionMeta: Record<Section, { title: string; lead: string; descrip
     description: 'AI·디지털 교육자료 수업 중 자주 마주치는 상황별 해결 방법 안내',
   },
   edtech: {
-    title: '에듀테크 활용 수업 사례',
+    title: '에듀테크 활용 수업 활동 사례',
     lead: 'AI·디지털 교육자료 수업에 에듀테크를 함께 활용해 수업을 풍성하게 만든 사례를 살펴보세요.',
     description: 'AI·디지털 교육자료 수업에 에듀테크 도구를 활용한 학교급별 수업 사례 카드뉴스',
   },
@@ -100,7 +100,7 @@ export const classCards: Record<Section, CardNewsItem[]> = {
     { id: 'edtech-high-math-08', level: 'high', title: 'AI·디지털 교육자료, 지오지브라와 함께하는 참여형 수학 탐구 수업', desc: 'AI·디지털 교과자료에 그래프·기하·대수를 연결, 수학적 개념을 움직이며 탐구하는 수업', subject: '고등수학', tool: '지오지브라' },
     { id: 'edtech-high-math-09', level: 'high', title: 'AI·디지털 교육자료 알지오매스로 수학을 ‘배우는 대상’에서 ‘탐구하는 대상’으로 바꾸어 주는 수학 수업', desc: 'AI·디지털 교과자료 알지오매스는 수학을 ‘배우는 대상’에서 ‘탐구하는 대상’으로 바꾸어 주는 수학적 도구', subject: '고등수학', tool: '알지오매스' },
     { id: 'edtech-high-math-10', level: 'high', title: 'AI·디지털 교육자료 바이브코딩으로 수학을 게임으로 만드는 수학 수업', desc: '맞춤형 비계로 완성하는 모둠 참여형 영어 수업', subject: '고등수학', tool: '매직스쿨' },
-    { id: 'edtech-high-math-11', level: 'high', title: 'AI·디지털 교육자료, 스쿨플랫과 함께하는 참여형 수학 탐구 수업', subject: '고등수학', tool: '스쿨플랫' },
+    { id: 'edtech-high-math-11', level: 'high', title: 'AI·디지털 교육자료, 스쿨플랫과 함께하는 참여형 수학 탐구 수업', desc: 'AI·디지털 교과자료를 활용한 참여형 수학 탐구 수업', subject: '고등수학', tool: '스쿨플랫' },
     // 고등 — 영어
     { id: 'edtech-high-eng-12', level: 'high', title: 'AI·디지털 교육자료 재구성에 제미나이 노트북을 더해 서술형·구술평가 채점과 맞춤형 피드백을 지원하는 영어 수업', desc: '영어 서술형과 구술평가를 더 효율적으로 평가하는 AI 활용', subject: '고등영어', tool: '제미나이 노트북' },
     { id: 'edtech-high-eng-13', level: 'high', title: 'AI·디지털 교육자료 재구성에 블루킷을 더해 영어 어휘·문법을 게임으로 반복 학습하는 참여형 영어 수업', desc: '게임과 퀴즈로 영어 학습 참여도를 높이는 수업 활동', subject: '고등영어', tool: '블루킷' },
