@@ -18,6 +18,39 @@ const meta = sectionMeta.case;
     </h1>
     <p class="mt-8 text-center text-[16px] text-ink">{meta.lead}</p>
 
+    <!-- 이용 안내 — 카드뉴스를 눌러 라이트박스를 열고, 그 안의 버튼으로 수업안 PDF를 받는다 -->
+    <div
+      class="mt-6 flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-line bg-band px-5 py-4 text-[14px] text-ink sm:flex-row sm:justify-center sm:gap-4 sm:py-3"
+    >
+      <p class="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-center leading-snug sm:justify-start">
+        <span
+          class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary-600 text-[11px] font-bold text-white"
+          aria-hidden="true">1</span
+        ><span>카드뉴스를 누르고</span>
+        <span
+          class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary-600 text-[11px] font-bold text-white"
+          aria-hidden="true">2</span
+        ><span>아래 버튼으로 <b class="font-semibold">수업 흐름(수업안)</b>을 볼 수 있어요.</span>
+      </p>
+
+      <!-- 라이트박스 안 버튼의 모습 (예시 — 실제 내려받기는 카드뉴스를 연 뒤) -->
+      <span
+        class="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary-600 px-4 py-2 text-[14px] font-bold text-white shadow-sm"
+        aria-hidden="true"
+      >
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M10 3v9m0 0l-3.5-3.5M10 12l3.5-3.5M4 15.5h12"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        수업 사례 PDF 내려받기
+      </span>
+    </div>
+
     <CardNewsGallery section="case" showPdf />
 
     <PageNavigation
