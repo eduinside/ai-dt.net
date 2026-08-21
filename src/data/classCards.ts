@@ -97,7 +97,6 @@ export const classCards: Record<Section, CardNewsItem[]> = {
     { id: 'edtech-high-math-05', level: 'high', title: 'AI·디지털 교육자료 재구성에 Gems로 만든 평가 도우미 봇을 더해 배움의 기준이 보이고 피드백이 살아나는 성장 수업', desc: 'AI·디지털 교육자료 재구성에 Gems로 만든 평가 도우미 봇을 더해 배움의 기준이 보이고 피드백이 살아나는 성장 수업', subject: '고등수학', tool: 'Gems' },
     { id: 'edtech-high-math-06', level: 'high', title: 'AI·디지털 교육자료 재구성에 통그라미를 더해 실제 자료를 분류·분석하며 집합의 연산을 벤다이어그램으로 이해하는 참여형 수업', desc: 'AI·디지털 교육자료 재구성에 통그라미를 더해 실제 자료를 분류·분석하며 집합의 연산을 벤다이어그램으로 이해하는 참여형 수업', subject: '고등수학', tool: '통그라미' },
     { id: 'edtech-high-math-07', level: 'high', title: 'AI·디지털 교육자료 재구성에 공학도구(알지오매스 블록코딩)를 활용한 참여형 수학 탐구 수업', desc: 'AI·디지털 교과자료에 블록코딩으로 수학적 사고를 시각적으로 확인, 탐구하는 수업', subject: '고등수학', tool: '알지오매스' },
-    { id: 'edtech-high-math-08', level: 'high', title: 'AI·디지털 교육자료, 지오지브라와 함께하는 참여형 수학 탐구 수업', desc: 'AI·디지털 교과자료에 그래프·기하·대수를 연결, 수학적 개념을 움직이며 탐구하는 수업', subject: '고등수학', tool: '지오지브라' },
     { id: 'edtech-high-math-09', level: 'high', title: 'AI·디지털 교육자료 알지오매스로 수학을 ‘배우는 대상’에서 ‘탐구하는 대상’으로 바꾸어 주는 수학 수업', desc: 'AI·디지털 교과자료 알지오매스는 수학을 ‘배우는 대상’에서 ‘탐구하는 대상’으로 바꾸어 주는 수학적 도구', subject: '고등수학', tool: '알지오매스' },
     { id: 'edtech-high-math-10', level: 'high', title: 'AI·디지털 교육자료 바이브코딩으로 수학을 게임으로 만드는 수학 수업', desc: '맞춤형 비계로 완성하는 모둠 참여형 영어 수업', subject: '고등수학', tool: '매직스쿨' },
     { id: 'edtech-high-math-11', level: 'high', title: 'AI·디지털 교육자료, 스쿨플랫과 함께하는 참여형 수학 탐구 수업', desc: 'AI·디지털 교과자료를 활용한 참여형 수학 탐구 수업', subject: '고등수학', tool: '스쿨플랫' },
@@ -106,5 +105,8 @@ export const classCards: Record<Section, CardNewsItem[]> = {
     { id: 'edtech-high-eng-13', level: 'high', title: 'AI·디지털 교육자료 재구성에 블루킷을 더해 영어 어휘·문법을 게임으로 반복 학습하는 참여형 영어 수업', desc: '게임과 퀴즈로 영어 학습 참여도를 높이는 수업 활동', subject: '고등영어', tool: '블루킷' },
     { id: 'edtech-high-eng-14', level: 'high', title: 'AI·디지털 교육자료 재구성! 매직스쿨로 맞춤형 비계를 완성하는 모둠 참여형 영어 수업', desc: '맞춤형 비계로 완성하는 모둠 참여형 영어 수업', subject: '고등영어', tool: '매직스쿨' },
     { id: 'edtech-high-eng-15', level: 'high', title: 'AI·디지털 교육자료에 QuillBot을 더해 서술형 평가에 맞춤형 문법 및 표현 첨삭을 지원하는 영어 수업', desc: '문법·표현 첨삭으로 지원하는 서술형 수행평가 피드백', subject: '고등영어', tool: '퀼봇' },
+    // 고등 — 정보
+    { id: 'edtech-high-com-01', level: 'high', title: 'AI·디지털 교육자료 정보과 실습에 코답 직관성을 더해 명쾌하고 스마트한 수업', desc: 'AI·디지털 교육자료와 코답을 함께 쓰면 데이터 속에 숨겨진 의미를 현실로 꺼내줍니다.', subject: '고등정보', tool: '코답' },
+    { id: 'edtech-high-com-02', level: 'high', title: 'AI·디지털 교과자료를 통한 코드 작성 학습과 ‘AI이거다’의 AI 실습을 더한 생생한 수업', desc: '복잡한 인공지능 개념과 데이터 학습 원리를 직관적으로 체험하는 온라인 AI 실습 플랫폼', subject: '고등정보', tool: 'AI이거다' },
   ],
 };
