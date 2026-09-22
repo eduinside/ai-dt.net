@@ -121,7 +121,7 @@ import imgCard4 from "../../assets/pages/manual/004.png";
             <ul class="mt-3 space-y-1.5 text-[15px] leading-relaxed text-muted">
               <li>
                 ✅ 교육디지털원패스 및 학습데이터 분석·활용 포털은 나이스의 학적
-                정보와 연동(<b><button type="button" id="open-presentation-btn" class="text-primary-600 hover:underline cursor-pointer">자세히 보기</button></b>)
+                정보와 연동(<b><a href="https://docs.google.com/presentation/d/11IYnnYoewSyIgmL_U06spAPUJf96UM_mGmLcwE9TIEs/present" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline cursor-pointer">자세히 보기</a></b>)
               </li>
               <li>✅ 학급시간표에서 AI·디지털 교육자료 과목 배정</li>
               <li>
@@ -355,20 +355,6 @@ import imgCard4 from "../../assets/pages/manual/004.png";
     </div>
   </dialog>
 
-  <!-- Presentation Dialog -->
-  <dialog id="presentation-dialog" class="fixed inset-0 z-50 w-full h-full max-w-none bg-black/80 backdrop-blur-sm p-4 m-0 flex-col items-center justify-center opacity-0 transition-opacity duration-300 open:flex open:opacity-100" aria-modal="true">
-    <div class="relative w-full max-w-[95vw] h-[85vh] bg-white rounded-md overflow-hidden flex flex-col shadow-lg">
-      <div class="flex justify-between items-center px-4 py-2.5 border-b border-line bg-gray-50">
-        <span class="font-bold text-[15px] text-ink">나이스 학적 연동 자세히 보기</span>
-        <button id="close-presentation" class="text-muted hover:text-ink font-bold text-[22px] cursor-pointer">&times;</button>
-      </div>
-      <iframe 
-        src="https://docs.google.com/presentation/d/11IYnnYoewSyIgmL_U06spAPUJf96UM_mGmLcwE9TIEs/present" 
-        class="w-full flex-grow border-0" 
-        allowfullscreen>
-      </iframe>
-    </div>
-  </dialog>
 </BaseLayout>
 
 <script>
@@ -468,35 +454,11 @@ import imgCard4 from "../../assets/pages/manual/004.png";
     });
   }
 
-  function setupPresentationModal() {
-    const dialog = document.getElementById("presentation-dialog") as HTMLDialogElement;
-    const openBtn = document.getElementById("open-presentation-btn");
-    const closeBtn = document.getElementById("close-presentation");
-    if (!dialog || !openBtn || !closeBtn) return;
-
-    openBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      dialog.showModal();
-    });
-
-    closeBtn.addEventListener("click", () => {
-      dialog.close();
-    });
-
-    dialog.addEventListener("click", (e) => {
-      if (e.target === dialog) {
-        dialog.close();
-      }
-    });
-  }
-
   setupManualTabs();
   setupLightbox();
-  setupPresentationModal();
   document.addEventListener("astro:page-load", () => {
     setupManualTabs();
     setupLightbox();
-    setupPresentationModal();
   });
 </script>
 
